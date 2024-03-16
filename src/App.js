@@ -40,6 +40,7 @@ import NewModule from "./components/admin/NewModule";
 import UpdateModule from "./components/admin/UpdateModule";
 import Courses from "./components/course/Courses";
 import CourseDetails from "./components/course/CourseDetails";
+import ModuleDetails from "./components/course/ModuleDetails";
 
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
@@ -265,6 +266,15 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <CourseDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/moduleDetails/:id"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <ModuleDetails />
             </ProtectedRoute>
           }
         />

@@ -23,12 +23,12 @@ const CourseModuleCard = ({ module, isAdmin }) => {
     if (window.confirm("Are you sure you want to delete this module?")) {
       dispatch(deleteModule(module._id))
         .then(() => {
-          toast.success("Module deleted successfully!"); 
+          toast.success("Module deleted successfully!");
         })
         .catch((error) => {
           console.error("Error deleting module:", error);
           toast.error("Failed to delete module.");
-        })
+        });
     }
   };
 
@@ -51,6 +51,8 @@ const CourseModuleCard = ({ module, isAdmin }) => {
       </CardContent>
       <CardActions>
         <Button
+          component={Link}
+          to={`/admin/moduleDetails/${module._id}`}
           startIcon={<RemoveRedEyeOutlinedIcon />}
           variant="outlined"
           color="primary"
