@@ -75,7 +75,7 @@ const CourseModuleCard = ({ module, isAdmin }) => {
           variant="outlined"
           color="error"
           size="small"
-          onClick={handleDelete} // Call handleDelete function when delete button is clicked
+          onClick={handleDelete} 
         >
           Delete
         </Button>

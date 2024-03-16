@@ -8,23 +8,39 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography,
+  Button,
+  IconButton,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { deleteChapter } from "../../actions/chapterActions"; // Import the deleteChapter action
+import { toast } from "react-toastify"; // Import toast
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 
 const ModuleDetails = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const navigate = useNavigate(); // Initialize useNavigate hook
+  const { id } = useParams(); // Make sure id is correctly extracted from the URL
   const { loading, error, module } = useSelector(
     (state) => state.moduleDetails
   );
 
   useEffect(() => {
-    dispatch(getModuleDetails(id));
+    dispatch(getModuleDetails(id)); // Ensure id is passed to the action correctly
     return () => {
       dispatch(clearErrors());
     };
   }, [dispatch, id]);
+
+  const handleDelete = (chapterId) => {
+    if (window.confirm("Are you sure you want to delete this chapter?")) {
+      dispatch(deleteChapter(chapterId)).then(() => {
+        toast.success("Chapter deleted successfully");
+        navigate("/admin/courses"); // Navigate to "/admin/courses" after successful deletion
+      });
+    }
+  };
 
   if (loading) return <Loader />;
   if (error) return <h2>{error}</h2>;
@@ -51,10 +67,26 @@ const ModuleDetails = () => {
                     aria-controls={`chapter-${index}-content`}
                     id={`chapter-${index}-header`}
                   >
-                    <Typography>{chapter.title}</Typography>
+                    <div>
+                      <Link to={`/admin/chapterDetails/${chapter._id}`}>
+                        {chapter.title}
+                      </Link>
+                      <Link to={`/admin/chapter/${chapter._id}`}>
+                        <IconButton color="primary" size="small">
+                          <EditOutlinedIcon fontSize="inherit" />
+                        </IconButton>
+                      </Link>
+                      <IconButton
+                        color="error"
+                        size="small"
+                        onClick={() => handleDelete(chapter._id)} // Call handleDelete with chapter ID
+                      >
+                        <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                      </IconButton>
+                    </div>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>{chapter.description}</Typography>
+                    {/* <Typography>{chapter.description}</Typography> */}
                   </AccordionDetails>
                 </Accordion>
               ))}
