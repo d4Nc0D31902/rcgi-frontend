@@ -35,7 +35,9 @@ import ProductReviews from "./components/admin/ProductReviews";
 import NewUser from "./components/admin/NewUser";
 import CourseList from "./components/admin/CourseList";
 import NewCourse from "./components/admin/NewCourse";
+import UpdateCourse from "./components/admin/UpdateCourse";
 import NewModule from "./components/admin/NewModule";
+import UpdateModule from "./components/admin/UpdateModule";
 import Courses from "./components/course/Courses";
 import CourseDetails from "./components/course/CourseDetails";
 
@@ -272,6 +274,23 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <NewModule />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/course/:id"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateCourse />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/module/:id"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateModule />
             </ProtectedRoute>
           }
         />

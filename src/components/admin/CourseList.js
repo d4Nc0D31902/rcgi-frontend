@@ -1,20 +1,15 @@
 import React, { Fragment, useEffect } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
-
 import Sidebar from "./Sidebar";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   getCourses,
   deleteCourse,
   clearErrors,
 } from "../../actions/courseActions";
-
 import { DELETE_COURSE_RESET } from "../../constants/courseConstants";
 
 const CoursesList = () => {

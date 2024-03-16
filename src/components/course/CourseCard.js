@@ -56,7 +56,7 @@ const Course = ({ course }) => {
           </Button>
           <Button
             component={Link}
-            to={`/admin/courseDetails/${course._id}`}
+            to={`/admin/course/${course._id}`}
             variant="outlined"
             size="small"
             color="primary"
