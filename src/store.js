@@ -32,6 +32,13 @@ import {
 } from "./reducers/moduleReducers";
 
 import {
+  chaptersReducer,
+  chapterDetailsReducer,
+  newChapterReducer,
+  chapterReducer,
+} from "./reducers/chapterReducers";
+
+import {
   authReducer,
   userReducer,
   forgotPasswordReducer,
@@ -82,6 +89,10 @@ const reducer = combineReducers({
   newModule: newModuleReducer,
   module: moduleReducer,
   addModule: addModuleReducer,
+  chapters: chaptersReducer,
+  chapterDetails: chapterDetailsReducer,
+  newChapter: newChapterReducer,
+  chapter: chapterReducer,
 });
 
 let initialState = {

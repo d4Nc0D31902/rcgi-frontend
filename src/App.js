@@ -33,14 +33,20 @@ import UpdateUser from "./components/admin/UpdateUser";
 import ProductReviews from "./components/admin/ProductReviews";
 
 import NewUser from "./components/admin/NewUser";
+
 import CourseList from "./components/admin/CourseList";
 import NewCourse from "./components/admin/NewCourse";
 import UpdateCourse from "./components/admin/UpdateCourse";
+
 import NewModule from "./components/admin/NewModule";
 import UpdateModule from "./components/admin/UpdateModule";
+
 import Courses from "./components/course/Courses";
+
 import CourseDetails from "./components/course/CourseDetails";
 import ModuleDetails from "./components/course/ModuleDetails";
+
+import NewChapter from "./components/admin/NewChapter";
 
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
@@ -284,6 +290,15 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <NewModule />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/module/:moduleId/chapter/new"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <NewChapter />
             </ProtectedRoute>
           }
         />

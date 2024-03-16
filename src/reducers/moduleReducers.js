@@ -20,6 +20,10 @@ import {
   UPDATE_MODULE_SUCCESS,
   UPDATE_MODULE_RESET,
   UPDATE_MODULE_FAIL,
+  ADD_CHAPTER_REQUEST, // Added new action type
+  ADD_CHAPTER_SUCCESS, // Added new action type
+  ADD_CHAPTER_RESET, // Added new action type
+  ADD_CHAPTER_FAIL, // Added new action type
   CLEAR_ERRORS,
 } from "../constants/moduleConstants";
 
@@ -159,6 +163,28 @@ export const moduleReducer = (state = {}, action) => {
       return {
         ...state,
         error: null,
+      };
+    // Handling the new action types related to adding a chapter
+    case ADD_CHAPTER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_CHAPTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        chapterAdded: action.payload,
+      };
+    case ADD_CHAPTER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case ADD_CHAPTER_RESET:
+      return {
+        ...state,
+        chapterAdded: false,
       };
     default:
       return state;
