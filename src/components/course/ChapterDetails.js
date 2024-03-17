@@ -28,7 +28,11 @@ const ChapterDetails = () => {
       <div className="row">
         <div className="col-12 col-lg-5 mt-5">
           <h3>{chapter.title}</h3>
-          <p className="mt-2">{chapter.description}</p>{" "}
+          {/* Use dangerouslySetInnerHTML to render HTML content */}
+          <div
+            className="mt-2"
+            dangerouslySetInnerHTML={{ __html: chapter.description }}
+          />
           <Link
             to={`/admin/chapter/${chapter._id}/lesson/new`}
             className="btn btn-primary"

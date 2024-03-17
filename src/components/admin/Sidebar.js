@@ -12,7 +12,7 @@ const Sidebar = () => {
               <i className="fa fa-tachometer"></i> Dashboard
             </Link>
           </li>
-          <li>
+          {/* <li>
             <a
               href="#productSubmenu"
               data-toggle="collapse"
@@ -34,22 +34,22 @@ const Sidebar = () => {
                 </Link>
               </li>
             </ul>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link to="/admin/orders">
               <i className="fa fa-shopping-basket"></i> Orders
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/admin/users">
               <i className="fa fa-users"></i> Users
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/admin/reviews">
               <i className="fa fa-star"></i> Reviews
             </Link>
-          </li>
+          </li> */}
 
           <li>
             <a

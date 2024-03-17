@@ -1,41 +1,48 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import {
-  updateChapter,
   getChapterDetails,
+  updateChapter,
   clearErrors,
-} from "../../actions/chapterActions"; // Updated import
-import { UPDATE_CHAPTER_RESET } from "../../constants/chapterConstants"; // Updated import
+} from "../../actions/chapterActions";
+import { UPDATE_CHAPTER_RESET } from "../../constants/chapterConstants";
+import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
+import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 
 const UpdateChapter = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const dispatch = useDispatch();
-  const { error, chapter } = useSelector((state) => state.chapterDetails); // Updated state name
+  const { error, chapter } = useSelector((state) => state.chapterDetails);
   const {
     loading,
     error: updateError,
     isUpdated,
-  } = useSelector((state) => state.chapter); // Updated state name
-  let { id } = useParams();
-  let navigate = useNavigate();
+  } = useSelector((state) => state.chapter);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const errMsg = (message = "") =>
     toast.error(message, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
+
   const successMsg = (message = "") =>
     toast.success(message, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
+
   useEffect(() => {
     if (chapter && chapter._id !== id) {
-      dispatch(getChapterDetails(id)); // Updated action
+      dispatch(getChapterDetails(id));
     } else {
       setTitle(chapter.title);
       setDescription(chapter.description);
@@ -53,65 +60,111 @@ const UpdateChapter = () => {
       successMsg("Chapter updated successfully");
       dispatch({ type: UPDATE_CHAPTER_RESET });
     }
-  }, [dispatch, error, isUpdated, navigate, updateError, chapter, id]); // Updated dependencies
+  }, [dispatch, error, isUpdated, navigate, updateError, chapter, id]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.set("title", title);
     formData.set("description", description);
-    dispatch(updateChapter(chapter._id, formData)); // Updated action
+    dispatch(updateChapter(chapter._id, formData));
   };
 
   return (
     <Fragment>
       <MetaData title={"Update Chapter"} />
-      <div className="row">
-        <div className="col-12 col-md-2">
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={2}>
           <Sidebar />
-        </div>
-        <div className="col-12 col-md-10">
-          <Fragment>
-            <div className="wrapper my-5">
-              <form
-                className="shadow-lg"
-                onSubmit={submitHandler}
-                encType="multipart/form-data"
-              >
-                <h1 className="mb-4">Update Chapter</h1>
-                <div className="form-group">
-                  <label htmlFor="title_field">Title</label>
-                  <input
-                    type="text"
+        </Grid>
+        <Grid item xs={12} md={10}>
+          <Paper elevation={3} sx={{ p: 3 }}>
+            <Typography variant="h4" component="h1" gutterBottom>
+              Update Chapter
+            </Typography>
+            <form onSubmit={submitHandler} encType="multipart/form-data">
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
                     id="title_field"
-                    className="form-control"
+                    label="Title"
+                    fullWidth
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="description_field">Description</label>
-                  <textarea
-                    className="form-control"
+                </Grid>
+                {/* <Grid item xs={12}>
+                  <TextField
                     id="description_field"
-                    rows="8"
+                    label="Description"
+                    fullWidth
+                    multiline
+                    rows={8}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                  ></textarea>
-                </div>
-                <button
-                  id="login_button"
-                  type="submit"
-                  className="btn btn-block py-3"
-                  disabled={loading ? true : false}
-                >
-                  UPDATE
-                </button>
-              </form>
-            </div>
-          </Fragment>
-        </div>
-      </div>
+                  />
+                </Grid> */}
+                <Grid item xs={12}>
+                  <ReactQuill
+                    id="description_field"
+                    theme="snow" // You can choose a theme
+                    value={description}
+                    onChange={(value) => setDescription(value)}
+                    modules={{
+                      toolbar: [
+                        [{ header: "1" }, { header: "2" }, { font: [] }],
+                        [{ size: [] }],
+                        ["bold", "italic", "underline", "strike", "blockquote"],
+                        [
+                          { list: "ordered" },
+                          { list: "bullet" },
+                          { indent: "-1" },
+                          { indent: "+1" },
+                        ],
+                        ["link", "image", "video"],
+                        ["clean"],
+                      ],
+                      clipboard: {
+                        matchVisual: false,
+                      },
+                    }}
+                    formats={[
+                      "header",
+                      "font",
+                      "size",
+                      "bold",
+                      "italic",
+                      "underline",
+                      "strike",
+                      "blockquote",
+                      "list",
+                      "bullet",
+                      "indent",
+                      "link",
+                      "image",
+                      "video",
+                    ]}
+                    placeholder="Enter description here"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="success"
+                    className="btn btn-block py-3"
+                    disabled={loading ? true : false}
+                    startIcon={<CachedOutlinedIcon />}
+                  >
+                    UPDATE
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };

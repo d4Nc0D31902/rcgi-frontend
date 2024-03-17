@@ -28,7 +28,7 @@ const Header = () => {
         </div> */}
 
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-          <Link to="/cart" style={{ textDecoration: "none" }}>
+          {/* <Link to="/cart" style={{ textDecoration: "none" }}>
             <span id="cart" className="ml-3">
               Cart
             </span>
@@ -36,7 +36,7 @@ const Header = () => {
             <span className="ml-1" id="cart_count">
               {cartItems.length}
             </span>
-          </Link>
+          </Link> */}
           {user ? (
             <div className="ml-4 dropdown d-inline">
               <Link

@@ -28,7 +28,11 @@ const LessonDetails = () => {
       <div className="row">
         <div className="col-12 col-lg-5 mt-5">
           <h3>{lesson.title}</h3>
-          <p className="mt-2">{lesson.content}</p>{" "}
+          {/* <p className="mt-2">{lesson.content}</p>{" "} */}
+          <div
+            className="mt-2"
+            dangerouslySetInnerHTML={{ __html: lesson.content }}
+          />
         </div>
       </div>
     </Fragment>

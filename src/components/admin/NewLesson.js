@@ -1,15 +1,19 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // or another theme
 import {
-  getChapterDetails, // Changed from getModuleDetails to getChapterDetails
+  getChapterDetails,
   addLesson,
   clearErrors,
-} from "../../actions/chapterActions"; // Changed from moduleActions to chapterActions
+} from "../../actions/chapterActions";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
 
 const AddLesson = () => {
   const [title, setTitle] = useState("");
@@ -17,7 +21,7 @@ const AddLesson = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { chapterId } = useParams(); // Changed from moduleId to chapterId
+  const { chapterId } = useParams();
 
   const { loading, error, success } = useSelector((state) => state.addLesson);
 
@@ -38,7 +42,7 @@ const AddLesson = () => {
   }, [dispatch, error, success, navigate]);
 
   useEffect(() => {
-    dispatch(getChapterDetails(chapterId)); // Changed from getModuleDetails to getChapterDetails
+    dispatch(getChapterDetails(chapterId));
   }, [dispatch, chapterId]);
 
   const submitHandler = async (e) => {
@@ -47,65 +51,100 @@ const AddLesson = () => {
     const formData = new FormData();
     formData.set("title", title);
     formData.set("content", content);
-    formData.set("chapterId", chapterId); // Changed from moduleId to chapterId
+    formData.set("chapterId", chapterId);
 
     await dispatch(addLesson(chapterId, formData));
 
     if (!error && success) {
       message("Lesson created successfully");
-      navigate(`/admin/courses`); // Changed from moduleId to chapterId
+      navigate(`/admin/courses`);
     }
   };
 
   return (
     <Fragment>
       <MetaData title={"New Lesson"} />
-      <div className="row">
-        <div className="col-12 col-md-2">
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={2}>
           <Sidebar />
-        </div>
-        <div className="col-12 col-md-10">
-          <Fragment>
-            <div className="wrapper my-5">
-              <form
-                className="shadow-lg"
-                onSubmit={submitHandler}
-                encType="multipart/form-data"
-              >
-                <h1 className="mb-4">New Lesson</h1>
-                <div className="form-group">
-                  <label htmlFor="title_field">Title</label>
-                  <input
-                    type="text"
+        </Grid>
+        <Grid item xs={12} md={10}>
+          <Paper elevation={3} sx={{ p: 3 }}>
+            <Typography variant="h4" component="h1" gutterBottom>
+              New Lesson
+            </Typography>
+            <form onSubmit={submitHandler} encType="multipart/form-data">
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
                     id="title_field"
-                    className="form-control"
+                    label="Title"
+                    fullWidth
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="content_field">Content</label>
-                  <textarea
-                    className="form-control"
+                </Grid>
+                <Grid item xs={12}>
+                  <ReactQuill
                     id="content_field"
-                    rows="8"
+                    theme="snow" // You can choose a theme
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                  ></textarea>
-                </div>
-                <button
-                  id="login_button"
-                  type="submit"
-                  className="btn btn-block py-3"
-                  disabled={loading ? true : false}
-                >
-                  CREATE
-                </button>
-              </form>
-            </div>
-          </Fragment>
-        </div>
-      </div>
+                    onChange={(value) => setContent(value)}
+                    modules={{
+                      toolbar: [
+                        [{ header: "1" }, { header: "2" }, { font: [] }],
+                        [{ size: [] }],
+                        ["bold", "italic", "underline", "strike", "blockquote"],
+                        [
+                          { list: "ordered" },
+                          { list: "bullet" },
+                          { indent: "-1" },
+                          { indent: "+1" },
+                        ],
+                        ["link", "image", "video"],
+                        ["clean"],
+                      ],
+                      clipboard: {
+                        matchVisual: false,
+                      },
+                    }}
+                    formats={[
+                      "header",
+                      "font",
+                      "size",
+                      "bold",
+                      "italic",
+                      "underline",
+                      "strike",
+                      "blockquote",
+                      "list",
+                      "bullet",
+                      "indent",
+                      "link",
+                      "image",
+                      "video",
+                    ]}
+                    placeholder="Enter content here"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="success"
+                    className="btn btn-block py-3"
+                    disabled={loading ? true : false}
+                    fullWidth
+                    startIcon={<SaveOutlinedIcon />}
+                  >
+                    SAVE
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };
