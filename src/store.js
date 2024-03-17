@@ -36,7 +36,15 @@ import {
   chapterDetailsReducer,
   newChapterReducer,
   chapterReducer,
+  addLessonReducer,
 } from "./reducers/chapterReducers";
+
+import {
+  lessonsReducer,
+  lessonDetailsReducer,
+  newLessonReducer,
+  lessonReducer,
+} from "./reducers/lessonReducers";
 
 import {
   authReducer,
@@ -93,6 +101,11 @@ const reducer = combineReducers({
   chapterDetails: chapterDetailsReducer,
   newChapter: newChapterReducer,
   chapter: chapterReducer,
+  addLesson: addLessonReducer,
+  lessons: lessonsReducer,
+  lessonDetails: lessonDetailsReducer,
+  newLesson: newLessonReducer,
+  lesson: lessonReducer,
 });
 
 let initialState = {

@@ -20,6 +20,9 @@ import {
   UPDATE_CHAPTER_SUCCESS,
   UPDATE_CHAPTER_RESET,
   UPDATE_CHAPTER_FAIL,
+  ADD_LESSON_REQUEST,
+  ADD_LESSON_SUCCESS,
+  ADD_LESSON_FAIL,
   CLEAR_ERRORS,
 } from "../constants/chapterConstants";
 
@@ -154,6 +157,34 @@ export const chapterReducer = (state = {}, action) => {
       return {
         ...state,
         isUpdated: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const addLessonReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_LESSON_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_LESSON_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        lesson: action.payload.lesson,
+      };
+    case ADD_LESSON_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
     case CLEAR_ERRORS:
       return {
