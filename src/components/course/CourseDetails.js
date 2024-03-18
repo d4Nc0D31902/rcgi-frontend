@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseDetails, clearErrors } from "../../actions/courseActions";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 import CourseModuleCard from "./CourseModuleCard";
@@ -21,28 +22,38 @@ const CourseDetails = () => {
   }, [dispatch, id]);
 
   if (loading) return <Loader />;
-  if (error) return <h2>{error}</h2>;
+  if (error) return <Typography variant="h2">{error}</Typography>;
 
   return (
     <Fragment>
       <MetaData title={course.title} />
-      <div className="row">
-        <div className="col-12 col-lg-5 mt-5">
-          <h3>{course.title}</h3>
-          <p className="mt-2">{course.description}</p>
-          <Link to={`/admin/course/${id}/module`} className="btn btn-primary">
-            Add Module
-          </Link>
-        </div>
-      </div>
-      <div className="row mt-4">
+      <Grid container spacing={4}>
+        <Grid item xs={12} lg={5}>
+          <Box mt={5}>
+            <Typography variant="h3">{course.title}</Typography>
+            <Typography variant="body1" mt={2}>
+              {course.description}
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to={`/admin/course/${id}/module`}
+              mt={2}
+            >
+              Add Module
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container spacing={4} mt={4}>
         {course.modules &&
           course.modules.map((module) => (
-            <div key={module._id} className="col-12 col-md-6 col-lg-4">
+            <Grid key={module._id} item xs={12} md={6} lg={4}>
               <CourseModuleCard module={module} />
-            </div>
+            </Grid>
           ))}
-      </div>
+      </Grid>
     </Fragment>
   );
 };

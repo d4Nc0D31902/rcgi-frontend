@@ -11,8 +11,9 @@ import {
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { deleteCourse } from "../../actions/courseActions";
-import { toast } from "react-toastify"; 
-import "react-toastify/dist/ReactToastify.css"; 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 
 const Course = ({ course }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const Course = ({ course }) => {
     if (window.confirm("Are you sure you want to delete this course?")) {
       try {
         await dispatch(deleteCourse(id));
-        toast.success("Course deleted successfully!"); 
+        toast.success("Course deleted successfully!");
       } catch (error) {
         console.error("Error deleting course:", error);
         toast.error("Failed to delete course.");
@@ -48,9 +49,10 @@ const Course = ({ course }) => {
           <Button
             component={Link}
             to={`/admin/courseDetails/${course._id}`}
-            variant="contained"
+            variant="outlined"
             size="small"
             fullWidth
+            startIcon={<RemoveRedEyeOutlinedIcon />}
           >
             View Course
           </Button>

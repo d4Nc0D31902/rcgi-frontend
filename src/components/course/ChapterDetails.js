@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Grid, Typography, Button } from "@mui/material";
 import { getChapterDetails, clearErrors } from "../../actions/chapterActions";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
@@ -20,27 +21,30 @@ const ChapterDetails = () => {
   }, [dispatch, id]);
 
   if (loading) return <Loader />;
-  if (error) return <h2>{error}</h2>;
+  if (error) return <Typography variant="h2">{error}</Typography>;
 
   return (
     <Fragment>
       <MetaData title={chapter.title} />
-      <div className="row">
-        <div className="col-12 col-lg-5 mt-5">
-          <h3>{chapter.title}</h3>
-          {/* Use dangerouslySetInnerHTML to render HTML content */}
-          <div
-            className="mt-2"
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={5}>
+          <Typography variant="h3" gutterBottom>
+            {chapter.title}
+          </Typography>
+          <Typography
+            variant="body1"
             dangerouslySetInnerHTML={{ __html: chapter.description }}
           />
-          <Link
+          <Button
+            component={Link}
             to={`/admin/chapter/${chapter._id}/lesson/new`}
-            className="btn btn-primary"
+            variant="contained"
+            color="primary"
           >
             Add Lesson
-          </Link>
-        </div>
-      </div>
+          </Button>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };
