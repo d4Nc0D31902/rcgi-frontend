@@ -37,6 +37,7 @@ import {
   newChapterReducer,
   chapterReducer,
   addLessonReducer,
+  addQuizReducer,
 } from "./reducers/chapterReducers";
 
 import {
@@ -45,6 +46,13 @@ import {
   newLessonReducer,
   lessonReducer,
 } from "./reducers/lessonReducers";
+
+import {
+  quizzesReducer,
+  quizDetailsReducer,
+  newQuizReducer,
+  quizReducer,
+} from "./reducers/quizReducers";
 
 import {
   newEnrollmentReducer,
@@ -119,6 +127,11 @@ const reducer = combineReducers({
   enrollmentDetails: enrollmentDetailsReducer,
   allEnrollments: allEnrollmentsReducer,
   enrollment: enrollmentReducer,
+  addQuiz: addQuizReducer,
+  quizzes: quizzesReducer,
+  quizDetails: quizDetailsReducer,
+  newQuiz: newQuizReducer,
+  quiz: quizReducer,
 });
 
 let initialState = {

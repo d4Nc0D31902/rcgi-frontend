@@ -23,6 +23,9 @@ import {
   ADD_LESSON_REQUEST,
   ADD_LESSON_SUCCESS,
   ADD_LESSON_FAIL,
+  ADD_QUIZ_REQUEST,
+  ADD_QUIZ_SUCCESS, 
+  ADD_QUIZ_FAIL,
   CLEAR_ERRORS,
 } from "../constants/chapterConstants";
 
@@ -182,6 +185,34 @@ export const addLessonReducer = (state = {}, action) => {
         lesson: action.payload.lesson,
       };
     case ADD_LESSON_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const addQuizReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_QUIZ_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_QUIZ_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        quiz: action.payload.quiz,
+      };
+    case ADD_QUIZ_FAIL:
       return {
         ...state,
         error: action.payload,

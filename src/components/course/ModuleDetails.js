@@ -14,7 +14,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { deleteChapter } from "../../actions/chapterActions";
-import { deleteLesson } from "../../actions/lessonActions"; // Import the deleteLesson action
+import { deleteLesson } from "../../actions/lessonActions";
+import { deleteQuiz } from "../../actions/quizActions"; // Import the deleteQuiz action
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -45,8 +46,18 @@ const ModuleDetails = () => {
     }
   };
 
+  const handleDeleteQuiz = (quizId) => {
+    if (window.confirm("Are you sure you want to delete this quiz?")) {
+      dispatch(deleteQuiz(quizId)).then(() => {
+        // Dispatch the deleteQuiz action
+        toast.success("Quiz deleted successfully");
+        // Optionally, you can navigate the user to another page after deleting the quiz
+        // navigate("/admin/courses");
+      });
+    }
+  };
+
   const handleDeleteLesson = (lessonId) => {
-    // Implement handleDeleteLesson function
     if (window.confirm("Are you sure you want to delete this lesson?")) {
       dispatch(deleteLesson(lessonId)).then(() => {
         toast.success("Lesson deleted successfully");
@@ -122,6 +133,31 @@ const ModuleDetails = () => {
                             color="error"
                             size="small"
                             onClick={() => handleDeleteLesson(lesson._id)}
+                          >
+                            <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                          </IconButton>
+                        )}
+                      </div>
+                    ))}
+                  </AccordionDetails>
+                  <AccordionDetails>
+                    {chapter.quizzes.map((quiz, quizIndex) => (
+                      <div key={quizIndex}>
+                        <Link to={`/admin/quizDetails/${quiz._id}`}>
+                          <p>{quiz.title}</p>
+                        </Link>
+                        {isAdmin && (
+                          <Link to={`/admin/quiz/${quiz._id}`}>
+                            <IconButton color="primary" size="small">
+                              <EditOutlinedIcon fontSize="inherit" />
+                            </IconButton>
+                          </Link>
+                        )}
+                        {isAdmin && (
+                          <IconButton
+                            color="error"
+                            size="small"
+                            onClick={() => handleDeleteQuiz(quiz._id)}
                           >
                             <DeleteOutlineOutlinedIcon fontSize="inherit" />
                           </IconButton>

@@ -56,6 +56,7 @@ const CourseModuleCard = ({ module, isAdmin }) => {
           variant="outlined"
           color="primary"
           size="small"
+          fullWidth
         >
           View
         </Button>

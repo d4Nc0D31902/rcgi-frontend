@@ -16,9 +16,12 @@ import {
   UPDATE_CHAPTER_REQUEST,
   UPDATE_CHAPTER_SUCCESS,
   UPDATE_CHAPTER_FAIL,
-  ADD_LESSON_REQUEST, // Import the new lesson action constant
+  ADD_LESSON_REQUEST,
   ADD_LESSON_SUCCESS,
   ADD_LESSON_FAIL,
+  ADD_QUIZ_REQUEST,
+  ADD_QUIZ_SUCCESS, 
+  ADD_QUIZ_FAIL, 
   CLEAR_ERRORS,
 } from "../constants/chapterConstants";
 
@@ -141,7 +144,7 @@ export const addLesson = (chapterId, lessonData) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true, 
+      withCredentials: true,
     };
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/admin/chapter/${chapterId}/lesson/new`,
@@ -155,6 +158,32 @@ export const addLesson = (chapterId, lessonData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADD_LESSON_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const addQuiz = (chapterId, quizData) => async (dispatch) => {
+  try {
+    dispatch({ type: ADD_QUIZ_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/admin/chapter/${chapterId}/quiz/new`,
+      quizData,
+      config
+    );
+    dispatch({
+      type: ADD_QUIZ_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_QUIZ_FAIL,
       payload: error.response.data.message,
     });
   }

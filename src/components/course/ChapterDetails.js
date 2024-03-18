@@ -46,6 +46,16 @@ const ChapterDetails = () => {
               Add Lesson
             </Button>
           )}
+          {isAdmin && (
+            <Button
+              component={Link}
+              to={`/admin/chapter/${chapter._id}/quiz/new`}
+              variant="contained"
+              color="primary"
+            >
+              Add Quiz
+            </Button>
+          )}
         </Grid>
       </Grid>
     </Fragment>

@@ -58,6 +58,10 @@ import UpdateLesson from "./components/admin/UpdateLesson";
 import NewEnrollment from "./components/admin/NewEnrollment";
 import EnrollmentList from "./components/enrollment/EnrollmentList";
 
+import NewQuiz from "./components/admin/NewQuiz";
+import UpdateQuiz from "./components/admin/UpdateQuiz";
+import QuizDetails from "./components/course/QuizDetails";
+
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -282,7 +286,7 @@ function App() {
           path="/admin/courseDetails/:id"
           element={
             // <ProtectedRoute isAdmin={true}>
-              <CourseDetails />
+            <CourseDetails />
             // </ProtectedRoute>
           }
         />
@@ -291,7 +295,7 @@ function App() {
           path="/admin/moduleDetails/:id"
           element={
             // <ProtectedRoute isAdmin={true}>
-              <ModuleDetails />
+            <ModuleDetails />
             // </ProtectedRoute>
           }
         />
@@ -300,7 +304,7 @@ function App() {
           path="/admin/chapterDetails/:id"
           element={
             // <ProtectedRoute isAdmin={true}>
-              <ChapterDetails />
+            <ChapterDetails />
             // </ProtectedRoute>
           }
         />
@@ -309,7 +313,16 @@ function App() {
           path="/admin/lessonDetails/:id"
           element={
             // <ProtectedRoute isAdmin={true}>
-              <LessonDetails />
+            <LessonDetails />
+            // </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/quizDetails/:id"
+          element={
+            // <ProtectedRoute isAdmin={true}>
+            <QuizDetails />
             // </ProtectedRoute>
           }
         />
@@ -337,6 +350,15 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <NewLesson />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/chapter/:chapterId/quiz/new"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <NewQuiz />
             </ProtectedRoute>
           }
         />
@@ -390,6 +412,15 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <UpdateLesson />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/quiz/:id"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateQuiz />
             </ProtectedRoute>
           }
         />
