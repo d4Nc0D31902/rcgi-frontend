@@ -281,36 +281,36 @@ function App() {
         <Route
           path="/admin/courseDetails/:id"
           element={
-            <ProtectedRoute isAdmin={true}>
+            // <ProtectedRoute isAdmin={true}>
               <CourseDetails />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/moduleDetails/:id"
           element={
-            <ProtectedRoute isAdmin={true}>
+            // <ProtectedRoute isAdmin={true}>
               <ModuleDetails />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/chapterDetails/:id"
           element={
-            <ProtectedRoute isAdmin={true}>
+            // <ProtectedRoute isAdmin={true}>
               <ChapterDetails />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/lessonDetails/:id"
           element={
-            <ProtectedRoute isAdmin={true}>
+            // <ProtectedRoute isAdmin={true}>
               <LessonDetails />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
 

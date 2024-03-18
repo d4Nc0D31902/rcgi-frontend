@@ -14,6 +14,11 @@ const CourseDetails = () => {
     (state) => state.courseDetails
   );
 
+  // Access user data from Redux store
+  const { user } = useSelector((state) => state.auth);
+  // Extract user role
+  const isAdmin = user && user.role === "admin";
+
   useEffect(() => {
     dispatch(getCourseDetails(id));
     return () => {
@@ -34,15 +39,18 @@ const CourseDetails = () => {
             <Typography variant="body1" mt={2}>
               {course.description}
             </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              component={Link}
-              to={`/admin/course/${id}/module`}
-              mt={2}
-            >
-              Add Module
-            </Button>
+            {/* Render the "Add Module" button conditionally based on isAdmin */}
+            {isAdmin && (
+              <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to={`/admin/course/${id}/module`}
+                mt={2}
+              >
+                Add Module
+              </Button>
+            )}
           </Box>
         </Grid>
       </Grid>

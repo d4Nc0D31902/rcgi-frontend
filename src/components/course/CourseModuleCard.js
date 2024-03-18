@@ -1,6 +1,5 @@
-import React, { Fragment, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Loader from "../layout/Loader";
+import React from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteModule } from "../../actions/moduleActions";
 import { toast } from "react-toastify";
@@ -60,25 +59,31 @@ const CourseModuleCard = ({ module, isAdmin }) => {
         >
           View
         </Button>
-        <Button
-          component={Link}
-          to={`/admin/module/${module._id}`}
-          startIcon={<EditOutlinedIcon />}
-          variant="outlined"
-          color="primary"
-          size="small"
-        >
-          Edit
-        </Button>
-        <Button
-          startIcon={<DeleteOutlineOutlinedIcon />}
-          variant="outlined"
-          color="error"
-          size="small"
-          onClick={handleDelete} 
-        >
-          Delete
-        </Button>
+        {/* Conditionally render the "Edit" button based on isAdmin */}
+        {isAdmin && (
+          <Button
+            component={Link}
+            to={`/admin/module/${module._id}`}
+            startIcon={<EditOutlinedIcon />}
+            variant="outlined"
+            color="primary"
+            size="small"
+          >
+            Edit
+          </Button>
+        )}
+        {/* Conditionally render the "Delete" button based on isAdmin */}
+        {isAdmin && (
+          <Button
+            startIcon={<DeleteOutlineOutlinedIcon />}
+            variant="outlined"
+            color="error"
+            size="small"
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        )}
         {isAdmin && (
           <Button
             startIcon={<PlayCircleOutlineOutlinedIcon />}

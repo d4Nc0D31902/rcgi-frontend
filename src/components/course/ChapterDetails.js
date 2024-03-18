@@ -12,7 +12,8 @@ const ChapterDetails = () => {
   const { loading, error, chapter } = useSelector(
     (state) => state.chapterDetails
   );
-
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user.role === "admin";
   useEffect(() => {
     dispatch(getChapterDetails(id));
     return () => {
@@ -35,14 +36,16 @@ const ChapterDetails = () => {
             variant="body1"
             dangerouslySetInnerHTML={{ __html: chapter.description }}
           />
-          <Button
-            component={Link}
-            to={`/admin/chapter/${chapter._id}/lesson/new`}
-            variant="contained"
-            color="primary"
-          >
-            Add Lesson
-          </Button>
+          {isAdmin && (
+            <Button
+              component={Link}
+              to={`/admin/chapter/${chapter._id}/lesson/new`}
+              variant="contained"
+              color="primary"
+            >
+              Add Lesson
+            </Button>
+          )}
         </Grid>
       </Grid>
     </Fragment>

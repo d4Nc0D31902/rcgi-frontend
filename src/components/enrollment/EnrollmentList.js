@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 
 import MetaData from "../layout/MetaData";
@@ -9,6 +9,7 @@ import { myEnrollments, clearErrors } from "../../actions/enrollmentActions";
 
 const ListEnrollments = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate hook
   const { loading, error, enrollments } = useSelector(
     (state) => state.myEnrollment
   );
@@ -19,6 +20,10 @@ const ListEnrollments = () => {
       dispatch(clearErrors());
     }
   }, [dispatch, error]);
+
+  const handleCourseClick = (courseId) => {
+    navigate(`/admin/courseDetails/${courseId}`); // Navigate to the specified route
+  };
 
   const setEnrollments = () => {
     const data = {
@@ -38,11 +43,11 @@ const ListEnrollments = () => {
           field: "course",
           sort: "asc",
         },
-        {
-          label: "Actions",
-          field: "actions",
-          sort: "asc",
-        },
+        // {
+        //   label: "Actions",
+        //   field: "actions",
+        //   sort: "asc",
+        // },
       ],
       rows: [],
     };
@@ -50,16 +55,23 @@ const ListEnrollments = () => {
     enrollments.forEach((enrollment) => {
       data.rows.push({
         id: enrollment._id,
-        user: enrollment.user[0].name, // Access user name from the first element of the populated array
-        course: enrollment.course[0].title, // Access course title from the first element of the populated array
-        actions: (
-          <Link
-            to={`/enrollment/${enrollment._id}`}
-            className="btn btn-primary"
+        user: enrollment.user[0].name,
+        course: (
+          <button
+            className="btn btn-link"
+            onClick={() => handleCourseClick(enrollment.course[0]._id)}
           >
-            <i className="fa fa-eye"></i>
-          </Link>
+            {enrollment.course[0].title}
+          </button>
         ),
+        // actions: (
+        //   <button
+        //     className="btn btn-primary"
+        //     onClick={() => handleCourseClick(enrollment.course[0]._id)}
+        //   >
+        //     <i className="fa fa-eye"></i>
+        //   </button>
+        // ),
       });
     });
 

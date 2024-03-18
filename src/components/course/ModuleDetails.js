@@ -26,6 +26,9 @@ const ModuleDetails = () => {
     (state) => state.moduleDetails
   );
 
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user.role === "admin";
+
   useEffect(() => {
     dispatch(getModuleDetails(id));
     return () => {
@@ -62,12 +65,14 @@ const ModuleDetails = () => {
         <div className="col-12 col-lg-5 mt-5">
           <h3>{module.title}</h3>
           <p className="mt-2">{module.description}</p>{" "}
-          <Link
-            to={`/admin/module/${id}/chapter/new`}
-            className="btn btn-primary"
-          >
-            Add Chapter
-          </Link>
+          {isAdmin && (
+            <Link
+              to={`/admin/module/${id}/chapter/new`}
+              className="btn btn-primary"
+            >
+              Add Chapter
+            </Link>
+          )}
           <div>
             {module.chapters &&
               module.chapters.map((chapter, index) => (
@@ -81,18 +86,22 @@ const ModuleDetails = () => {
                       <Link to={`/admin/chapterDetails/${chapter._id}`}>
                         {chapter.title}
                       </Link>
-                      <Link to={`/admin/chapter/${chapter._id}`}>
-                        <IconButton color="primary" size="small">
-                          <EditOutlinedIcon fontSize="inherit" />
+                      {isAdmin && (
+                        <Link to={`/admin/chapter/${chapter._id}`}>
+                          <IconButton color="primary" size="small">
+                            <EditOutlinedIcon fontSize="inherit" />
+                          </IconButton>
+                        </Link>
+                      )}
+                      {isAdmin && (
+                        <IconButton
+                          color="error"
+                          size="small"
+                          onClick={() => handleDelete(chapter._id)}
+                        >
+                          <DeleteOutlineOutlinedIcon fontSize="inherit" />
                         </IconButton>
-                      </Link>
-                      <IconButton
-                        color="error"
-                        size="small"
-                        onClick={() => handleDelete(chapter._id)}
-                      >
-                        <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                      </IconButton>
+                      )}
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -101,18 +110,22 @@ const ModuleDetails = () => {
                         <Link to={`/admin/lessonDetails/${lesson._id}`}>
                           <p>{lesson.title}</p>
                         </Link>
-                        <Link to={`/admin/lesson/${lesson._id}`}>
-                          <IconButton color="primary" size="small">
-                            <EditOutlinedIcon fontSize="inherit" />
+                        {isAdmin && (
+                          <Link to={`/admin/lesson/${lesson._id}`}>
+                            <IconButton color="primary" size="small">
+                              <EditOutlinedIcon fontSize="inherit" />
+                            </IconButton>
+                          </Link>
+                        )}
+                        {isAdmin && (
+                          <IconButton
+                            color="error"
+                            size="small"
+                            onClick={() => handleDeleteLesson(lesson._id)}
+                          >
+                            <DeleteOutlineOutlinedIcon fontSize="inherit" />
                           </IconButton>
-                        </Link>
-                        <IconButton
-                          color="error"
-                          size="small"
-                          onClick={() => handleDeleteLesson(lesson._id)}
-                        >
-                          <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                        </IconButton>
+                        )}
                       </div>
                     ))}
                   </AccordionDetails>
