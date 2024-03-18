@@ -5,37 +5,37 @@ import { MDBDataTable } from "mdbreact";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { myOrders, clearErrors } from "../../actions/orderActions";
-const ListOrders = () => {
+import { myEnrollments, clearErrors } from "../../actions/enrollmentActions";
+
+const ListEnrollments = () => {
   const dispatch = useDispatch();
-  const { loading, error, orders } = useSelector((state) => state.myOrders);
+  const { loading, error, enrollments } = useSelector(
+    (state) => state.myEnrollment
+  );
+
   useEffect(() => {
-    dispatch(myOrders());
+    dispatch(myEnrollments());
     if (error) {
       dispatch(clearErrors());
     }
   }, [dispatch, error]);
-  const setOrders = () => {
+
+  const setEnrollments = () => {
     const data = {
       columns: [
         {
-          label: "Order ID",
+          label: "Enrollment ID",
           field: "id",
           sort: "asc",
         },
         {
-          label: "Num of Items",
-          field: "numOfItems",
+          label: "User",
+          field: "user",
           sort: "asc",
         },
         {
-          label: "Amount",
-          field: "amount",
-          sort: "asc",
-        },
-        {
-          label: "Status",
-          field: "status",
+          label: "Course",
+          field: "course",
           sort: "asc",
         },
         {
@@ -46,39 +46,35 @@ const ListOrders = () => {
       ],
       rows: [],
     };
-    orders.forEach((order) => {
+
+    enrollments.forEach((enrollment) => {
       data.rows.push({
-        id: order._id,
-        numOfItems: order.orderItems.length,
-        amount: `$${order.totalPrice}`,
-        status:
-          order.orderStatus &&
-          String(order.orderStatus).includes("Delivered") ? (
-            <p style={{ color: "green" }}>{order.orderStatus}</p>
-          ) : (
-            <p style={{ color: "red" }}>{order.orderStatus}</p>
-          ),
+        id: enrollment._id,
+        user: enrollment.user[0].name, // Access user name from the first element of the populated array
+        course: enrollment.course[0].title, // Access course title from the first element of the populated array
         actions: (
-          <Link to={`/order/${order._id}`} className="btn btn-primary">
+          <Link
+            to={`/enrollment/${enrollment._id}`}
+            className="btn btn-primary"
+          >
             <i className="fa fa-eye"></i>
           </Link>
         ),
       });
     });
+
     return data;
   };
 
   return (
     <Fragment>
-      <MetaData title={"My Orders"} />
-
-      <h1 className="my-5">My Orders</h1>
-
+      <MetaData title={"My Enrollments"} />
+      <h1 className="my-5">My Enrollments</h1>
       {loading ? (
         <Loader />
       ) : (
         <MDBDataTable
-          data={setOrders()}
+          data={setEnrollments()}
           className="px-3"
           bordered
           striped
@@ -89,4 +85,4 @@ const ListOrders = () => {
   );
 };
 
-export default ListOrders;
+export default ListEnrollments;

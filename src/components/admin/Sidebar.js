@@ -12,6 +12,12 @@ const Sidebar = () => {
               <i className="fa fa-tachometer"></i> Dashboard
             </Link>
           </li>
+
+          <li>
+            <Link to="/admin/enrollment/new">
+              <i className="fa fa-user-plus"></i> Assign Employees
+            </Link>
+          </li>
           {/* <li>
             <a
               href="#productSubmenu"

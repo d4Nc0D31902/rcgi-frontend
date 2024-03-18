@@ -55,6 +55,9 @@ import NewLesson from "./components/admin/NewLesson";
 import LessonDetails from "./components/course/LessonDetails";
 import UpdateLesson from "./components/admin/UpdateLesson";
 
+import NewEnrollment from "./components/admin/NewEnrollment";
+import EnrollmentList from "./components/enrollment/EnrollmentList";
+
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -334,6 +337,24 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <NewLesson />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/enrollment/new"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <NewEnrollment />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/enrollment/me"
+          element={
+            <ProtectedRoute>
+              <EnrollmentList />
             </ProtectedRoute>
           }
         />

@@ -88,21 +88,10 @@ const AddChapter = () => {
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </Grid>
-                {/* <Grid item xs={12}>
-                  <TextField
-                    id="description_field"
-                    label="Description"
-                    fullWidth
-                    multiline
-                    rows={8}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </Grid> */}
                 <Grid item xs={12}>
                   <ReactQuill
                     id="description_field"
-                    theme="snow" // You can change the theme as needed
+                    theme="snow" 
                     value={description}
                     onChange={(value) => setDescription(value)}
                     modules={{
@@ -130,15 +119,6 @@ const AddChapter = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  {/* <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className="btn btn-block py-3"
-                    disabled={loading ? true : false}
-                  >
-                    CREATE
-                  </Button> */}
                   <Button
                     type="submit"
                     variant="contained"

@@ -47,6 +47,14 @@ import {
 } from "./reducers/lessonReducers";
 
 import {
+  newEnrollmentReducer,
+  myEnrollmentsReducer,
+  enrollmentDetailsReducer,
+  allEnrollmentsReducer,
+  enrollmentReducer,
+} from "./reducers/enrollmentReducers";
+
+import {
   authReducer,
   userReducer,
   forgotPasswordReducer,
@@ -106,6 +114,11 @@ const reducer = combineReducers({
   lessonDetails: lessonDetailsReducer,
   newLesson: newLessonReducer,
   lesson: lessonReducer,
+  newEnrollment: newEnrollmentReducer,
+  myEnrollment: myEnrollmentsReducer,
+  enrollmentDetails: enrollmentDetailsReducer,
+  allEnrollments: allEnrollmentsReducer,
+  enrollment: enrollmentReducer,
 });
 
 let initialState = {
