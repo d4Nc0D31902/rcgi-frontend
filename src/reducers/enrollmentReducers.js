@@ -20,6 +20,9 @@ import {
   DELETE_ENROLLMENT_RESET,
   DELETE_ENROLLMENT_FAIL,
   CLEAR_ERRORS,
+  JOIN_ENROLLMENT_REQUEST,
+  JOIN_ENROLLMENT_SUCCESS,
+  JOIN_ENROLLMENT_FAIL,
 } from "../constants/enrollmentConstants";
 
 export const newEnrollmentReducer = (state = {}, action) => {
@@ -36,17 +39,20 @@ export const newEnrollmentReducer = (state = {}, action) => {
         loading: false,
         enrollment: action.payload,
       };
+
     case CREATE_ENROLLMENT_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
+
     case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
+
     default:
       return state;
   }
@@ -156,6 +162,7 @@ export const enrollmentReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_ENROLLMENT_REQUEST:
     case DELETE_ENROLLMENT_REQUEST:
+    case JOIN_ENROLLMENT_REQUEST: // Adding JOIN_ENROLLMENT_REQUEST
       return {
         ...state,
         loading: true,
@@ -175,8 +182,16 @@ export const enrollmentReducer = (state = {}, action) => {
         isDeleted: action.payload,
       };
 
+    case JOIN_ENROLLMENT_SUCCESS: // Adding JOIN_ENROLLMENT_SUCCESS
+      return {
+        ...state,
+        loading: false,
+        isJoined: action.payload,
+      };
+
     case UPDATE_ENROLLMENT_FAIL:
     case DELETE_ENROLLMENT_FAIL:
+    case JOIN_ENROLLMENT_FAIL: // Adding JOIN_ENROLLMENT_FAIL
       return {
         ...state,
         error: action.payload,

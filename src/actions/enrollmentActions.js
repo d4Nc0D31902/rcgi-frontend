@@ -18,6 +18,9 @@ import {
   DELETE_ENROLLMENT_REQUEST,
   DELETE_ENROLLMENT_SUCCESS,
   DELETE_ENROLLMENT_FAIL,
+  JOIN_ENROLLMENT_REQUEST, // Added
+  JOIN_ENROLLMENT_SUCCESS, // Added
+  JOIN_ENROLLMENT_FAIL, // Added
   CLEAR_ERRORS,
 } from "../constants/enrollmentConstants";
 
@@ -31,7 +34,7 @@ export const createEnrollment = (enrollment) => async (dispatch, getState) => {
       withCredentials: true,
     };
     const { data } = await axios.post(
-      `${process.env.REACT_APP_API}/api/v1/admin/enrollment/new`,
+      `${process.env.REACT_APP_API}/api/v1/enrollment/new`,
       enrollment,
       config
     );
@@ -80,6 +83,32 @@ export const getEnrollmentDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ENROLLMENT_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const joinEnrollment = (enrollment) => async (dispatch) => {
+  try {
+    dispatch({ type: JOIN_ENROLLMENT_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/enrollment/join`,
+      enrollment,
+      config
+    );
+    dispatch({
+      type: JOIN_ENROLLMENT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: JOIN_ENROLLMENT_FAIL,
       payload: error.response.data.message,
     });
   }

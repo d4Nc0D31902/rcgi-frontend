@@ -11,15 +11,18 @@ import {
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { deleteCourse } from "../../actions/courseActions";
+import { joinEnrollment } from "../../actions/enrollmentActions"; 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import PlayCircleFilledWhiteOutlinedIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
 
 const Course = ({ course }) => {
-  const dispatch = useDispatch();
-  // const { role } = useSelector((state) => state.auth.user);
+  console.log("Course:", course);
 
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  console.log("User:", user);
   const isAdmin = user && user.role === "admin";
 
   const deleteHandler = async (id) => {
@@ -32,6 +35,31 @@ const Course = ({ course }) => {
         toast.error("Failed to delete course.");
       }
     }
+  };
+
+  const startCourseHandler = () => {
+    if (!user) {
+      return;
+    }
+
+    if (!course) {
+      console.error("Course is empty.");
+      return;
+    }
+
+    const enrollment = {
+      userId: user._id,
+      courseId: course._id,
+    };
+
+    dispatch(joinEnrollment(enrollment))
+      .then(() => {
+        toast.success("Enrollment created successfully!");
+      })
+      .catch((error) => {
+        console.error("Error creating enrollment:", error);
+        toast.error("Failed to create enrollment.");
+      });
   };
 
   return (
@@ -59,6 +87,16 @@ const Course = ({ course }) => {
             startIcon={<RemoveRedEyeOutlinedIcon />}
           >
             View Course
+          </Button>
+          <Button
+            variant="outlined"
+            color="success"
+            size="small"
+            fullWidth
+            startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
+            onClick={startCourseHandler}
+          >
+            Start
           </Button>
           {isAdmin && (
             <>
