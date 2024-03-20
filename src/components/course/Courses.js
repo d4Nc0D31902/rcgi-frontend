@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CourseCard from "./CourseCard";
-import { getCourses } from "../../actions/courseActions"; // Import your action file here
+import { getCourses } from "../../actions/courseActions"; 
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -9,8 +9,7 @@ const Courses = () => {
 
   useEffect(() => {
     dispatch(getCourses());
-  }, [dispatch]); // Run the effect only once when component mounts
-
+  }, [dispatch]); 
   if (loading) {
     return <div>Loading...</div>;
   }

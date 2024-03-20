@@ -43,11 +43,11 @@ const ListEnrollments = () => {
           field: "course",
           sort: "asc",
         },
-        // {
-        //   label: "Actions",
-        //   field: "actions",
-        //   sort: "asc",
-        // },
+        {
+          label: "Actions",
+          field: "actions",
+          sort: "asc",
+        },
       ],
       rows: [],
     };
@@ -56,22 +56,15 @@ const ListEnrollments = () => {
       data.rows.push({
         id: enrollment._id,
         user: enrollment.user[0].name,
-        course: (
+        course: enrollment.course[0].title,
+        actions: (
           <button
-            className="btn btn-link"
+            className="btn btn-success" 
             onClick={() => handleCourseClick(enrollment.course[0]._id)}
           >
-            {enrollment.course[0].title}
+            <i className="fa fa-play"></i>
           </button>
         ),
-        // actions: (
-        //   <button
-        //     className="btn btn-primary"
-        //     onClick={() => handleCourseClick(enrollment.course[0]._id)}
-        //   >
-        //     <i className="fa fa-eye"></i>
-        //   </button>
-        // ),
       });
     });
 

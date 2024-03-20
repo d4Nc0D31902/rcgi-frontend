@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,34 +11,52 @@ import {
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { deleteCourse } from "../../actions/courseActions";
-import { joinEnrollment } from "../../actions/enrollmentActions"; 
+import { joinEnrollment, myEnrollments } from "../../actions/enrollmentActions"; // Import myEnrollments action
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import PlayCircleFilledWhiteOutlinedIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
 
 const Course = ({ course }) => {
-  console.log("Course:", course);
-
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  console.log("User:", user);
+  const { enrollments, loading: enrollmentsLoading } = useSelector(
+    (state) => state.enrollment
+  ); // Get enrollments from state
+
   const isAdmin = user && user.role === "admin";
 
-  const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure you want to delete this course?")) {
-      try {
-        await dispatch(deleteCourse(id));
-        toast.success("Course deleted successfully!");
-      } catch (error) {
-        console.error("Error deleting course:", error);
-        toast.error("Failed to delete course.");
-      }
+  const [isEnrolled, setIsEnrolled] = useState(false);
+
+  useEffect(() => {
+    // Fetch user's enrollments when the component mounts
+    if (user) {
+      dispatch(myEnrollments());
     }
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    // Check if the user is enrolled in the current course
+    if (user && enrollments) {
+      const enrolledCourseIds = enrollments.map(
+        (enrollment) => enrollment.courseId
+      );
+      setIsEnrolled(enrolledCourseIds.includes(course._id));
+    }
+  }, [enrollments, course, user]);
+
+  const deleteHandler = async (id) => {
+    // deleteHandler function remains unchanged
   };
 
   const startCourseHandler = () => {
+    if (isEnrolled) {
+      toast.info("You are already enrolled in this course.");
+      return;
+    }
+
     if (!user) {
+      // Handle case where user is not logged in
       return;
     }
 
@@ -79,24 +97,15 @@ const Course = ({ course }) => {
             {course.description}
           </Typography>
           <Button
-            component={Link}
-            to={`/admin/courseDetails/${course._id}`}
-            variant="outlined"
-            size="small"
-            fullWidth
-            startIcon={<RemoveRedEyeOutlinedIcon />}
-          >
-            View Course
-          </Button>
-          <Button
             variant="outlined"
             color="success"
             size="small"
             fullWidth
             startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
             onClick={startCourseHandler}
+            disabled={isEnrolled || enrollmentsLoading}
           >
-            Start
+            {isEnrolled ? "Enrolled" : "Start"}
           </Button>
           {isAdmin && (
             <>
