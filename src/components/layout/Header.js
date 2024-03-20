@@ -41,6 +41,16 @@ const Header = () => {
               {cartItems.length}
             </span>
           </Link> */}
+          
+          <Link
+            to="/courses"
+            style={{ textDecoration: "none", marginLeft: "10px" }}
+          >
+            <span id="cart">
+              <i className="fa fa-book"></i> Courses
+            </span>
+          </Link>
+
           {user ? (
             <div className="ml-4 dropdown d-inline">
               <Link

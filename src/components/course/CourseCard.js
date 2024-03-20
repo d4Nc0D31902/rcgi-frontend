@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
   CardMedia,
@@ -17,6 +17,10 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 
 const Course = ({ course }) => {
   const dispatch = useDispatch();
+  // const { role } = useSelector((state) => state.auth.user);
+
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user.role === "admin";
 
   const deleteHandler = async (id) => {
     if (window.confirm("Are you sure you want to delete this course?")) {
@@ -56,25 +60,29 @@ const Course = ({ course }) => {
           >
             View Course
           </Button>
-          <Button
-            component={Link}
-            to={`/admin/course/${course._id}`}
-            variant="outlined"
-            size="small"
-            color="primary"
-            startIcon={<EditOutlinedIcon />}
-          >
-            Edit
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            color="error"
-            startIcon={<DeleteOutlineOutlinedIcon />}
-            onClick={() => deleteHandler(course._id)}
-          >
-            Delete
-          </Button>
+          {isAdmin && (
+            <>
+              <Button
+                component={Link}
+                to={`/admin/course/${course._id}`}
+                variant="outlined"
+                size="small"
+                color="primary"
+                startIcon={<EditOutlinedIcon />}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                color="error"
+                startIcon={<DeleteOutlineOutlinedIcon />}
+                onClick={() => deleteHandler(course._id)}
+              >
+                Delete
+              </Button>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

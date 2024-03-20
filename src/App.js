@@ -77,10 +77,11 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<Home />} exact="true" /> */}
         <Route path="/" element={<HomePage />} exact="true" />
+        <Route path="/courses" element={<Courses />} exact="true" />
         <Route path="/product/:id" element={<ProductDetails />} exact="true" />
         <Route path="/search/:keyword" element={<Home />} exact="true" />
         <Route path="/login" element={<Login />} exact="true" />
-        {/* <Route path="/register" element={<Register />} exact="true" /> */}
+        <Route path="/register" element={<Register />} exact="true" />
         <Route
           path="/password/forgot"
           element={<ForgotPassword />}
@@ -245,7 +246,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+{/* 
         <Route
           path="/admin/newUser"
           element={
@@ -253,7 +254,7 @@ function App() {
               <NewUser />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         <Route
           path="/admin/courses"

@@ -18,7 +18,11 @@ const QuizDetails = () => {
   const { id } = useParams();
   const { loading, error, quiz } = useSelector((state) => state.quizDetails);
   const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [totalScores, setTotalScores] = useState(0); // State variable to hold the total scores
+  const [submitted, setSubmitted] = useState(false); // State to track if quiz is submitted
+  const totalQuestions = quiz.content ? quiz.content.length : 0; // Total number of questions
+  const totalScores = Object.values(selectedAnswers).filter(
+    (answer, index) => answer === quiz.content[index].answer
+  ).length; // Total scores
 
   useEffect(() => {
     dispatch(getQuizDetails(id));
@@ -36,14 +40,7 @@ const QuizDetails = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
-
-    let totalScores = 0;
-    quiz.content.forEach((question, index) => {
-      if (selectedAnswers[index] === question.answer) {
-        totalScores++;
-      }
-    });
-    setTotalScores(totalScores);
+    setSubmitted(true); // Mark quiz as submitted
   };
 
   if (loading) return <Loader />;
@@ -86,10 +83,10 @@ const QuizDetails = () => {
               Submit Quiz
             </Button>
           </form>
-          {/* Display total scores after submission */}
-          {totalScores !== 0 && (
+          {/* Display total scores only after submission */}
+          {submitted && (
             <Typography variant="h6" component="h2" gutterBottom>
-              Total Scores: {totalScores}
+              Total Scores: {totalScores}/{totalQuestions}
             </Typography>
           )}
         </div>

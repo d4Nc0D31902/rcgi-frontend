@@ -9,18 +9,18 @@ import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { allUsers, clearErrors, deleteUser } from "../../actions/userActions";
 import { DELETE_USER_RESET } from "../../constants/userConstants";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 
 const UsersList = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const { loading, error, users } = useSelector((state) => state.allUsers);
   const { isDeleted } = useSelector((state) => state.user);
+
   const errMsg = (message = "") =>
     toast.error(message, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
+
   const successMsg = (message = "") =>
     toast.success(message, {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -42,6 +42,7 @@ const UsersList = () => {
   const deleteUserHandler = (id) => {
     dispatch(deleteUser(id));
   };
+
   const setUsers = () => {
     const data = {
       columns: [
@@ -61,13 +62,18 @@ const UsersList = () => {
           sort: "asc",
         },
         {
+          label: "Role",
+          field: "role",
+          sort: "asc",
+        },
+        {
           label: "Company",
           field: "company",
           sort: "asc",
         },
         {
-          label: "Role",
-          field: "role",
+          label: "Employee ID",
+          field: "employee_id",
           sort: "asc",
         },
         {
@@ -75,7 +81,6 @@ const UsersList = () => {
           field: "actions",
         },
       ],
-
       rows: [],
     };
 
@@ -84,8 +89,9 @@ const UsersList = () => {
         id: user._id,
         name: user.name,
         email: user.email,
-        company: user.company,
         role: user.role,
+        company: user.company,
+        employee_id: user.employee_id,
         actions: (
           <Fragment>
             <Link
@@ -94,7 +100,6 @@ const UsersList = () => {
             >
               <i className="fa fa-pencil"></i>
             </Link>
-
             <button
               className="btn btn-danger py-1 px-2 ml-2"
               onClick={() => deleteUserHandler(user._id)}
@@ -105,7 +110,6 @@ const UsersList = () => {
         ),
       });
     });
-
     return data;
   };
 
@@ -118,17 +122,11 @@ const UsersList = () => {
         </div>
         <div className="col-12 col-md-10">
           <Fragment>
-            <h1 className="my-5">All Users</h1>
-            <div className="col-12 col-md-10">
-              <Button
-                variant="outlined"
-                color="success"
-                component={Link}
-                to="/admin/newUser"
-                startIcon={<AddIcon />}
-              >
-                Register
-              </Button>
+            <div className="d-flex justify-content-between align-items-center">
+              <h1 className="my-5">All Users</h1>
+              <Link to={"/register"} className="btn btn-primary">
+                Register Employee
+              </Link>
             </div>
             {loading ? (
               <Loader />

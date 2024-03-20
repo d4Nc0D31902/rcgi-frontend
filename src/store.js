@@ -68,6 +68,7 @@ import {
   forgotPasswordReducer,
   allUsersReducer,
   userDetailsReducer,
+  registerReducer,
   customerSalesReducer,
 } from "./reducers/userReducers";
 import { cartReducer } from "./reducers/cartReducers";
@@ -132,6 +133,7 @@ const reducer = combineReducers({
   quizDetails: quizDetailsReducer,
   newQuiz: newQuizReducer,
   quiz: quizReducer,
+  register: registerReducer,
 });
 
 let initialState = {

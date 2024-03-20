@@ -1,43 +1,38 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
-
-// import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from "react-redux";
-import { register, clearErrors } from "../../actions/userActions";
+import { register } from "../../actions/userActions";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Grid from "@mui/material/Unstable_Grid2";
+import Box from "@mui/material/Box";
+import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
+import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
+import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
+    company: "",
+    employee_id: "",
   });
-
-  const { name, email, password } = user;
-
+  const { name, email, password, company, employee_id } = user;
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState(
     "/images/default_avatar.jpg"
   );
-
-  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isAuthenticated, error, loading } = useSelector(
-    (state) => state.auth
-  );
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    }
-
-    if (error) {
-      // alert.error(error);
-      dispatch(clearErrors());
-    }
-  }, [dispatch, isAuthenticated, error, navigate]);
+  const { loading } = useSelector((state) => state.auth);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -47,8 +42,13 @@ const Register = () => {
     formData.set("email", email);
     formData.set("password", password);
     formData.set("avatar", avatar);
+    formData.set("company", company);
+    formData.set("employee_id", employee_id);
 
-    dispatch(register(formData));
+    dispatch(register(formData)).then(() => {
+      toast.success("Registration successful!");
+      navigate("/admin/users");
+    });
   };
 
   const onChange = (e) => {
@@ -72,90 +72,152 @@ const Register = () => {
     <Fragment>
       <MetaData title={"Register User"} />
 
-      <div className="row wrapper">
-        <div className="col-10 col-lg-5">
-          <form
-            className="shadow-lg"
-            onSubmit={submitHandler}
-            encType="multipart/form-data"
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        alignItems="center"
+        style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}
+      >
+        <Grid item xs={12} sm={8} md={6} lg={4}>
+          <Box
+            sx={{
+              backgroundColor: "white",
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+              borderRadius: "8px",
+              padding: "20px",
+            }}
           >
-            <h1 className="mb-3">Register</h1>
+            <form onSubmit={submitHandler} encType="multipart/form-data">
+              <h1 className="mb-3">Register</h1>
 
-            <div className="form-group">
-              <label htmlFor="email_field">Name</label>
-              <input
-                type="name"
+              <TextField
                 id="name_field"
-                className="form-control"
+                label="Name"
+                variant="outlined"
                 name="name"
                 value={name}
                 onChange={onChange}
+                fullWidth
+                margin="normal"
+                required
+                InputProps={{
+                  startAdornment: (
+                    <DriveFileRenameOutlineOutlinedIcon color="action" />
+                  ),
+                }}
               />
-            </div>
 
-            <div className="form-group">
-              <label htmlFor="email_field">Email</label>
-              <input
-                type="email"
+              <TextField
                 id="email_field"
-                className="form-control"
+                label="Email"
+                variant="outlined"
                 name="email"
                 value={email}
                 onChange={onChange}
+                fullWidth
+                margin="normal"
+                required
+                InputProps={{
+                  startAdornment: <EmailOutlinedIcon color="action" />,
+                }}
               />
-            </div>
 
-            <div className="form-group">
-              <label htmlFor="password_field">Password</label>
-              <input
-                type="password"
+              <TextField
                 id="password_field"
-                className="form-control"
+                label="Password"
+                variant="outlined"
                 name="password"
                 value={password}
                 onChange={onChange}
+                fullWidth
+                margin="normal"
+                required
+                type="password" // Set type to "password"
               />
-            </div>
 
-            <div className="form-group">
-              <label htmlFor="avatar_upload">Avatar</label>
-              <div className="d-flex align-items-center">
-                <div>
-                  <figure className="avatar mr-3 item-rtl">
-                    <img
-                      src={avatarPreview}
-                      className="rounded-circle"
-                      alt="Avatar Preview"
+              <TextField
+                id="company_field"
+                select
+                label="Company"
+                variant="outlined"
+                name="company"
+                value={company}
+                onChange={onChange}
+                fullWidth
+                margin="normal"
+                required
+                InputProps={{
+                  startAdornment: <ApartmentOutlinedIcon color="action" />,
+                }}
+              >
+                {["Barcino", "Meat Depot", "Single Origin", "Bluesmith"].map(
+                  (option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  )
+                )}
+              </TextField>
+
+              <TextField
+                id="employee_id_field"
+                label="Employee ID"
+                variant="outlined"
+                name="employee_id"
+                value={employee_id}
+                onChange={onChange}
+                fullWidth
+                margin="normal"
+                required
+                InputProps={{
+                  startAdornment: <BadgeOutlinedIcon color="action" />,
+                }}
+              />
+
+              <div className="form-group">
+                <label htmlFor="avatar_upload">Avatar</label>
+                <div className="d-flex align-items-center">
+                  <div>
+                    <figure className="avatar mr-3 item-rtl">
+                      <img
+                        src={avatarPreview}
+                        className="rounded-circle"
+                        alt="Avatar Preview"
+                      />
+                    </figure>
+                  </div>
+                  <div className="custom-file">
+                    <input
+                      type="file"
+                      name="avatar"
+                      className="custom-file-input"
+                      id="customFile"
+                      accept="images/*"
+                      onChange={onChange}
                     />
-                  </figure>
-                </div>
-                <div className="custom-file">
-                  <input
-                    type="file"
-                    name="avatar"
-                    className="custom-file-input"
-                    id="customFile"
-                    accept="images/*"
-                    onChange={onChange}
-                  />
-                  <label className="custom-file-label" htmlFor="customFile">
-                    Choose Avatar
-                  </label>
+                    <label className="custom-file-label" htmlFor="customFile">
+                      Choose Avatar
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <button
-              id="register_button"
-              type="submit"
-              className="btn btn-block py-3"
-              disabled={loading ? true : false}
-            >
-              REGISTER
-            </button>
-          </form>
-        </div>
-      </div>
+              <Button
+                id="register_button"
+                type="submit"
+                variant="contained"
+                className="btn btn-block py-3"
+                color="success"
+                disabled={loading ? true : false}
+                startIcon={<HowToRegOutlinedIcon />}
+              >
+                REGISTER
+              </Button>
+            </form>
+          </Box>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };
