@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getLessonDetails, clearErrors } from "../../actions/lessonActions";
 import Loader from "../layout/Loader";
@@ -30,7 +30,12 @@ const LessonDetails = () => {
           <h3>{lesson.title}</h3>
           {lesson.videoURL && (
             <div className="embed-responsive embed-responsive-16by9 mt-2">
-              <video controls className="embed-responsive-item">
+              <video
+                controls
+                controlsList="nodownload"
+                disablePictureInPicture
+                className="embed-responsive-item"
+              >
                 <source src={lesson.videoURL} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
