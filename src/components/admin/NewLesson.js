@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // or another theme
+import "react-quill/dist/quill.snow.css"; 
 import {
   getChapterDetails,
   addLesson,
@@ -18,6 +18,7 @@ import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
 const AddLesson = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [videoURL, setVideoURL] = useState(""); 
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const AddLesson = () => {
     const formData = new FormData();
     formData.set("title", title);
     formData.set("content", content);
-    formData.set("chapterId", chapterId);
+    formData.set("videoURL", videoURL); 
 
     await dispatch(addLesson(chapterId, formData));
 
@@ -59,6 +60,27 @@ const AddLesson = () => {
       message("Lesson created successfully");
       navigate(`/admin/courses`);
     }
+  };
+
+  const openUploadWidget = () => {
+    window.cloudinary
+      .createUploadWidget(
+        {
+          cloudName: "dctuofruu",
+          uploadPreset: "clx7g60b",
+          folder: "lessons", 
+          sources: ["local", "url"],
+          resourceType: "video",
+          clientAllowedFormats: ["mp4", "mov", "avi", "flv"], 
+          maxFileSize: 500000000, 
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            setVideoURL(result.info.url);
+          }
+        }
+      )
+      .open(); 
   };
 
   return (
@@ -87,7 +109,7 @@ const AddLesson = () => {
                 <Grid item xs={12}>
                   <ReactQuill
                     id="content_field"
-                    theme="snow" // You can choose a theme
+                    theme="snow"
                     value={content}
                     onChange={(value) => setContent(value)}
                     modules={{
@@ -126,6 +148,27 @@ const AddLesson = () => {
                     ]}
                     placeholder="Enter content here"
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    value={content}
+                    onClick={openUploadWidget} 
+                  >
+                    Upload Video
+                  </Button>
+                  {videoURL && (
+                    <div>
+                      <video
+                        controls
+                        style={{ maxWidth: "100%", maxHeight: "400px" }}
+                      >
+                        <source src={videoURL} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  )}
                 </Grid>
                 <Grid item xs={12}>
                   <Button

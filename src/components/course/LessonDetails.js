@@ -28,7 +28,14 @@ const LessonDetails = () => {
       <div className="row">
         <div className="col-12 col-lg-5 mt-5">
           <h3>{lesson.title}</h3>
-          {/* <p className="mt-2">{lesson.content}</p>{" "} */}
+          {lesson.videoURL && (
+            <div className="embed-responsive embed-responsive-16by9 mt-2">
+              <video controls className="embed-responsive-item">
+                <source src={lesson.videoURL} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
           <div
             className="mt-2"
             dangerouslySetInnerHTML={{ __html: lesson.content }}

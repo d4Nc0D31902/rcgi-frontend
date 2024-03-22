@@ -11,7 +11,7 @@ import {
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { deleteCourse } from "../../actions/courseActions";
-import { joinEnrollment, myEnrollments } from "../../actions/enrollmentActions"; // Import myEnrollments action
+import { joinEnrollment, myEnrollments } from "../../actions/enrollmentActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
@@ -22,21 +22,19 @@ const Course = ({ course }) => {
   const { user } = useSelector((state) => state.auth);
   const { enrollments, loading: enrollmentsLoading } = useSelector(
     (state) => state.enrollment
-  ); // Get enrollments from state
+  );
 
   const isAdmin = user && user.role === "admin";
 
   const [isEnrolled, setIsEnrolled] = useState(false);
 
   useEffect(() => {
-    // Fetch user's enrollments when the component mounts
     if (user) {
       dispatch(myEnrollments());
     }
   }, [dispatch, user]);
 
   useEffect(() => {
-    // Check if the user is enrolled in the current course
     if (user && enrollments) {
       const enrolledCourseIds = enrollments.map(
         (enrollment) => enrollment.courseId
@@ -46,9 +44,16 @@ const Course = ({ course }) => {
   }, [enrollments, course, user]);
 
   const deleteHandler = async (id) => {
-    // deleteHandler function remains unchanged
+    if (window.confirm("Are you sure you want to delete this course?")) {
+      try {
+        await dispatch(deleteCourse(id));
+        toast.success("Course deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting course:", error);
+        toast.error("Failed to delete course.");
+      }
+    }
   };
-
   const startCourseHandler = () => {
     if (isEnrolled) {
       toast.info("You are already enrolled in this course.");
@@ -56,7 +61,6 @@ const Course = ({ course }) => {
     }
 
     if (!user) {
-      // Handle case where user is not logged in
       return;
     }
 
@@ -109,6 +113,16 @@ const Course = ({ course }) => {
           </Button>
           {isAdmin && (
             <>
+              <Button
+                component={Link}
+                to={`/admin/courseDetails/${course._id}`}
+                variant="outlined"
+                size="small"
+                fullWidth
+                startIcon={<RemoveRedEyeOutlinedIcon />}
+              >
+                View Course
+              </Button>
               <Button
                 component={Link}
                 to={`/admin/course/${course._id}`}
