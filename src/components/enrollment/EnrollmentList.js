@@ -9,7 +9,7 @@ import { myEnrollments, clearErrors } from "../../actions/enrollmentActions";
 
 const ListEnrollments = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate(); 
   const { loading, error, enrollments } = useSelector(
     (state) => state.myEnrollment
   );
@@ -22,7 +22,7 @@ const ListEnrollments = () => {
   }, [dispatch, error]);
 
   const handleCourseClick = (courseId) => {
-    navigate(`/admin/courseDetails/${courseId}`); // Navigate to the specified route
+    navigate(`/courseDetails/${courseId}`);
   };
 
   const setEnrollments = () => {

@@ -39,7 +39,6 @@ const CourseDetails = () => {
             <Typography variant="body1" mt={2}>
               {course.description}
             </Typography>
-            {/* Render the "Add Module" button conditionally based on isAdmin */}
             {isAdmin && (
               <Button
                 variant="contained"

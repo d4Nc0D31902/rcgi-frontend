@@ -246,7 +246,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-{/* 
+        {/* 
         <Route
           path="/admin/newUser"
           element={
@@ -285,6 +285,15 @@ function App() {
 
         <Route
           path="/admin/courseDetails/:id"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <CourseDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/courseDetails/:id"
           element={
             // <ProtectedRoute isAdmin={true}>
             <CourseDetails />

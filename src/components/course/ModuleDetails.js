@@ -49,10 +49,7 @@ const ModuleDetails = () => {
   const handleDeleteQuiz = (quizId) => {
     if (window.confirm("Are you sure you want to delete this quiz?")) {
       dispatch(deleteQuiz(quizId)).then(() => {
-        // Dispatch the deleteQuiz action
         toast.success("Quiz deleted successfully");
-        // Optionally, you can navigate the user to another page after deleting the quiz
-        // navigate("/admin/courses");
       });
     }
   };
@@ -74,6 +71,20 @@ const ModuleDetails = () => {
       <MetaData title={module.title} />
       <div className="row">
         <div className="col-12 col-lg-5 mt-5">
+          <div>
+            {module.images && (
+              <div>
+                {module.images.map((image, index) => (
+                  <img
+                    src={image.url}
+                    alt={`Image ${index}`}
+                    key={index}
+                    style={{ width: "500px", height: "200px" }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
           <h3>{module.title}</h3>
           <p className="mt-2">{module.description}</p>{" "}
           {isAdmin && (
