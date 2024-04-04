@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteModule } from "../../actions/moduleActions";
@@ -20,6 +20,12 @@ const CourseModuleCard = ({ module, isFirst, prevModuleStatus }) => {
 
   const { user } = useSelector((state) => state.auth);
   const isAdmin = user && user.role === "admin";
+
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  };
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this module?")) {
@@ -47,19 +53,20 @@ const CourseModuleCard = ({ module, isFirst, prevModuleStatus }) => {
         <Typography gutterBottom variant="h5" component="div">
           {module.title}
         </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            maxHeight: "80px",
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-          }}
-        >
-          {module.description}
+        <Typography gutterBottom variant="body2" component="div">
+          {expanded
+            ? module.description
+            : `${module.description.slice(0, 350)}...`}
+          {!expanded && (
+            <Button onClick={toggleExpanded} color="primary" size="small">
+              See More
+            </Button>
+          )}
+          {expanded && (
+            <Button onClick={toggleExpanded} color="primary" size="small">
+              See Less
+            </Button>
+          )}
         </Typography>
       </CardContent>
       <CardActions>

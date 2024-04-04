@@ -140,7 +140,11 @@ const EnrollmentDetails = () => {
               </Typography> */}
               {course && course[0] && (
                 <div>
-                  <Typography variant="h5" gutterBottom>
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{ marginTop: "20px" }}
+                  >
                     {course[0].courseId.title}
                   </Typography>
                   <Typography variant="subtitle1" gutterBottom>

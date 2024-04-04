@@ -9,6 +9,7 @@ import {
   Grid,
   Paper,
   Button,
+  Divider,
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import {
@@ -52,7 +53,7 @@ const EnrollmentChapterDetails = () => {
       ) : (
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
-            <Paper elevation={3} style={{ padding: "20px", marginTop: "20px"}}>
+            <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
               {/* <Typography variant="h4" gutterBottom>
                 Chapter Info
               </Typography>
@@ -64,6 +65,8 @@ const EnrollmentChapterDetails = () => {
                   <Typography variant="h4" gutterBottom>
                     {chapter.chapterId.title}
                   </Typography>
+                  <Divider style={{ margin: "20px 0" }} />
+
                   <Typography
                     variant="body1"
                     dangerouslySetInnerHTML={{

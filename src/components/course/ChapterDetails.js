@@ -1,7 +1,13 @@
 import React, { Fragment, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Typography, Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Button,
+  Paper, // Import Paper component
+  Divider,
+} from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -42,55 +48,61 @@ const ChapterDetails = () => {
   return (
     <Fragment>
       <MetaData title={chapter.title} />
-      <Grid container spacing={2}>
-        <Grid item xs={12} lg={5}>
-          <Typography variant="h3" gutterBottom>
-            {chapter.title}
-          </Typography>
-          <Typography
-            variant="body1"
-            dangerouslySetInnerHTML={{ __html: chapter.description }}
-          />
-          {isAdmin && (
-            <Button
-              component={Link}
-              to={`/admin/chapter/${chapter._id}/lesson/new`}
-              variant="contained"
-              color="primary"
-            >
-              Add Lesson
-            </Button>
-          )}
-          {isAdmin && (
-            <Button
-              component={Link}
-              to={`/admin/chapter/${chapter._id}/quiz/new`}
-              variant="contained"
-              color="primary"
-            >
-              Add Quiz
-            </Button>
-          )}
-          {chapter.status === "Not Done" && (
-            <Button
-              onClick={handleMarkAsDone}
-              variant="contained"
-              color="primary"
-              disabled={loading}
-            >
-              {loading ? "Loading..." : "Mark As Done"}
-            </Button>
-          )}
+      <Grid container justifyContent="center">
+        <Grid item xs={12} lg={8}>
+          {/* Apply Paper component */}
+          <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
+            <Typography variant="h3" gutterBottom>
+              {chapter.title}
+            </Typography>
+            <Divider style={{ margin: "20px 0" }} />
+            <Typography
+              variant="body1"
+              dangerouslySetInnerHTML={{ __html: chapter.description }}
+            />
+            {isAdmin && (
+              <Button
+                component={Link}
+                to={`/admin/chapter/${chapter._id}/lesson/new`}
+                variant="contained"
+                style={{ marginLeft: "20px" }}
+                color="primary"
+              >
+                Add Lesson
+              </Button>
+            )}
+            {isAdmin && (
+              <Button
+                component={Link}
+                to={`/admin/chapter/${chapter._id}/quiz/new`}
+                variant="contained"
+                color="primary"
+                style={{ marginLeft: "20px" }}
+              >
+                Add Quiz
+              </Button>
+            )}
+            {chapter.status === "Not Done" && (
+              <Button
+                onClick={handleMarkAsDone}
+                variant="contained"
+                color="primary"
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Mark As Done"}
+              </Button>
+            )}
 
-          {chapter.status === "Done" && (
-            <Button
-              variant="contained"
-              color="success"
-              startIcon={<CheckIcon />}
-            >
-              Done
-            </Button>
-          )}
+            {chapter.status === "Done" && (
+              <Button
+                variant="contained"
+                color="success"
+                startIcon={<CheckIcon />}
+              >
+                Done
+              </Button>
+            )}
+          </Paper>
         </Grid>
       </Grid>
     </Fragment>

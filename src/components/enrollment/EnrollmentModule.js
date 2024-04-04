@@ -10,6 +10,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Divider,
 } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import MetaData from "../layout/MetaData";
@@ -70,6 +71,7 @@ const EnrollmentModuleDetails = () => {
                   </div>
                 )}
               </div>
+              <Divider style={{ margin: "20px 0" }} />
               {enrollmentModule && (
                 <div>
                   <Typography variant="h5" gutterBottom>
@@ -80,6 +82,7 @@ const EnrollmentModuleDetails = () => {
                     {/* Description: {enrollmentModule.moduleId.description} */}
                     {enrollmentModule.moduleId.description}
                   </Typography>
+                  <Divider style={{ margin: "20px 0" }} />
                   {/* <Typography variant="h5" gutterBottom>
                     Chapters
                   </Typography> */}
@@ -164,7 +167,7 @@ const EnrollmentModuleDetails = () => {
                       </AccordionSummary> */}
                       <AccordionSummary
                         style={{
-                          backgroundColor: "white", 
+                          backgroundColor: "white",
                         }}
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls={`chapter-${index}-content`}
