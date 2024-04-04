@@ -37,7 +37,7 @@ const EnrollmentModuleDetails = () => {
       ) : (
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
-            <Paper elevation={3} style={{ padding: "20px" }}>
+            <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
               {/* <Typography variant="h4" gutterBottom>
                 Module Info
               </Typography> */}
@@ -163,6 +163,9 @@ const EnrollmentModuleDetails = () => {
                         )}
                       </AccordionSummary> */}
                       <AccordionSummary
+                        style={{
+                          backgroundColor: "white", 
+                        }}
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls={`chapter-${index}-content`}
                         id={`chapter-${index}-header`}
@@ -190,7 +193,12 @@ const EnrollmentModuleDetails = () => {
                           </Typography>
                         )}
                       </AccordionSummary>
-                      <AccordionDetails>
+                      {/* <AccordionDetails> */}
+                      <AccordionDetails
+                        style={{
+                          backgroundColor: "gray", // Change background color to light blue
+                        }}
+                      >
                         <div>
                           {chapter.lessons.map((lesson, lessonIndex) => (
                             <Typography

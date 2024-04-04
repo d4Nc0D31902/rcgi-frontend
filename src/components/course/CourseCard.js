@@ -117,7 +117,11 @@ const Course = ({ course }) => {
 
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-      <Card sx={{ maxWidth: 345 }}>
+      {/* <Card sx={{ maxWidth: 345 }} style={{marginLeft: "20px"}}> */}
+      <Card
+        sx={{ maxWidth: 345 }}
+        style={{ marginLeft: "20px", border: "1px solid #ccc" }}
+      >
         <CardMedia
           component="img"
           height="140"
