@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { getEnrollmentDetails } from "../../actions/enrollmentActions";
@@ -27,6 +27,12 @@ const EnrollmentDetails = () => {
   useEffect(() => {
     dispatch(getEnrollmentDetails(id));
   }, [dispatch, id]);
+
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
 
   return (
     <Fragment>
@@ -167,8 +173,23 @@ const EnrollmentDetails = () => {
                         <Typography variant="h6" gutterBottom>
                           {mod.moduleId.title}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary">
+                        {/* <Typography variant="body2" color="textSecondary">
                           {mod.moduleId.description}
+                        </Typography> */}
+                        <Typography variant="body2" color="textSecondary">
+                          {showFullDescription
+                            ? mod.moduleId.description
+                            : `${mod.moduleId.description.substring(
+                                0,
+                                350
+                              )}...`}
+                          <Button
+                            onClick={toggleDescription}
+                            color="primary"
+                            size="small"
+                          >
+                            {showFullDescription ? "See Less" : "See More"}
+                          </Button>
                         </Typography>
                         <Link
                           to={`/enrollment/${id}/module/${mod._id}`}
