@@ -56,7 +56,12 @@ import LessonDetails from "./components/course/LessonDetails";
 import UpdateLesson from "./components/admin/UpdateLesson";
 
 import NewEnrollment from "./components/admin/NewEnrollment";
+import EnrollmentDetails from "./components/enrollment/EnrollmentDetails";
 import EnrollmentList from "./components/enrollment/EnrollmentList";
+import EnrollmentModule from "./components/enrollment/EnrollmentModule";
+import EnrollmentChapter from "./components/enrollment/EnrollmentChapter";
+import EnrollmentLesson from "./components/enrollment/EnrollmentLesson";
+import EnrollmentQuiz from "./components/enrollment/EnrollmentQuiz";
 
 import NewQuiz from "./components/admin/NewQuiz";
 import UpdateQuiz from "./components/admin/UpdateQuiz";
@@ -295,45 +300,44 @@ function App() {
         <Route
           path="/courseDetails/:id"
           element={
-            // <ProtectedRoute isAdmin={true}>
-            <CourseDetails />
-            // </ProtectedRoute>
+            <ProtectedRoute isAdmin={true}>
+              <CourseDetails />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/moduleDetails/:id"
           element={
-            // <ProtectedRoute isAdmin={true}>
-            <ModuleDetails />
-            // </ProtectedRoute>
+            <ProtectedRoute isAdmin={true}>
+              <ModuleDetails />
+            </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/chapterDetails/:id"
           element={
-            // <ProtectedRoute isAdmin={true}>
-            <ChapterDetails />
-            // </ProtectedRoute>
+            <ProtectedRoute isAdmin={true}>
+              <ChapterDetails />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/lessonDetails/:id"
           element={
-            // <ProtectedRoute isAdmin={true}>
-            <LessonDetails />
-            // </ProtectedRoute>
+            <ProtectedRoute isAdmin={true}>
+              <LessonDetails />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/quizDetails/:id"
           element={
-            // <ProtectedRoute isAdmin={true}>
-            <QuizDetails />
-            // </ProtectedRoute>
+            <ProtectedRoute isAdmin={true}>
+              <QuizDetails />
+            </ProtectedRoute>
           }
         />
 
@@ -342,6 +346,51 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <NewModule />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/enrollment/:id"
+          element={
+            <ProtectedRoute>
+              <EnrollmentDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/enrollment/:id/module/:moduleId"
+          element={
+            <ProtectedRoute>
+              <EnrollmentModule />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId"
+          element={
+            <ProtectedRoute>
+              <EnrollmentChapter />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId/lesson/:lessonId"
+          element={
+            <ProtectedRoute>
+              <EnrollmentLesson />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId/quiz/:quizId"
+          element={
+            <ProtectedRoute>
+              <EnrollmentQuiz />
             </ProtectedRoute>
           }
         />

@@ -13,11 +13,11 @@ const Sidebar = () => {
             </Link>
           </li>
 
-          <li>
+          {/* <li>
             <Link to="/admin/enrollment/new">
               <i className="fa fa-user-plus"></i> Assign Employees
             </Link>
-          </li>
+          </li> */}
           {/* <li>
             <a
               href="#productSubmenu"

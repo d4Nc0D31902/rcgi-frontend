@@ -15,7 +15,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { deleteChapter } from "../../actions/chapterActions";
 import { deleteLesson } from "../../actions/lessonActions";
-import { deleteQuiz } from "../../actions/quizActions"; // Import the deleteQuiz action
+import { deleteQuiz } from "../../actions/quizActions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -104,10 +104,53 @@ const ModuleDetails = () => {
                     aria-controls={`chapter-${index}-content`}
                     id={`chapter-${index}-header`}
                   >
+                    {/* <div>
+                      {index === 0 ? (
+                        <Link to={`/admin/chapterDetails/${chapter._id}`}>
+                          {chapter.title}
+                        </Link>
+                      ) : chapter.status === "Done" ? (
+                        <Link to={`/admin/chapterDetails/${chapter._id}`}>
+                          {chapter.title}
+                        </Link>
+                      ) : (
+                        chapter.title
+                      )} */}
                     <div>
-                      <Link to={`/admin/chapterDetails/${chapter._id}`}>
-                        {chapter.title}
-                      </Link>
+                      {index === 0 ? (
+                        <Link to={`/admin/chapterDetails/${chapter._id}`}>
+                          <span
+                            style={{
+                              color:
+                                chapter.status === "Done" ? "green" : "inherit",
+                            }}
+                          >
+                            {chapter.title}
+                          </span>
+                        </Link>
+                      ) : chapter.status === "Done" ||
+                        (module.chapters[index - 1] &&
+                          module.chapters[index - 1].status === "Finished") ? (
+                        <Link to={`/admin/chapterDetails/${chapter._id}`}>
+                          <span
+                            style={{
+                              color:
+                                chapter.status === "Done" ? "green" : "inherit",
+                            }}
+                          >
+                            {chapter.title}
+                          </span>
+                        </Link>
+                      ) : (
+                        <span
+                          style={{
+                            color:
+                              chapter.status === "Done" ? "green" : "inherit",
+                          }}
+                        >
+                          {chapter.title}
+                        </span>
+                      )}
                       {isAdmin && (
                         <Link to={`/admin/chapter/${chapter._id}`}>
                           <IconButton color="primary" size="small">
@@ -129,9 +172,38 @@ const ModuleDetails = () => {
                   <AccordionDetails>
                     {chapter.lessons.map((lesson, lessonIndex) => (
                       <div key={lessonIndex}>
-                        <Link to={`/admin/lessonDetails/${lesson._id}`}>
+                        {lessonIndex === 0 && chapter.status === "Done" ? (
+                          <Link to={`/admin/lessonDetails/${lesson._id}`}>
+                            <p
+                              style={{
+                                color:
+                                  lesson.status === "Done"
+                                    ? "green"
+                                    : "inherit",
+                              }}
+                            >
+                              {lesson.title}
+                            </p>
+                          </Link>
+                        ) : lesson.status === "Done" ||
+                          (chapter.lessons[lessonIndex - 1] &&
+                            chapter.lessons[lessonIndex - 1].status ===
+                              "Done") ? (
+                          <Link to={`/admin/lessonDetails/${lesson._id}`}>
+                            <p
+                              style={{
+                                color:
+                                  lesson.status === "Done"
+                                    ? "green"
+                                    : "inherit",
+                              }}
+                            >
+                              {lesson.title}
+                            </p>
+                          </Link>
+                        ) : (
                           <p>{lesson.title}</p>
-                        </Link>
+                        )}
                         {isAdmin && (
                           <Link to={`/admin/lesson/${lesson._id}`}>
                             <IconButton color="primary" size="small">

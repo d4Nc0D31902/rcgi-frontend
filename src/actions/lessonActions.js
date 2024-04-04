@@ -16,6 +16,9 @@ import {
   UPDATE_LESSON_REQUEST,
   UPDATE_LESSON_SUCCESS,
   UPDATE_LESSON_FAIL,
+  MARK_LESSON_AS_DONE_REQUEST,
+  MARK_LESSON_AS_DONE_SUCCESS,
+  MARK_LESSON_AS_DONE_FAIL,
   CLEAR_ERRORS,
 } from "../constants/lessonConstants";
 
@@ -65,7 +68,7 @@ export const newLesson = (lessonData) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true, //correct
+      withCredentials: true,
     };
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/admin/lesson/new`,
@@ -90,7 +93,7 @@ export const deleteLesson = (id) => async (dispatch) => {
     const { data } = await axios.delete(
       `${process.env.REACT_APP_API}/api/v1/admin/lesson/${id}`,
       {
-        withCredentials: true, //correct
+        withCredentials: true,
       }
     );
     dispatch({
@@ -126,6 +129,28 @@ export const updateLesson = (id, lessonData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_LESSON_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const markLessonAsDone = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: MARK_LESSON_AS_DONE_REQUEST });
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v1/admin/lesson/${id}/done`,
+      null,
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: MARK_LESSON_AS_DONE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: MARK_LESSON_AS_DONE_FAIL,
       payload: error.response.data.message,
     });
   }

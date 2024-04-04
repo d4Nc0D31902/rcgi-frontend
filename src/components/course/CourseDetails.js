@@ -14,9 +14,7 @@ const CourseDetails = () => {
     (state) => state.courseDetails
   );
 
-  // Access user data from Redux store
   const { user } = useSelector((state) => state.auth);
-  // Extract user role
   const isAdmin = user && user.role === "admin";
 
   useEffect(() => {
@@ -55,9 +53,15 @@ const CourseDetails = () => {
       </Grid>
       <Grid container spacing={4} mt={4}>
         {course.modules &&
-          course.modules.map((module) => (
+          course.modules.map((module, index) => (
             <Grid key={module._id} item xs={12} md={6} lg={4}>
-              <CourseModuleCard module={module} />
+              <CourseModuleCard
+                module={module}
+                isFirst={index === 0}
+                prevModuleStatus={
+                  index > 0 ? course.modules[index - 1].status : null
+                }
+              />
             </Grid>
           ))}
       </Grid>

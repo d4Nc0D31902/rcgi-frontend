@@ -1,22 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteModule } from "../../actions/moduleActions";
 import { toast } from "react-toastify";
+import { Button } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import CardActions from "@mui/material/CardActions";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
-import PlayCircleOutlineOutlinedIcon from "@mui/icons-material/PlayCircleOutlineOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const CourseModuleCard = ({ module, isAdmin }) => {
+const CourseModuleCard = ({ module, isFirst, prevModuleStatus }) => {
   const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user.role === "admin";
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this module?")) {
@@ -44,7 +47,18 @@ const CourseModuleCard = ({ module, isAdmin }) => {
         <Typography gutterBottom variant="h5" component="div">
           {module.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            maxHeight: "80px",
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
+          }}
+        >
           {module.description}
         </Typography>
       </CardContent>
@@ -60,40 +74,20 @@ const CourseModuleCard = ({ module, isAdmin }) => {
         >
           View
         </Button>
-        {/* Conditionally render the "Edit" button based on isAdmin */}
         {isAdmin && (
-          <Button
+          <IconButton
             component={Link}
             to={`/admin/module/${module._id}`}
-            startIcon={<EditOutlinedIcon />}
-            variant="outlined"
             color="primary"
             size="small"
           >
-            Edit
-          </Button>
-        )}
-        {/* Conditionally render the "Delete" button based on isAdmin */}
-        {isAdmin && (
-          <Button
-            startIcon={<DeleteOutlineOutlinedIcon />}
-            variant="outlined"
-            color="error"
-            size="small"
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
+            <EditOutlinedIcon />
+          </IconButton>
         )}
         {isAdmin && (
-          <Button
-            startIcon={<PlayCircleOutlineOutlinedIcon />}
-            variant="outlined"
-            color="success"
-            size="small"
-          >
-            Start
-          </Button>
+          <IconButton color="error" size="small" onClick={handleDelete}>
+            <DeleteOutlineOutlinedIcon />
+          </IconButton>
         )}
       </CardActions>
     </Card>

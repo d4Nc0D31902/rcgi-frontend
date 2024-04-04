@@ -54,6 +54,36 @@ const Course = ({ course }) => {
       }
     }
   };
+  // const startCourseHandler = () => {
+  //   if (isEnrolled) {
+  //     toast.info("You are already enrolled in this course.");
+  //     return;
+  //   }
+
+  //   if (!user) {
+  //     return;
+  //   }
+
+  //   if (!course) {
+  //     console.error("Course is empty.");
+  //     return;
+  //   }
+
+  //   const enrollment = {
+  //     userId: user._id,
+  //     courseId: course._id,
+  //   };
+
+  //   dispatch(joinEnrollment(enrollment))
+  //     .then(() => {
+  //       toast.success("Enrollment created successfully!");
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error creating enrollment:", error);
+  //       toast.error("Failed to create enrollment.");
+  //     });
+  // };
+
   const startCourseHandler = () => {
     if (isEnrolled) {
       toast.info("You are already enrolled in this course.");
@@ -76,6 +106,7 @@ const Course = ({ course }) => {
 
     dispatch(joinEnrollment(enrollment))
       .then(() => {
+        dispatch(myEnrollments());
         toast.success("Enrollment created successfully!");
       })
       .catch((error) => {
@@ -100,17 +131,19 @@ const Course = ({ course }) => {
           <Typography gutterBottom variant="caption" component="div">
             {course.description}
           </Typography>
-          <Button
-            variant="outlined"
-            color="success"
-            size="small"
-            fullWidth
-            startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
-            onClick={startCourseHandler}
-            disabled={isEnrolled || enrollmentsLoading}
-          >
-            {isEnrolled ? "Enrolled" : "Start"}
-          </Button>
+          <Link to="/enrollment/me" style={{ textDecoration: "none" }}>
+            <Button
+              variant="outlined"
+              color="success"
+              size="small"
+              fullWidth
+              startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
+              onClick={startCourseHandler}
+              disabled={isEnrolled || enrollmentsLoading}
+            >
+              {isEnrolled ? "Enrolled" : "Start"}
+            </Button>
+          </Link>
           {isAdmin && (
             <>
               <Button

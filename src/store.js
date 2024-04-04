@@ -38,6 +38,7 @@ import {
   chapterReducer,
   addLessonReducer,
   addQuizReducer,
+  // markChapterAsDoneReducer,
 } from "./reducers/chapterReducers";
 
 import {
@@ -45,6 +46,7 @@ import {
   lessonDetailsReducer,
   newLessonReducer,
   lessonReducer,
+  // markLessonAsDoneReducer,
 } from "./reducers/lessonReducers";
 
 import {
@@ -60,6 +62,12 @@ import {
   enrollmentDetailsReducer,
   allEnrollmentsReducer,
   enrollmentReducer,
+  getEnrollmentModuleReducer,
+  getEnrollmentChapterReducer,
+  getSingleLessonReducer,
+  getSingleQuizReducer,
+  markChapterAsDoneReducer,
+  markLessonAsDoneReducer,
 } from "./reducers/enrollmentReducers";
 
 import {
@@ -117,12 +125,14 @@ const reducer = combineReducers({
   chapters: chaptersReducer,
   chapterDetails: chapterDetailsReducer,
   newChapter: newChapterReducer,
+  markChapterAsDone: markChapterAsDoneReducer,
   chapter: chapterReducer,
   addLesson: addLessonReducer,
   lessons: lessonsReducer,
   lessonDetails: lessonDetailsReducer,
   newLesson: newLessonReducer,
   lesson: lessonReducer,
+  markLessonAsDone: markLessonAsDoneReducer,
   newEnrollment: newEnrollmentReducer,
   myEnrollment: myEnrollmentsReducer,
   enrollmentDetails: enrollmentDetailsReducer,
@@ -134,6 +144,12 @@ const reducer = combineReducers({
   newQuiz: newQuizReducer,
   quiz: quizReducer,
   register: registerReducer,
+  getEnrollmentModule: getEnrollmentModuleReducer,
+  getEnrollmentChapter: getEnrollmentChapterReducer,
+  getSingleLesson: getSingleLessonReducer,
+  getSingleQuiz: getSingleQuizReducer,
+  markChapterAsDone: markChapterAsDoneReducer,
+  markLessonAsDone: markLessonAsDoneReducer,
 });
 
 let initialState = {

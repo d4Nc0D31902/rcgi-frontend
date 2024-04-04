@@ -23,6 +23,24 @@ import {
   JOIN_ENROLLMENT_REQUEST,
   JOIN_ENROLLMENT_SUCCESS,
   JOIN_ENROLLMENT_FAIL,
+  GET_ENROLLMENT_MODULE_REQUEST,
+  GET_ENROLLMENT_MODULE_SUCCESS,
+  GET_ENROLLMENT_MODULE_FAIL,
+  GET_ENROLLMENT_CHAPTER_REQUEST,
+  GET_ENROLLMENT_CHAPTER_SUCCESS,
+  GET_ENROLLMENT_CHAPTER_FAIL,
+  GET_SINGLE_LESSON_REQUEST,
+  GET_SINGLE_LESSON_SUCCESS,
+  GET_SINGLE_LESSON_FAIL,
+  GET_SINGLE_QUIZ_REQUEST,
+  GET_SINGLE_QUIZ_SUCCESS,
+  GET_SINGLE_QUIZ_FAIL,
+  MARK_CHAPTER_AS_DONE_REQUEST,
+  MARK_CHAPTER_AS_DONE_SUCCESS,
+  MARK_CHAPTER_AS_DONE_FAIL,
+  MARK_LESSON_AS_DONE_REQUEST, // Adding MARK_LESSON_AS_DONE_REQUEST
+  MARK_LESSON_AS_DONE_SUCCESS, // Adding MARK_LESSON_AS_DONE_SUCCESS
+  MARK_LESSON_AS_DONE_FAIL, // Adding MARK_LESSON_AS_DONE_FAIL
 } from "../constants/enrollmentConstants";
 
 export const newEnrollmentReducer = (state = {}, action) => {
@@ -215,6 +233,164 @@ export const enrollmentReducer = (state = {}, action) => {
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const getEnrollmentModuleReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_ENROLLMENT_MODULE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_ENROLLMENT_MODULE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        enrollmentModule: action.payload,
+      };
+
+    case GET_ENROLLMENT_MODULE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getEnrollmentChapterReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_ENROLLMENT_CHAPTER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_ENROLLMENT_CHAPTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        chapter: action.payload,
+      };
+
+    case GET_ENROLLMENT_CHAPTER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getSingleLessonReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_SINGLE_LESSON_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_SINGLE_LESSON_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        lesson: action.payload,
+      };
+
+    case GET_SINGLE_LESSON_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getSingleQuizReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_SINGLE_QUIZ_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_SINGLE_QUIZ_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        quiz: action.payload,
+      };
+
+    case GET_SINGLE_QUIZ_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const markChapterAsDoneReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MARK_CHAPTER_AS_DONE_REQUEST:
+      return { loading: true };
+    case MARK_CHAPTER_AS_DONE_SUCCESS:
+      return { loading: false, success: true };
+    case MARK_CHAPTER_AS_DONE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const markLessonAsDoneReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MARK_LESSON_AS_DONE_REQUEST:
+      return { loading: true };
+    case MARK_LESSON_AS_DONE_SUCCESS:
+      return { loading: false, success: true };
+    case MARK_LESSON_AS_DONE_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

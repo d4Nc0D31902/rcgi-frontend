@@ -1,9 +1,17 @@
 import React, { Fragment, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getLessonDetails, clearErrors } from "../../actions/lessonActions";
+import {
+  getLessonDetails,
+  clearErrors,
+  markLessonAsDone,
+} from "../../actions/lessonActions";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
+import { Typography, Grid, Paper, Button } from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CheckIcon from "@mui/icons-material/Check";
 
 const LessonDetails = () => {
   const dispatch = useDispatch();
@@ -19,34 +27,63 @@ const LessonDetails = () => {
     };
   }, [dispatch, id]);
 
+  const handleMarkAsDone = () => {
+    dispatch(markLessonAsDone(id));
+    window.location.reload();
+    toast.success("Lesson marked as done successfully!");
+  };
+
   if (loading) return <Loader />;
-  if (error) return <h2>{error}</h2>;
+  if (error) return <Typography variant="h6">{error}</Typography>;
 
   return (
     <Fragment>
       <MetaData title={lesson.title} />
-      <div className="row">
-        <div className="col-12 col-lg-5 mt-5">
-          <h3>{lesson.title}</h3>
+      <Grid container justifyContent="center">
+        <Grid item xs={12} lg={5} mt={5}>
+          <Typography variant="h4" gutterBottom>
+            {lesson.title}
+          </Typography>
           {lesson.videoURL && (
-            <div className="embed-responsive embed-responsive-16by9 mt-2">
+            <Paper elevation={3} mt={2}>
               <video
                 controls
                 controlsList="nodownload"
                 disablePictureInPicture
-                className="embed-responsive-item"
+                style={{ width: "100%", height: "auto" }}
               >
                 <source src={lesson.videoURL} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-            </div>
+            </Paper>
           )}
-          <div
-            className="mt-2"
+          <Typography
+            variant="body1"
+            mt={2}
             dangerouslySetInnerHTML={{ __html: lesson.content }}
           />
-        </div>
-      </div>
+          {lesson.status === "Not Done" && (
+            <Button
+              onClick={handleMarkAsDone}
+              variant="contained"
+              color="primary"
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Mark As Done"}
+            </Button>
+          )}
+
+          {lesson.status === "Done" && (
+            <Button
+              variant="contained"
+              color="success"
+              startIcon={<CheckIcon />}
+            >
+              Done
+            </Button>
+          )}
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };

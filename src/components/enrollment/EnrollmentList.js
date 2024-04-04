@@ -9,7 +9,7 @@ import { myEnrollments, clearErrors } from "../../actions/enrollmentActions";
 
 const ListEnrollments = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { loading, error, enrollments } = useSelector(
     (state) => state.myEnrollment
   );
@@ -20,10 +20,6 @@ const ListEnrollments = () => {
       dispatch(clearErrors());
     }
   }, [dispatch, error]);
-
-  const handleCourseClick = (courseId) => {
-    navigate(`/courseDetails/${courseId}`);
-  };
 
   const setEnrollments = () => {
     const data = {
@@ -53,17 +49,20 @@ const ListEnrollments = () => {
     };
 
     enrollments.forEach((enrollment) => {
+      const courseId = enrollment.course[0].courseId; 
+      const courseTitle = courseId.title; 
+
       data.rows.push({
         id: enrollment._id,
         user: enrollment.user[0].name,
-        course: enrollment.course[0].title,
+        course: courseTitle, 
         actions: (
-          <button
-            className="btn btn-success" 
-            onClick={() => handleCourseClick(enrollment.course[0]._id)}
+          <Link
+            to={`/enrollment/${enrollment._id}`}
+            className="btn btn-primary"
           >
-            <i className="fa fa-play"></i>
-          </button>
+            <i className="fa fa-eye"></i>
+          </Link>
         ),
       });
     });

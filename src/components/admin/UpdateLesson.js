@@ -19,6 +19,7 @@ import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
 const UpdateLesson = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [videoURL, setVideoURL] = useState(""); 
 
   const dispatch = useDispatch();
   const { error, lesson } = useSelector((state) => state.lessonDetails);
@@ -67,7 +68,29 @@ const UpdateLesson = () => {
     const formData = new FormData();
     formData.set("title", title);
     formData.set("content", content);
+    formData.set("videoURL", videoURL); 
     dispatch(updateLesson(lesson._id, formData));
+  };
+
+  const openUploadWidget = () => {
+    window.cloudinary
+      .createUploadWidget(
+        {
+          cloudName: "dctuofruu",
+          uploadPreset: "clx7g60b",
+          folder: "lessons",
+          sources: ["local", "url"],
+          resourceType: "video",
+          clientAllowedFormats: ["mp4", "mov", "avi", "flv"],
+          maxFileSize: 500000000,
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            setVideoURL(result.info.url);
+          }
+        }
+      )
+      .open();
   };
 
   return (
@@ -135,6 +158,28 @@ const UpdateLesson = () => {
                     ]}
                     placeholder="Enter content here"
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    value={content}
+                    onChange={(value) => setVideoURL(value)}
+                    onClick={openUploadWidget}
+                  >
+                    Upload Video
+                  </Button>
+                  {videoURL && (
+                    <div>
+                      <video
+                        controls
+                        style={{ maxWidth: "100%", maxHeight: "400px" }}
+                      >
+                        <source src={videoURL} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  )}
                 </Grid>
                 <Grid item xs={12}>
                   <Button

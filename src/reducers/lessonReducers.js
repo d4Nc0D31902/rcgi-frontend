@@ -20,6 +20,10 @@ import {
   UPDATE_LESSON_SUCCESS,
   UPDATE_LESSON_RESET,
   UPDATE_LESSON_FAIL,
+  MARK_LESSON_AS_DONE_REQUEST,
+  MARK_LESSON_AS_DONE_SUCCESS,
+  MARK_LESSON_AS_DONE_FAIL,
+  MARK_LESSON_AS_DONE_RESET,
   CLEAR_ERRORS,
 } from "../constants/lessonConstants";
 
@@ -165,3 +169,31 @@ export const lessonReducer = (state = {}, action) => {
   }
 };
 
+export const markLessonAsDoneReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MARK_LESSON_AS_DONE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case MARK_LESSON_AS_DONE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.success,
+        lesson: action.payload.lesson,
+      };
+    case MARK_LESSON_AS_DONE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};

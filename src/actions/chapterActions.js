@@ -20,8 +20,11 @@ import {
   ADD_LESSON_SUCCESS,
   ADD_LESSON_FAIL,
   ADD_QUIZ_REQUEST,
-  ADD_QUIZ_SUCCESS, 
-  ADD_QUIZ_FAIL, 
+  ADD_QUIZ_SUCCESS,
+  ADD_QUIZ_FAIL,
+  MARK_CHAPTER_AS_DONE_REQUEST, // Added new action constant
+  MARK_CHAPTER_AS_DONE_SUCCESS, // Added new action constant
+  MARK_CHAPTER_AS_DONE_FAIL, // Added new action constant
   CLEAR_ERRORS,
 } from "../constants/chapterConstants";
 
@@ -184,6 +187,29 @@ export const addQuiz = (chapterId, quizData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADD_QUIZ_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const markChapterAsDone = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: MARK_CHAPTER_AS_DONE_REQUEST });
+    const config = {
+      withCredentials: true, // Add withCredentials to the request config
+    };
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v1/chapter/${id}/markAsDone`,
+      null,
+      config
+    );
+    dispatch({
+      type: MARK_CHAPTER_AS_DONE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: MARK_CHAPTER_AS_DONE_FAIL,
       payload: error.response.data.message,
     });
   }
