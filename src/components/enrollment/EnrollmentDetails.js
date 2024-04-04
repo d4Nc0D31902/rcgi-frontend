@@ -126,7 +126,16 @@ const EnrollmentDetails = () => {
                   module.map((mod, index) => (
                     <Card
                       key={mod._id}
-                      style={{ width: "40%", marginBottom: "20px" }}
+                      style={{
+                        width: "40%",
+                        marginBottom: "20px",
+                        marginTop: "20px",
+                        marginRight: "50px",
+                        marginLeft: "50px",
+                        border: "2px solid #ccc",
+                        borderRadius: "5px",
+                        padding: "10px",
+                      }}
                     >
                       <CardMedia
                         component="img"
