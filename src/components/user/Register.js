@@ -15,6 +15,8 @@ import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRen
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -29,6 +31,7 @@ const Register = () => {
   const [avatarPreview, setAvatarPreview] = useState(
     "/images/default_avatar.jpg"
   );
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,6 +69,10 @@ const Register = () => {
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   return (
@@ -123,6 +130,30 @@ const Register = () => {
                 }}
               />
 
+              {/* <TextField
+                id="password_field"
+                label="Password"
+                variant="outlined"
+                name="password"
+                value={password}
+                onChange={onChange}
+                fullWidth
+                margin="normal"
+                required
+                type={showPassword ? "text" : "password"} 
+                InputProps={{
+                  endAdornment: (
+                    <Button onClick={togglePasswordVisibility}>
+                      {showPassword ? (
+                        <VisibilityIcon />
+                      ) : (
+                        <VisibilityOffIcon />
+                      )}
+                    </Button>
+                  ),
+                }}
+              /> */}
+
               <TextField
                 id="password_field"
                 label="Password"
@@ -133,7 +164,18 @@ const Register = () => {
                 fullWidth
                 margin="normal"
                 required
-                type="password" // Set type to "password"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <Button onClick={togglePasswordVisibility}>
+                      {showPassword ? (
+                        <VisibilityIcon color="action" />
+                      ) : (
+                        <VisibilityOffIcon color="action" />
+                      )}
+                    </Button>
+                  ),
+                }}
               />
 
               <TextField
