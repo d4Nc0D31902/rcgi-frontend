@@ -104,53 +104,10 @@ const ModuleDetails = () => {
                     aria-controls={`chapter-${index}-content`}
                     id={`chapter-${index}-header`}
                   >
-                    {/* <div>
-                      {index === 0 ? (
-                        <Link to={`/admin/chapterDetails/${chapter._id}`}>
-                          {chapter.title}
-                        </Link>
-                      ) : chapter.status === "Done" ? (
-                        <Link to={`/admin/chapterDetails/${chapter._id}`}>
-                          {chapter.title}
-                        </Link>
-                      ) : (
-                        chapter.title
-                      )} */}
                     <div>
-                      {index === 0 ? (
-                        <Link to={`/admin/chapterDetails/${chapter._id}`}>
-                          <span
-                            style={{
-                              color:
-                                chapter.status === "Done" ? "green" : "inherit",
-                            }}
-                          >
-                            {chapter.title}
-                          </span>
-                        </Link>
-                      ) : chapter.status === "Done" ||
-                        (module.chapters[index - 1] &&
-                          module.chapters[index - 1].status === "Finished") ? (
-                        <Link to={`/admin/chapterDetails/${chapter._id}`}>
-                          <span
-                            style={{
-                              color:
-                                chapter.status === "Done" ? "green" : "inherit",
-                            }}
-                          >
-                            {chapter.title}
-                          </span>
-                        </Link>
-                      ) : (
-                        <span
-                          style={{
-                            color:
-                              chapter.status === "Done" ? "green" : "inherit",
-                          }}
-                        >
-                          {chapter.title}
-                        </span>
-                      )}
+                      <Link to={`/admin/chapterDetails/${chapter._id}`}>
+                        {chapter.title}
+                      </Link>
                       {isAdmin && (
                         <Link to={`/admin/chapter/${chapter._id}`}>
                           <IconButton color="primary" size="small">
@@ -171,39 +128,10 @@ const ModuleDetails = () => {
                   </AccordionSummary>
                   <AccordionDetails>
                     {chapter.lessons.map((lesson, lessonIndex) => (
-                      <div key={lessonIndex}>
-                        {lessonIndex === 0 && chapter.status === "Done" ? (
-                          <Link to={`/admin/lessonDetails/${lesson._id}`}>
-                            <p
-                              style={{
-                                color:
-                                  lesson.status === "Done"
-                                    ? "green"
-                                    : "inherit",
-                              }}
-                            >
-                              {lesson.title}
-                            </p>
-                          </Link>
-                        ) : lesson.status === "Done" ||
-                          (chapter.lessons[lessonIndex - 1] &&
-                            chapter.lessons[lessonIndex - 1].status ===
-                              "Done") ? (
-                          <Link to={`/admin/lessonDetails/${lesson._id}`}>
-                            <p
-                              style={{
-                                color:
-                                  lesson.status === "Done"
-                                    ? "green"
-                                    : "inherit",
-                              }}
-                            >
-                              {lesson.title}
-                            </p>
-                          </Link>
-                        ) : (
-                          <p>{lesson.title}</p>
-                        )}
+                      <div key={lessonIndex}> 
+                        <Link to={`/admin/lessonDetails/${lesson._id}`}>
+                          {lesson.title}
+                        </Link>
                         {isAdmin && (
                           <Link to={`/admin/lesson/${lesson._id}`}>
                             <IconButton color="primary" size="small">

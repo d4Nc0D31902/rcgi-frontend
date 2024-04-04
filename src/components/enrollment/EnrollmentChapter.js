@@ -53,16 +53,16 @@ const EnrollmentChapterDetails = () => {
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Paper elevation={3} style={{ padding: "20px" }}>
-              <Typography variant="h4" gutterBottom>
+              {/* <Typography variant="h4" gutterBottom>
                 Chapter Info
               </Typography>
               <Typography variant="h5" gutterBottom>
                 Chapter Details
-              </Typography>
+              </Typography> */}
               {chapter && (
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Title: {chapter.chapterId.title}
+                  <Typography variant="h4" gutterBottom>
+                    {chapter.chapterId.title}
                   </Typography>
                   <Typography
                     variant="body1"

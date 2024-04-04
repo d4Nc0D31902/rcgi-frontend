@@ -38,23 +38,51 @@ const EnrollmentModuleDetails = () => {
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Paper elevation={3} style={{ padding: "20px" }}>
-              <Typography variant="h4" gutterBottom>
+              {/* <Typography variant="h4" gutterBottom>
                 Module Info
-              </Typography>
-              <Typography variant="h5" gutterBottom>
+              </Typography> */}
+              {/* <Typography variant="h5" gutterBottom>
                 Module Details
-              </Typography>
+              </Typography> */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                }}
+              >
+                {enrollmentModule && enrollmentModule.moduleId.images && (
+                  <div>
+                    {enrollmentModule.moduleId.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image.url}
+                        alt={`Module Image ${index + 1}`}
+                        style={{
+                          width: "100%",
+                          maxHeight: "200px",
+                          margin: "10px 0",
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
               {enrollmentModule && (
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Title: {enrollmentModule.moduleId.title}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Description: {enrollmentModule.moduleId.description}
-                  </Typography>
                   <Typography variant="h5" gutterBottom>
-                    Chapters
+                    {/* Title: {enrollmentModule.moduleId.title} */}
+                    {enrollmentModule.moduleId.title}
                   </Typography>
+                  <Typography variant="subtitle1" gutterBottom>
+                    {/* Description: {enrollmentModule.moduleId.description} */}
+                    {enrollmentModule.moduleId.description}
+                  </Typography>
+                  {/* <Typography variant="h5" gutterBottom>
+                    Chapters
+                  </Typography> */}
                   {enrollmentModule.chapter.map((chapter, index) => (
                     <Accordion key={index}>
                       {/* <AccordionSummary

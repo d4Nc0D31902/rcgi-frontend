@@ -131,7 +131,7 @@ const Course = ({ course }) => {
           <Typography gutterBottom variant="caption" component="div">
             {course.description}
           </Typography>
-          <Link to="/enrollment/me" style={{ textDecoration: "none" }}>
+          {/* <Link to="/enrollment/me" style={{ textDecoration: "none" }}>
             <Button
               variant="outlined"
               color="success"
@@ -143,7 +143,22 @@ const Course = ({ course }) => {
             >
               {isEnrolled ? "Enrolled" : "Start"}
             </Button>
-          </Link>
+          </Link> */}
+          {!isAdmin && (
+            <Link to="/enrollment/me" style={{ textDecoration: "none" }}>
+              <Button
+                variant="outlined"
+                color="success"
+                size="small"
+                fullWidth
+                startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
+                onClick={startCourseHandler}
+                disabled={isEnrolled || enrollmentsLoading}
+              >
+                {isEnrolled ? "Enrolled" : "Start"}
+              </Button>
+            </Link>
+          )}
           {isAdmin && (
             <>
               <Button

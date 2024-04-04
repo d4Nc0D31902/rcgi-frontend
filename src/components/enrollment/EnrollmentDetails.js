@@ -12,6 +12,7 @@ import {
   CardMedia,
   Box,
   Button,
+  Avatar,
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 
@@ -40,10 +41,7 @@ const EnrollmentDetails = () => {
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Paper elevation={3} style={{ padding: "20px" }}>
-              <Typography variant="h4" gutterBottom>
-                Enrollment Info
-              </Typography>
-              <Typography variant="h5" gutterBottom>
+              {/* <Typography variant="h5" gutterBottom>
                 User Info
               </Typography>
               {user && (
@@ -58,19 +56,89 @@ const EnrollmentDetails = () => {
                     Company: {user[0].company}
                   </Typography>
                 </div>
-              )}
-
-              <hr />
+              )} */}
               <Typography variant="h5" gutterBottom>
-                Course Info
+                Employee Info
               </Typography>
+              {user && (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {user[0].avatar && (
+                    <Avatar
+                      alt={user[0].name}
+                      src={user[0].avatar.url}
+                      style={{ marginRight: "10px" }}
+                    />
+                  )}
+                  <div>
+                    <Typography variant="subtitle1" gutterBottom>
+                      Name: {user[0].name}
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                      Employee ID: {user[0].employee_id}
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                      Company: {user[0].company}
+                    </Typography>
+                  </div>
+                </div>
+              )}
+              <hr />
+              {/* Banner */}
+              {/* <div style={{ display: "flex", justifyContent: "center" }}>
+                {course && course[0] && (
+                  <div>
+                    {course[0].courseId.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image.url}
+                        alt={`Course Image ${index + 1}`}
+                        style={{
+                          width: "100%",
+                          maxHeight: "200px",
+                          margin: "10px 0",
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div> */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                }}
+              >
+                {course && course[0] && (
+                  <div>
+                    {course[0].courseId.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image.url}
+                        alt={`Course Image ${index + 1}`}
+                        style={{
+                          width: "100%",
+                          maxHeight: "200px",
+                          margin: "10px 0",
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+              {/* End Banner */}
+              {/* <Typography variant="h5" gutterBottom>
+                Course Info
+              </Typography> */}
               {course && course[0] && (
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Title: {course[0].courseId.title}
+                  <Typography variant="h5" gutterBottom>
+                    {course[0].courseId.title}
                   </Typography>
                   <Typography variant="subtitle1" gutterBottom>
-                    Description: {course[0].courseId.description}
+                    {course[0].courseId.description}
                   </Typography>
                 </div>
               )}
