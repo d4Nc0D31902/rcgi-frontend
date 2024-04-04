@@ -74,7 +74,12 @@ const EnrollmentModuleDetails = () => {
                   </Typography>
                   <Divider style={{ margin: "20px 0" }} />
                   {enrollmentModule.chapter.map((chapter, index) => (
-                    <Accordion key={index}>
+                    <Accordion
+                      key={index}
+                      style={{
+                        border: "1px solid black",
+                      }}
+                    >
                       <AccordionSummary
                         style={{
                           backgroundColor: "white",
@@ -139,7 +144,7 @@ const EnrollmentModuleDetails = () => {
                                       style={{
                                         color:
                                           lesson.status === "Not Done"
-                                            ? "black"
+                                            ? "gray"
                                             : "",
                                       }}
                                     >
@@ -158,19 +163,15 @@ const EnrollmentModuleDetails = () => {
                             ) &&
                               chapter.quizzes.map((quiz, quizIndex) => (
                                 <li key={quizIndex}>
-                                  <Typography
-                                    variant="body1"
-                                    gutterBottom
-                                    style={{
-                                      color:
-                                        quiz.status === "Done"
-                                          ? "green"
-                                          : "black",
-                                    }}
-                                  >
+                                  <Typography variant="body1" gutterBottom>
                                     <Link
                                       to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
-                                      style={{ textDecoration: "none" }}
+                                      style={{
+                                        color:
+                                          quiz.status === "Done"
+                                            ? "green"
+                                            : "black",
+                                      }}
                                     >
                                       {quiz.quizId.title}
                                     </Link>

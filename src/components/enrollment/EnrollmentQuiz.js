@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   RadioGroup,
   Button,
+  Divider,
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 
@@ -46,7 +47,7 @@ const EnrollmentQuizDetails = () => {
   };
 
   const checkResult = (score) => {
-    const passThreshold = 0.7; // Threshold for passing (70%)
+    const passThreshold = 0.7;
     const percentage = score / quiz.quizId.content.length;
     if (percentage >= passThreshold) {
       setResult("Passed");
@@ -67,18 +68,13 @@ const EnrollmentQuizDetails = () => {
       ) : (
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
-            <Paper elevation={3} sx={{ padding: "20px" }}>
-              <Typography variant="h4" gutterBottom>
-                Quiz Info
-              </Typography>
-              <Typography variant="h5" gutterBottom>
-                Quiz Details
-              </Typography>
+            <Paper elevation={3} sx={{ padding: "20px", marginTop: "20px" }}>
               {quiz && (
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Title: {quiz.quizId.title}
+                  <Typography variant="h4" gutterBottom>
+                    {quiz.quizId.title}
                   </Typography>
+                  <Divider style={{ margin: "20px 0" }} />
                   {quiz.quizId.content.map((question, index) => (
                     <div key={index}>
                       <Typography variant="body1" sx={{ marginBottom: "8px" }}>
@@ -101,6 +97,7 @@ const EnrollmentQuizDetails = () => {
                           ))}
                         </RadioGroup>
                       </FormControl>
+                      <Divider style={{ margin: "20px 0" }} />
                     </div>
                   ))}
                   <Button
@@ -113,11 +110,20 @@ const EnrollmentQuizDetails = () => {
                   <Typography variant="h6" sx={{ marginTop: "20px" }}>
                     Score: {score}/{quiz.quizId.content.length}
                   </Typography>
-                  {result && (
-                    <Typography variant="h6" sx={{ marginTop: "20px" }}>
-                      Result: {result}
-                    </Typography>
-                  )}
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      marginTop: "20px",
+                      color:
+                        result === "Failed"
+                          ? "red"
+                          : result === "Passed"
+                          ? "green"
+                          : "",
+                    }}
+                  >
+                    Result: {result}
+                  </Typography>
                 </div>
               )}
             </Paper>

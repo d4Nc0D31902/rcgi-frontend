@@ -60,7 +60,13 @@ const EnrollmentChapterDetails = () => {
             {enrollmentModule && (
               <Fragment>
                 {enrollmentModule.chapter.map((chapter, index) => (
-                  <Accordion key={index} defaultExpanded={true}>
+                  <Accordion
+                    key={index}
+                    defaultExpanded={true}
+                    style={{
+                      border: "1px solid black",
+                    }}
+                  >
                     <AccordionSummary
                       style={{
                         backgroundColor: "white",
@@ -124,7 +130,7 @@ const EnrollmentChapterDetails = () => {
                                     style={{
                                       color:
                                         lesson.status === "Not Done"
-                                          ? "black"
+                                          ? "gray"
                                           : "",
                                     }}
                                   >
@@ -143,19 +149,15 @@ const EnrollmentChapterDetails = () => {
                           ) &&
                             chapter.quizzes.map((quiz, quizIndex) => (
                               <li key={quizIndex}>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  style={{
-                                    color:
-                                      quiz.status === "Done"
-                                        ? "green"
-                                        : "black",
-                                  }}
-                                >
+                                <Typography variant="body1" gutterBottom>
                                   <Link
                                     to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
-                                    style={{ textDecoration: "none" }}
+                                    style={{
+                                      color:
+                                        quiz.status === "Done"
+                                          ? "green"
+                                          : "black",
+                                    }}
                                   >
                                     {quiz.quizId.title}
                                   </Link>
