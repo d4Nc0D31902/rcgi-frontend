@@ -39,12 +39,6 @@ const EnrollmentModuleDetails = () => {
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-              {/* <Typography variant="h4" gutterBottom>
-                Module Info
-              </Typography> */}
-              {/* <Typography variant="h5" gutterBottom>
-                Module Details
-              </Typography> */}
               <div
                 style={{
                   display: "flex",
@@ -75,96 +69,14 @@ const EnrollmentModuleDetails = () => {
               {enrollmentModule && (
                 <div>
                   <Typography variant="h5" gutterBottom>
-                    {/* Title: {enrollmentModule.moduleId.title} */}
                     {enrollmentModule.moduleId.title}
                   </Typography>
                   <Typography variant="subtitle1" gutterBottom>
-                    {/* Description: {enrollmentModule.moduleId.description} */}
                     {enrollmentModule.moduleId.description}
                   </Typography>
                   <Divider style={{ margin: "20px 0" }} />
-                  {/* <Typography variant="h5" gutterBottom>
-                    Chapters
-                  </Typography> */}
                   {enrollmentModule.chapter.map((chapter, index) => (
                     <Accordion key={index}>
-                      {/* <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`chapter-${index}-content`}
-                        id={`chapter-${index}-header`}
-                      >
-                        {chapter.status === "Done" ||
-                        index === 0 ||
-                        enrollmentModule.chapter[index - 1].status ===
-                          "Done" ? (
-                          <Link
-                            to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}`}
-                            style={{ textDecoration: "none", color: "green" }}
-                          >
-                            <Typography style={{ color: "green" }}>
-                              {chapter.chapterId.title}
-                            </Typography>
-                          </Link>
-                        ) : (
-                          <Typography style={{ color: "black" }}>
-                            {chapter.chapterId.title}
-                          </Typography>
-                        )}
-                      </AccordionSummary> */}
-                      {/* <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`chapter-${index}-content`}
-                        id={`chapter-${index}-header`}
-                      >
-                        <Link
-                          to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}`}
-                          style={{ textDecoration: "none", color: "green" }}
-                        >
-                          <Typography style={{ color: "green" }}>
-                            {chapter.chapterId.title}
-                          </Typography>
-                        </Link>
-                      </AccordionSummary> */}
-                      {/* <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`chapter-${index}-content`}
-                        id={`chapter-${index}-header`}
-                      >
-                        {chapter.status === "Not Done" ? (
-                          <Typography style={{ color: "gray" }}>
-                            {chapter.chapterId.title}
-                          </Typography>
-                        ) : (
-                          <Link
-                            to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}`}
-                            style={{ textDecoration: "none", color: "green" }}
-                          >
-                            <Typography style={{ color: "green" }}>
-                              {chapter.chapterId.title}
-                            </Typography>
-                          </Link>
-                        )}
-                      </AccordionSummary> */}
-                      {/* <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`chapter-${index}-content`}
-                        id={`chapter-${index}-header`}
-                      >
-                        {index === 0 || chapter.status !== "Not Done" ? (
-                          <Link
-                            to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}`}
-                            style={{ textDecoration: "none", color: "green" }}
-                          >
-                            <Typography style={{ color: "green" }}>
-                              {chapter.chapterId.title}
-                            </Typography>
-                          </Link>
-                        ) : (
-                          <Typography style={{ color: "gray" }}>
-                            {chapter.chapterId.title}
-                          </Typography>
-                        )}
-                      </AccordionSummary> */}
                       <AccordionSummary
                         style={{
                           backgroundColor: "white",
@@ -196,10 +108,9 @@ const EnrollmentModuleDetails = () => {
                           </Typography>
                         )}
                       </AccordionSummary>
-                      {/* <AccordionDetails> */}
                       <AccordionDetails
                         style={{
-                          backgroundColor: "gray", // Change background color to light blue
+                          backgroundColor: "gray",
                         }}
                       >
                         <div>
@@ -241,7 +152,6 @@ const EnrollmentModuleDetails = () => {
                           ))}
                         </div>
                         <div>
-                          {/* Render quizzes only if all lessons in the chapter are done */}
                           {chapter.lessons.every(
                             (lesson) => lesson.status === "Done"
                           ) &&

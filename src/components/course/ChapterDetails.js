@@ -52,7 +52,6 @@ const ChapterDetails = () => {
       <MetaData title={chapter.title} />
       <Grid container justifyContent="center">
         <Grid item xs={12} lg={8}>
-          {/* Apply Paper component */}
           <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
             <Typography variant="h3" gutterBottom>
               {chapter.title}
@@ -68,7 +67,7 @@ const ChapterDetails = () => {
                 to={`/admin/chapter/${chapter._id}/lesson/new`}
                 variant="outlined"
                 style={{ marginLeft: "20px" }}
-                color="primary"
+                color="success"
                 startIcon={<PlayLessonIcon />}
               >
                 Add Lesson
@@ -79,7 +78,7 @@ const ChapterDetails = () => {
                 component={Link}
                 to={`/admin/chapter/${chapter._id}/quiz/new`}
                 variant="outlined"
-                color="primary"
+                color="success"
                 style={{ marginLeft: "20px" }}
                 startIcon={<QuizIcon />}
               >

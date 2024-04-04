@@ -17,6 +17,7 @@ import {
   markChapterAsDone,
 } from "../../actions/enrollmentActions";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
+import EnrollmentModule from "./EnrollmentModule";
 
 const EnrollmentChapterDetails = () => {
   const dispatch = useDispatch();
@@ -54,12 +55,6 @@ const EnrollmentChapterDetails = () => {
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-              {/* <Typography variant="h4" gutterBottom>
-                Chapter Info
-              </Typography>
-              <Typography variant="h5" gutterBottom>
-                Chapter Details
-              </Typography> */}
               {chapter && (
                 <div>
                   <Typography variant="h4" gutterBottom>
@@ -73,7 +68,6 @@ const EnrollmentChapterDetails = () => {
                       __html: chapter.chapterId.description,
                     }}
                   />
-                  {/* Conditionally render buttons based on chapter status */}
                   {chapter.status === "Not Done" ? (
                     <Button
                       variant="outlined"

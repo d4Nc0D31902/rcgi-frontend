@@ -41,7 +41,7 @@ const CourseModuleCard = ({ module, isFirst, prevModuleStatus }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "50px" }}>
       {module.images && module.images.length > 0 && (
         <CardMedia
           sx={{ height: 140 }}
