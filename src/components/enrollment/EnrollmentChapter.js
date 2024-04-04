@@ -52,7 +52,7 @@ const EnrollmentChapterDetails = () => {
       ) : (
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
-            <Paper elevation={3} style={{ padding: "20px" }}>
+            <Paper elevation={3} style={{ padding: "20px", marginTop: "20px"}}>
               {/* <Typography variant="h4" gutterBottom>
                 Chapter Info
               </Typography>
