@@ -29,9 +29,7 @@ const EnrollmentModuleDetails = () => {
   return (
     <Fragment>
       <MetaData title={"Enrollment Module Details"} />
-      {loading ? (
-        <CircularProgress style={{ margin: "auto" }} />
-      ) : error ? (
+      {error ? (
         <Typography variant="h6" color="error" align="center">
           {error}
         </Typography>
@@ -96,9 +94,14 @@ const EnrollmentModuleDetails = () => {
                           )) ? (
                           <Link
                             to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}`}
-                            style={{ textDecoration: "none", color: "green" }}
+                            style={{ textDecoration: "none" }}
                           >
-                            <Typography style={{ color: "green" }}>
+                            <Typography
+                              style={{
+                                color:
+                                  chapter.status === "Done" ? "green" : "black",
+                              }}
+                            >
                               {chapter.chapterId.title}
                             </Typography>
                           </Link>
@@ -110,71 +113,71 @@ const EnrollmentModuleDetails = () => {
                       </AccordionSummary>
                       <AccordionDetails
                         style={{
-                          backgroundColor: "gray",
+                          backgroundColor: "lightgray",
                         }}
                       >
                         <div>
-                          {chapter.lessons.map((lesson, lessonIndex) => (
-                            <Typography
-                              key={lessonIndex}
-                              variant="body1"
-                              gutterBottom
-                              style={{
-                                color:
-                                  lesson.status === "Done" ? "green" : "black",
-                                pointerEvents:
-                                  lessonIndex === 0 ||
-                                  chapter.lessons[lessonIndex - 1].status ===
-                                    "Done"
-                                    ? "auto"
-                                    : "none",
-                                textDecoration:
-                                  lessonIndex === 0 ||
-                                  chapter.lessons[lessonIndex - 1].status ===
-                                    "Done"
-                                    ? "auto"
-                                    : "none",
-                              }}
-                            >
-                              {chapter.status === "Done" ? (
-                                <Link
-                                  to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
-                                  style={{
-                                    textDecoration: "none",
-                                  }}
-                                >
-                                  {lesson.lessonId.title}
-                                </Link>
-                              ) : (
-                                <span>{lesson.lessonId.title}</span>
-                              )}
-                            </Typography>
-                          ))}
+                          <ul>
+                            {chapter.lessons.map((lesson, lessonIndex) => (
+                              <li key={lessonIndex}>
+                                <Typography variant="body1" gutterBottom>
+                                  {chapter.status === "Done" ? (
+                                    <Link
+                                      to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
+                                      style={{
+                                        textDecoration: "none",
+                                        color:
+                                          lesson.status === "Done"
+                                            ? "green"
+                                            : "black",
+                                      }}
+                                    >
+                                      {lesson.lessonId.title}
+                                    </Link>
+                                  ) : (
+                                    <span
+                                      style={{
+                                        color:
+                                          lesson.status === "Not Done"
+                                            ? "black"
+                                            : "",
+                                      }}
+                                    >
+                                      {lesson.lessonId.title}
+                                    </span>
+                                  )}
+                                </Typography>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                         <div>
-                          {chapter.lessons.every(
-                            (lesson) => lesson.status === "Done"
-                          ) &&
-                            chapter.quizzes.map((quiz, quizIndex) => (
-                              <Typography
-                                key={quizIndex}
-                                variant="body1"
-                                gutterBottom
-                                style={{
-                                  color:
-                                    quiz.status === "Done" ? "green" : "black",
-                                }}
-                              >
-                                <Link
-                                  to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
-                                  style={{
-                                    textDecoration: "none",
-                                  }}
-                                >
-                                  {quiz.quizId.title}
-                                </Link>
-                              </Typography>
-                            ))}
+                          <ul>
+                            {chapter.lessons.every(
+                              (lesson) => lesson.status === "Done"
+                            ) &&
+                              chapter.quizzes.map((quiz, quizIndex) => (
+                                <li key={quizIndex}>
+                                  <Typography
+                                    variant="body1"
+                                    gutterBottom
+                                    style={{
+                                      color:
+                                        quiz.status === "Done"
+                                          ? "green"
+                                          : "black",
+                                    }}
+                                  >
+                                    <Link
+                                      to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
+                                      style={{ textDecoration: "none" }}
+                                    >
+                                      {quiz.quizId.title}
+                                    </Link>
+                                  </Typography>
+                                </li>
+                              ))}
+                          </ul>
                         </div>
                       </AccordionDetails>
                     </Accordion>
