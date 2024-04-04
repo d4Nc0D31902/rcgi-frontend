@@ -123,10 +123,9 @@ const Course = ({ course }) => {
 
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-      {/* <Card sx={{ maxWidth: 345 }} style={{marginLeft: "20px"}}> */}
       <Card
-        sx={{ maxWidth: 345 }}
-        style={{ marginLeft: "20px", border: "1px solid #ccc" }}
+        // sx={{ maxWidth: 345 }}
+        style={{ width: "100%", marginLeft: "20px", border: "1px solid #ccc" }}
       >
         <CardMedia
           component="img"
@@ -138,9 +137,6 @@ const Course = ({ course }) => {
           <Typography gutterBottom variant="h5" component="div">
             {course.title}
           </Typography>
-          {/* <Typography gutterBottom variant="caption" component="div">
-            {course.description}
-          </Typography> */}
           <Typography gutterBottom variant="caption" component="div">
             {showFullDescription
               ? course.description
@@ -149,19 +145,6 @@ const Course = ({ course }) => {
               {showFullDescription ? "See Less" : "See More"}
             </Button>
           </Typography>
-          {/* <Link to="/enrollment/me" style={{ textDecoration: "none" }}>
-            <Button
-              variant="outlined"
-              color="success"
-              size="small"
-              fullWidth
-              startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
-              onClick={startCourseHandler}
-              disabled={isEnrolled || enrollmentsLoading}
-            >
-              {isEnrolled ? "Enrolled" : "Start"}
-            </Button>
-          </Link> */}
           {!isAdmin && (
             <Link to="/enrollment/me" style={{ textDecoration: "none" }}>
               <Button

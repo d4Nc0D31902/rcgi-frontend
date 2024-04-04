@@ -47,22 +47,6 @@ const EnrollmentDetails = () => {
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-              {/* <Typography variant="h5" gutterBottom>
-                User Info
-              </Typography>
-              {user && (
-                <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Name: {user[0].name}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Employee ID: {user[0].employee_id}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Company: {user[0].company}
-                  </Typography>
-                </div>
-              )} */}
               <Typography variant="h5" gutterBottom>
                 Employee Info
               </Typography>
@@ -89,25 +73,6 @@ const EnrollmentDetails = () => {
                 </div>
               )}
               <hr />
-              {/* Banner */}
-              {/* <div style={{ display: "flex", justifyContent: "center" }}>
-                {course && course[0] && (
-                  <div>
-                    {course[0].courseId.images.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image.url}
-                        alt={`Course Image ${index + 1}`}
-                        style={{
-                          width: "100%",
-                          maxHeight: "200px",
-                          margin: "10px 0",
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div> */}
               <div
                 style={{
                   display: "flex",
@@ -134,10 +99,6 @@ const EnrollmentDetails = () => {
                   </div>
                 )}
               </div>
-              {/* End Banner */}
-              {/* <Typography variant="h5" gutterBottom>
-                Course Info
-              </Typography> */}
               {course && course[0] && (
                 <div>
                   <Typography
@@ -165,11 +126,11 @@ const EnrollmentDetails = () => {
                   module.map((mod, index) => (
                     <Card
                       key={mod._id}
-                      style={{ width: "30%", marginBottom: "20px" }}
+                      style={{ width: "40%", marginBottom: "20px" }}
                     >
                       <CardMedia
                         component="img"
-                        height="140"
+                        height="150"
                         image={mod.moduleId.images[0].url}
                         alt={mod.moduleId.title}
                       />
@@ -177,9 +138,6 @@ const EnrollmentDetails = () => {
                         <Typography variant="h6" gutterBottom>
                           {mod.moduleId.title}
                         </Typography>
-                        {/* <Typography variant="body2" color="textSecondary">
-                          {mod.moduleId.description}
-                        </Typography> */}
                         <Typography variant="body2" color="textSecondary">
                           {showFullDescription
                             ? mod.moduleId.description

@@ -25,11 +25,6 @@ const ListEnrollments = () => {
     const data = {
       columns: [
         {
-          label: "Enrollment ID",
-          field: "id",
-          sort: "asc",
-        },
-        {
           label: "User",
           field: "user",
           sort: "asc",
