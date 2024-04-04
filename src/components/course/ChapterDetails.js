@@ -18,6 +18,8 @@ import {
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 import CheckIcon from "@mui/icons-material/Check";
+import QuizIcon from "@mui/icons-material/Quiz";
+import PlayLessonIcon from "@mui/icons-material/PlayLesson";
 
 const ChapterDetails = () => {
   const dispatch = useDispatch();
@@ -64,9 +66,10 @@ const ChapterDetails = () => {
               <Button
                 component={Link}
                 to={`/admin/chapter/${chapter._id}/lesson/new`}
-                variant="contained"
+                variant="outlined"
                 style={{ marginLeft: "20px" }}
                 color="primary"
+                startIcon={<PlayLessonIcon />}
               >
                 Add Lesson
               </Button>
@@ -75,9 +78,10 @@ const ChapterDetails = () => {
               <Button
                 component={Link}
                 to={`/admin/chapter/${chapter._id}/quiz/new`}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 style={{ marginLeft: "20px" }}
+                startIcon={<QuizIcon />}
               >
                 Add Quiz
               </Button>

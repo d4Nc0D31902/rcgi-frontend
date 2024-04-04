@@ -23,6 +23,8 @@ import { deleteLesson } from "../../actions/lessonActions";
 import { deleteQuiz } from "../../actions/quizActions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import BookIcon from "@mui/icons-material/Book";
 
 const ModuleDetails = () => {
   const dispatch = useDispatch();
@@ -115,12 +117,13 @@ const ModuleDetails = () => {
             </Typography>
             {isAdmin && (
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
+                color="success"
                 component={Link}
                 to={`/admin/module/${id}/chapter/new`}
                 mt={2}
                 style={{ marginTop: "20px" }}
+                startIcon={<BookIcon />}
               >
                 Add Chapter
               </Button>

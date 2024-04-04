@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import CourseModuleCard from "./CourseModuleCard";
+import AddIcon from "@mui/icons-material/Add";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 
 const CourseDetails = () => {
   const dispatch = useDispatch();
@@ -51,11 +53,12 @@ const CourseDetails = () => {
           </Typography>
           {isAdmin && (
             <Button
-              variant="contained"
-              color="primary"
+              variant="outlined"
+              color="success"
               component={Link}
               to={`/admin/course/${id}/module`}
               style={{ marginTop: "20px" }}
+              startIcon={<ImportContactsIcon />}
             >
               Add Module
             </Button>

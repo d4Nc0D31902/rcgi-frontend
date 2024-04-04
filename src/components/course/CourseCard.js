@@ -195,6 +195,7 @@ const Course = ({ course }) => {
                 variant="outlined"
                 size="small"
                 color="primary"
+                style={{ marginTop: "10px" }}
                 startIcon={<EditOutlinedIcon />}
               >
                 Edit
@@ -203,6 +204,7 @@ const Course = ({ course }) => {
                 variant="outlined"
                 size="small"
                 color="error"
+                style={{ marginTop: "10px", marginLeft: "145px" }}
                 startIcon={<DeleteOutlineOutlinedIcon />}
                 onClick={() => deleteHandler(course._id)}
               >
