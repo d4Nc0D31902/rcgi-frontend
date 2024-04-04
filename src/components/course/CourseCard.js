@@ -28,6 +28,12 @@ const Course = ({ course }) => {
 
   const [isEnrolled, setIsEnrolled] = useState(false);
 
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
   useEffect(() => {
     if (user) {
       dispatch(myEnrollments());
@@ -132,8 +138,16 @@ const Course = ({ course }) => {
           <Typography gutterBottom variant="h5" component="div">
             {course.title}
           </Typography>
-          <Typography gutterBottom variant="caption" component="div">
+          {/* <Typography gutterBottom variant="caption" component="div">
             {course.description}
+          </Typography> */}
+          <Typography gutterBottom variant="caption" component="div">
+            {showFullDescription
+              ? course.description
+              : `${course.description.substring(0, 350)}...`}
+            <Button onClick={toggleDescription} color="primary" size="small">
+              {showFullDescription ? "See Less" : "See More"}
+            </Button>
           </Typography>
           {/* <Link to="/enrollment/me" style={{ textDecoration: "none" }}>
             <Button
