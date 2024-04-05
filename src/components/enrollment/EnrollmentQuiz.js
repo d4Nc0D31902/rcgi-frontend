@@ -27,6 +27,7 @@ const EnrollmentQuizDetails = () => {
   const [score, setScore] = useState(0);
   const [result, setResult] = useState(null);
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
+  const [submitted, setSubmitted] = useState(false); // State to track submission
 
   useEffect(() => {
     dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
@@ -50,6 +51,7 @@ const EnrollmentQuizDetails = () => {
     setScore(newScore);
     setIncorrectAnswers(incorrect);
     checkResult(newScore);
+    setSubmitted(true); // Set submitted to true after submission
   };
 
   const checkResult = (score) => {
@@ -105,7 +107,7 @@ const EnrollmentQuizDetails = () => {
                             <FormControlLabel
                               key={optionIndex}
                               value={option}
-                              control={<Radio />}
+                              control={<Radio disabled={submitted} />} // Disable radio button if submitted
                               label={option}
                             />
                           ))}
