@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const EnrollmentQuizDetails = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,14 @@ const EnrollmentQuizDetails = () => {
     } else {
       setResult("Failed");
     }
+  };
+
+  const handleRetake = () => {
+    setAnswers({});
+    setScore(0);
+    setResult(null);
+    setIncorrectAnswers([]);
+    setSubmitted(false);
   };
 
   return (
@@ -124,6 +133,17 @@ const EnrollmentQuizDetails = () => {
                   >
                     Submit
                   </Button>
+
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleRetake}
+                    endIcon={<RefreshIcon />}
+                    style={{ display: result === "Failed" ? "block" : "none" }}
+                  >
+                    Retake
+                  </Button>
+
                   <Typography variant="h6" sx={{ marginTop: "20px" }}>
                     Score: {score}/{quiz.quizId.content.length}
                   </Typography>

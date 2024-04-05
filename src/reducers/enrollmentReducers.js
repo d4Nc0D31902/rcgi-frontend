@@ -41,6 +41,9 @@ import {
   MARK_LESSON_AS_DONE_REQUEST, // Adding MARK_LESSON_AS_DONE_REQUEST
   MARK_LESSON_AS_DONE_SUCCESS, // Adding MARK_LESSON_AS_DONE_SUCCESS
   MARK_LESSON_AS_DONE_FAIL, // Adding MARK_LESSON_AS_DONE_FAIL
+  MARK_QUIZ_AS_DONE_REQUEST,
+  MARK_QUIZ_AS_DONE_SUCCESS,
+  MARK_QUIZ_AS_DONE_FAIL,
 } from "../constants/enrollmentConstants";
 
 export const newEnrollmentReducer = (state = {}, action) => {
@@ -390,6 +393,19 @@ export const markLessonAsDoneReducer = (state = {}, action) => {
     case MARK_LESSON_AS_DONE_SUCCESS:
       return { loading: false, success: true };
     case MARK_LESSON_AS_DONE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const markQuizAsDoneReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MARK_QUIZ_AS_DONE_REQUEST:
+      return { loading: true };
+    case MARK_QUIZ_AS_DONE_SUCCESS:
+      return { loading: false, success: true };
+    case MARK_QUIZ_AS_DONE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

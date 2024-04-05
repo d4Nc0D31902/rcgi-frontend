@@ -39,6 +39,9 @@ import {
   MARK_LESSON_AS_DONE_REQUEST, // Adding MARK_LESSON_AS_DONE_REQUEST
   MARK_LESSON_AS_DONE_SUCCESS, // Adding MARK_LESSON_AS_DONE_SUCCESS
   MARK_LESSON_AS_DONE_FAIL, // Adding MARK_LESSON_AS_DONE_FAIL
+  MARK_QUIZ_AS_DONE_REQUEST,
+  MARK_QUIZ_AS_DONE_SUCCESS,
+  MARK_QUIZ_AS_DONE_FAIL,
   CLEAR_ERRORS,
 } from "../constants/enrollmentConstants";
 
@@ -356,6 +359,41 @@ export const markLessonAsDone =
       console.error("Error marking lesson as done:", error);
       dispatch({
         type: MARK_LESSON_AS_DONE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const markQuizAsDone =
+  (enrollmentId, moduleId, chapterId, quizId) => async (dispatch) => {
+    try {
+      dispatch({ type: MARK_QUIZ_AS_DONE_REQUEST });
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+
+      console.log("Sending request to mark quiz as done...");
+
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_API}/api/v1/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/quiz/${quizId}/mark-as-done`,
+        {},
+        config
+      );
+
+      console.log("Quiz marked as done successfully:", data);
+
+      dispatch({
+        type: MARK_QUIZ_AS_DONE_SUCCESS,
+        payload: data.success,
+      });
+    } catch (error) {
+      console.error("Failed to mark quiz as done:", error);
+      dispatch({
+        type: MARK_QUIZ_AS_DONE_FAIL,
         payload: error.response.data.message,
       });
     }

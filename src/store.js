@@ -68,6 +68,7 @@ import {
   getSingleQuizReducer,
   markChapterAsDoneReducer,
   markLessonAsDoneReducer,
+  markQuizAsDoneReducer,
 } from "./reducers/enrollmentReducers";
 
 import {
@@ -150,6 +151,7 @@ const reducer = combineReducers({
   getSingleQuiz: getSingleQuizReducer,
   markChapterAsDone: markChapterAsDoneReducer,
   markLessonAsDone: markLessonAsDoneReducer,
+  markQuizAsDone: markQuizAsDoneReducer,
 });
 
 let initialState = {
