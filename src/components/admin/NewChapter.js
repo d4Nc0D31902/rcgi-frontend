@@ -91,7 +91,7 @@ const AddChapter = () => {
                 <Grid item xs={12}>
                   <ReactQuill
                     id="description_field"
-                    theme="snow" 
+                    theme="snow"
                     value={description}
                     onChange={(value) => setDescription(value)}
                     modules={{
@@ -100,8 +100,17 @@ const AddChapter = () => {
                         ["bold", "italic", "underline", "strike"],
                         [{ list: "ordered" }, { list: "bullet" }],
                         ["link", "image"],
+                        [{ align: [] }], // Text alignment options
+                        [{ script: "sub" }, { script: "super" }], // Subscript and superscript
+                        [{ indent: "-1" }, { indent: "+1" }], // Indentation
+                        [{ direction: "rtl" }], // Right to left direction
+                        [{ size: ["small", false, "large", "huge"] }], // Font size
+                        [{ color: [] }, { background: [] }], // Font and background color
                         ["clean"],
                       ],
+                      clipboard: {
+                        matchVisual: false, // Disable HTML paste
+                      },
                     }}
                     formats={[
                       "header",
@@ -113,6 +122,14 @@ const AddChapter = () => {
                       "bullet",
                       "link",
                       "image",
+                      "align",
+                      "script",
+                      "indent",
+                      "direction",
+                      "size",
+                      "color",
+                      "background",
+                      "clean",
                     ]}
                     placeholder="Enter description here"
                   />

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; 
+import "react-quill/dist/quill.snow.css";
 import {
   getChapterDetails,
   addLesson,
@@ -18,7 +18,7 @@ import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
 const AddLesson = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [videoURL, setVideoURL] = useState(""); 
+  const [videoURL, setVideoURL] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const AddLesson = () => {
     const formData = new FormData();
     formData.set("title", title);
     formData.set("content", content);
-    formData.set("videoURL", videoURL); 
+    formData.set("videoURL", videoURL);
 
     await dispatch(addLesson(chapterId, formData));
 
@@ -68,11 +68,11 @@ const AddLesson = () => {
         {
           cloudName: "dctuofruu",
           uploadPreset: "clx7g60b",
-          folder: "lessons", 
+          folder: "lessons",
           sources: ["local", "url"],
           resourceType: "video",
-          clientAllowedFormats: ["mp4", "mov", "avi", "flv"], 
-          maxFileSize: 500000000, 
+          clientAllowedFormats: ["mp4", "mov", "avi", "flv"],
+          maxFileSize: 500000000,
         },
         (error, result) => {
           if (!error && result && result.event === "success") {
@@ -80,7 +80,7 @@ const AddLesson = () => {
           }
         }
       )
-      .open(); 
+      .open();
   };
 
   return (
@@ -114,7 +114,7 @@ const AddLesson = () => {
                     onChange={(value) => setContent(value)}
                     modules={{
                       toolbar: [
-                        [{ header: "1" }, { header: "2" }, { font: [] }],
+                        [{ header: [1, 2, 3, 4, 5, false] }],
                         [{ size: [] }],
                         ["bold", "italic", "underline", "strike", "blockquote"],
                         [
@@ -124,6 +124,11 @@ const AddLesson = () => {
                           { indent: "+1" },
                         ],
                         ["link", "image", "video"],
+                        [{ script: "sub" }, { script: "super" }],
+                        [{ color: [] }, { background: [] }],
+                        [{ align: [] }],
+                        ["code-block"],
+                        ["formula"],
                         ["clean"],
                       ],
                       clipboard: {
@@ -145,6 +150,12 @@ const AddLesson = () => {
                       "link",
                       "image",
                       "video",
+                      "script",
+                      "color",
+                      "background",
+                      "align",
+                      "code-block",
+                      "formula",
                     ]}
                     placeholder="Enter content here"
                   />
@@ -154,7 +165,7 @@ const AddLesson = () => {
                     variant="contained"
                     color="primary"
                     value={content}
-                    onClick={openUploadWidget} 
+                    onClick={openUploadWidget}
                   >
                     Upload Video
                   </Button>

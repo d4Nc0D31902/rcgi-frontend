@@ -19,7 +19,7 @@ import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
 const UpdateLesson = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [videoURL, setVideoURL] = useState(""); 
+  const [videoURL, setVideoURL] = useState("");
 
   const dispatch = useDispatch();
   const { error, lesson } = useSelector((state) => state.lessonDetails);
@@ -57,7 +57,7 @@ const UpdateLesson = () => {
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      navigate("/admin/courses");
+      navigate(-1);
       successMsg("Lesson updated successfully");
       dispatch({ type: UPDATE_LESSON_RESET });
     }
@@ -68,7 +68,7 @@ const UpdateLesson = () => {
     const formData = new FormData();
     formData.set("title", title);
     formData.set("content", content);
-    formData.set("videoURL", videoURL); 
+    formData.set("videoURL", videoURL);
     dispatch(updateLesson(lesson._id, formData));
   };
 
@@ -124,7 +124,7 @@ const UpdateLesson = () => {
                     onChange={(value) => setContent(value)}
                     modules={{
                       toolbar: [
-                        [{ header: "1" }, { header: "2" }, { font: [] }],
+                        [{ header: [1, 2, 3, 4, 5, false] }],
                         [{ size: [] }],
                         ["bold", "italic", "underline", "strike", "blockquote"],
                         [
@@ -134,6 +134,11 @@ const UpdateLesson = () => {
                           { indent: "+1" },
                         ],
                         ["link", "image", "video"],
+                        [{ script: "sub" }, { script: "super" }],
+                        [{ color: [] }, { background: [] }],
+                        [{ align: [] }],
+                        ["code-block"],
+                        ["formula"],
                         ["clean"],
                       ],
                       clipboard: {
@@ -155,6 +160,12 @@ const UpdateLesson = () => {
                       "link",
                       "image",
                       "video",
+                      "script",
+                      "color",
+                      "background",
+                      "align",
+                      "code-block",
+                      "formula",
                     ]}
                     placeholder="Enter content here"
                   />

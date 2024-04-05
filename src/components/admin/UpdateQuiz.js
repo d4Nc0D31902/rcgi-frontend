@@ -57,7 +57,7 @@ const UpdateQuiz = () => {
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      navigate("/admin/courses");
+      navigate(-1);
       successMsg("Quiz updated successfully");
       dispatch({ type: UPDATE_QUIZ_RESET });
     }

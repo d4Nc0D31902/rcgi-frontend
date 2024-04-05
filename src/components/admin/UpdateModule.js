@@ -42,6 +42,28 @@ const UpdateModule = () => {
       position: toast.POSITION.BOTTOM_CENTER,
     });
 
+  // useEffect(() => {
+  //   if (module && module._id !== id) {
+  //     dispatch(getModuleDetails(id));
+  //   } else {
+  //     setTitle(module.title);
+  //     setDescription(module.description);
+  //     setOldImages(module.images);
+  //   }
+  //   if (error) {
+  //     errMsg(error);
+  //     dispatch(clearErrors());
+  //   }
+  //   if (updateError) {
+  //     errMsg(updateError);
+  //     dispatch(clearErrors());
+  //   }
+  //   if (isUpdated) {
+  //     successMsg("Module updated successfully");
+  //     dispatch({ type: UPDATE_MODULE_RESET });
+  //   }
+  // }, [dispatch, error, isUpdated, navigate, updateError, module, id]);
+
   useEffect(() => {
     if (module && module._id !== id) {
       dispatch(getModuleDetails(id));
@@ -59,9 +81,9 @@ const UpdateModule = () => {
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      navigate("/admin/courses");
       successMsg("Module updated successfully");
       dispatch({ type: UPDATE_MODULE_RESET });
+      navigate(-1);
     }
   }, [dispatch, error, isUpdated, navigate, updateError, module, id]);
 

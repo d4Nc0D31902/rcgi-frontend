@@ -56,7 +56,7 @@ const UpdateChapter = () => {
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      navigate("/admin/courses");
+      navigate(-1);
       successMsg("Chapter updated successfully");
       dispatch({ type: UPDATE_CHAPTER_RESET });
     }
@@ -112,7 +112,7 @@ const UpdateChapter = () => {
                     onChange={(value) => setDescription(value)}
                     modules={{
                       toolbar: [
-                        [{ header: "1" }, { header: "2" }, { font: [] }],
+                        [{ header: [1, 2, 3, 4, 5, false] }],
                         [{ size: [] }],
                         ["bold", "italic", "underline", "strike", "blockquote"],
                         [
@@ -122,6 +122,11 @@ const UpdateChapter = () => {
                           { indent: "+1" },
                         ],
                         ["link", "image", "video"],
+                        [{ script: "sub" }, { script: "super" }],
+                        [{ color: [] }, { background: [] }],
+                        [{ align: [] }],
+                        ["code-block"],
+                        ["formula"],
                         ["clean"],
                       ],
                       clipboard: {
@@ -143,6 +148,12 @@ const UpdateChapter = () => {
                       "link",
                       "image",
                       "video",
+                      "script",
+                      "color",
+                      "background",
+                      "align",
+                      "code-block",
+                      "formula",
                     ]}
                     placeholder="Enter description here"
                   />

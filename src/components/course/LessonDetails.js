@@ -8,7 +8,7 @@ import {
 } from "../../actions/lessonActions";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
-import { Typography, Grid, Paper, Button } from "@mui/material";
+import { Typography, Grid, Paper, Button, Divider } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CheckIcon from "@mui/icons-material/Check";
@@ -40,48 +40,63 @@ const LessonDetails = () => {
     <Fragment>
       <MetaData title={lesson.title} />
       <Grid container justifyContent="center">
-        <Grid item xs={12} lg={5} mt={5}>
-          <Typography variant="h4" gutterBottom>
-            {lesson.title}
-          </Typography>
-          {lesson.videoURL && (
-            <Paper elevation={3} mt={2}>
+        <Grid item xs={12} lg={9}>
+          <Paper
+            elevation={3}
+            style={{ padding: "20px", marginTop: "20px", marginBottom: "20px" }}
+          >
+            <Typography variant="h4" gutterBottom>
+              {lesson.title}
+            </Typography>
+            <Divider style={{ margin: "20px 0" }} />
+
+            {lesson.videoURL && (
               <video
                 controls
                 controlsList="nodownload"
                 disablePictureInPicture
-                style={{ width: "100%", height: "auto" }}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  border: "2px solid #ccc",
+                  borderRadius: "4px",
+                }}
+                disabled
               >
                 <source src={lesson.videoURL} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-            </Paper>
-          )}
-          <Typography
-            variant="body1"
-            mt={2}
-            dangerouslySetInnerHTML={{ __html: lesson.content }}
-          />
-          {lesson.status === "Not Done" && (
-            <Button
-              onClick={handleMarkAsDone}
-              variant="contained"
-              color="primary"
-              disabled={loading}
-            >
-              {loading ? "Loading..." : "Mark As Done"}
-            </Button>
-          )}
+            )}
+            <Divider style={{ margin: "20px 0" }} />
 
-          {lesson.status === "Done" && (
-            <Button
-              variant="contained"
-              color="success"
-              startIcon={<CheckIcon />}
-            >
-              Done
-            </Button>
-          )}
+            <Typography
+              variant="body1"
+              mt={2}
+              dangerouslySetInnerHTML={{ __html: lesson.content }}
+            />
+            {lesson.status === "Not Done" && (
+              <Button
+                onClick={handleMarkAsDone}
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                style={{ marginTop: "20px" }}
+              >
+                {loading ? "Loading..." : "Mark As Done"}
+              </Button>
+            )}
+
+            {lesson.status === "Done" && (
+              <Button
+                variant="contained"
+                color="success"
+                startIcon={<CheckIcon />}
+                style={{ marginTop: "20px" }}
+              >
+                Done
+              </Button>
+            )}
+          </Paper>
         </Grid>
       </Grid>
     </Fragment>

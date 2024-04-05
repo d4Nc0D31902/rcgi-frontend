@@ -11,6 +11,9 @@ import {
   RadioGroup,
   Typography,
   Button,
+  Grid,
+  Paper,
+  Divider,
 } from "@mui/material";
 
 const QuizDetails = () => {
@@ -18,8 +21,8 @@ const QuizDetails = () => {
   const { id } = useParams();
   const { loading, error, quiz } = useSelector((state) => state.quizDetails);
   const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [submitted, setSubmitted] = useState(false); 
-  const totalQuestions = quiz.content ? quiz.content.length : 0; 
+  const [submitted, setSubmitted] = useState(false);
+  const totalQuestions = quiz.content ? quiz.content.length : 0;
   const totalScores = Object.values(selectedAnswers).filter(
     (answer, index) => answer === quiz.content[index].answer
   ).length;
@@ -39,7 +42,7 @@ const QuizDetails = () => {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     setSubmitted(true);
   };
 
@@ -49,47 +52,52 @@ const QuizDetails = () => {
   return (
     <Fragment>
       <MetaData title={quiz.title} />
-      <div className="row">
-        <div className="col-12 col-lg-8 mt-5">
-          <Typography variant="h4" component="h1" gutterBottom>
-            {quiz.title}
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            {quiz.content &&
-              quiz.content.map((question, index) => (
-                <div key={index}>
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    {index + 1}. {question.questions}
-                  </Typography>
-                  <FormControl component="fieldset">
-                    <RadioGroup
-                      name={`question_${index}`}
-                      value={selectedAnswers[index] || ""}
-                      onChange={(e) => handleChange(index, e)}
-                    >
-                      {question.options.map((option, optionIndex) => (
-                        <FormControlLabel
-                          key={optionIndex}
-                          value={option}
-                          control={<Radio />}
-                          label={option}
-                        />
-                      ))}
-                    </RadioGroup>
-                  </FormControl>
-                </div>
-              ))}
-            <Button type="submit" variant="contained" color="primary">
-              Submit Quiz
-            </Button>
-          </form>
-          {submitted && (
-            <Typography variant="h6" component="h2" gutterBottom>
-              Total Scores: {totalScores}/{totalQuestions}
+      <Grid container justifyContent="center">
+        <Grid item xs={12} lg={8} mt={5}>
+          <Paper elevation={3} style={{ padding: "20px" }}>
+            <Typography variant="h4" component="h1" gutterBottom>
+              {quiz.title}
             </Typography>
-          )}
-        </div>
-      </div>
+            <Divider style={{ margin: "20px 0" }} />
+
+            <form onSubmit={handleSubmit}>
+              {quiz.content &&
+                quiz.content.map((question, index) => (
+                  <div key={index}>
+                    <Typography variant="h6" component="h2" gutterBottom>
+                      {index + 1}. {question.questions}
+                    </Typography>
+                    <FormControl component="fieldset">
+                      <RadioGroup
+                        name={`question_${index}`}
+                        value={selectedAnswers[index] || ""}
+                        onChange={(e) => handleChange(index, e)}
+                      >
+                        {question.options.map((option, optionIndex) => (
+                          <FormControlLabel
+                            key={optionIndex}
+                            value={option}
+                            control={<Radio />}
+                            label={option}
+                          />
+                        ))}
+                      </RadioGroup>
+                    </FormControl>
+                    <Divider style={{ margin: "20px 0" }} />
+                  </div>
+                ))}
+              <Button type="submit" variant="contained" color="primary">
+                Submit Quiz
+              </Button>
+            </form>
+            {submitted && (
+              <Typography variant="h6" component="h2" gutterBottom>
+                Total Scores: {totalScores}/{totalQuestions}
+              </Typography>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };
