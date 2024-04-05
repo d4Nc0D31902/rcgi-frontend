@@ -56,7 +56,7 @@ const AddChapter = () => {
     try {
       await dispatch(addChapter(moduleId, formData));
       toast.success("Chapter added successfully!");
-      navigate(`/admin/courses`);
+      navigate(-1);
     } catch (error) {
       console.error("Error adding chapter:", error);
       toast.error(

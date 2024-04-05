@@ -38,7 +38,8 @@ const AddModule = () => {
     }
 
     if (success) {
-      navigate("/admin/courses");
+      navigate(-1);
+
       message("Module created successfully");
       dispatch({ type: NEW_COURSE_RESET });
     }

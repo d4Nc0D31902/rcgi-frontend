@@ -37,7 +37,8 @@ const AddLesson = () => {
     }
 
     if (success) {
-      navigate("/admin/courses");
+      navigate(-1);
+
       message("Lesson created successfully");
     }
   }, [dispatch, error, success, navigate]);
@@ -58,7 +59,7 @@ const AddLesson = () => {
 
     if (!error && success) {
       message("Lesson created successfully");
-      navigate(`/admin/courses`);
+      navigate(-1);
     }
   };
 
