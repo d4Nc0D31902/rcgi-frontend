@@ -19,6 +19,8 @@ import {
 import MetaData from "../layout/MetaData";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import RefreshIcon from "@mui/icons-material/Refresh";
+
 const EnrollmentQuizDetails = () => {
   const dispatch = useDispatch();
   const { loading, error, quiz } = useSelector((state) => state.getSingleQuiz);
@@ -62,10 +64,23 @@ const EnrollmentQuizDetails = () => {
     }
   };
 
+  const handleRetake = () => {
+    setAnswers({});
+    setScore(0);
+    setResult(null);
+    setIncorrectAnswers([]);
+    setSubmitted(false);
+  };
+
   const handleMarkAsDone = () => {
-    dispatch(markQuizAsDone(enrollmentId, moduleId, chapterId, quizId));
-    toast.success("Quiz marked as done successfully!");
-    dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
+    dispatch(markQuizAsDone(enrollmentId, moduleId, chapterId, quizId))
+      .then(() => {
+        toast.success("Lesson marked as done successfully!");
+        dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
+      })
+      .catch((error) => {
+        toast.error("Failed to mark lesson as done: " + error.message);
+      });
   };
 
   return (
@@ -120,14 +135,32 @@ const EnrollmentQuizDetails = () => {
                       <Divider style={{ margin: "20px 0" }} />
                     </div>
                   ))}
+
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
                     endIcon={<ArrowUpwardIcon />}
+                    disabled={
+                      result === "Passed" ||
+                      result === "Failed" ||
+                      (quiz && quiz.status === "Done")
+                    }
                   >
                     Submit
                   </Button>
+
+                  {result === "Failed" && (
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      endIcon={<RefreshIcon />}
+                      style={{ marginLeft: "20px" }}
+                      onClick={handleRetake}
+                    >
+                      Retake
+                    </Button>
+                  )}
 
                   {result === "Passed" && quiz && quiz.status !== "Done" && (
                     <Button
