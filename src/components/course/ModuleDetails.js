@@ -79,7 +79,6 @@ const ModuleDetails = () => {
       <Grid container justifyContent="center">
         <Grid item xs={12} lg={8}>
           <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-            {/* Banner section */}
             <div style={{ marginBottom: "20px" }}>
               {module.images && (
                 <div
@@ -106,8 +105,6 @@ const ModuleDetails = () => {
                 </div>
               )}
             </div>
-            {/* Banner section ends */}
-            {/* Divider */}
             <Divider style={{ margin: "20px 0" }} />
             <Typography variant="h3" mt={2}>
               {module.title}
@@ -168,7 +165,11 @@ const ModuleDetails = () => {
                         )}
                       </div>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails
+                      style={{
+                        backgroundColor: "lightgray",
+                      }}
+                    >
                       {chapter.lessons.map((lesson, lessonIndex) => (
                         <div key={lessonIndex}>
                           <Typography
@@ -200,7 +201,11 @@ const ModuleDetails = () => {
                         </div>
                       ))}
                     </AccordionDetails>
-                    <AccordionDetails>
+                    <AccordionDetails
+                      style={{
+                        backgroundColor: "lightgray",
+                      }}
+                    >
                       {chapter.quizzes.map((quiz, quizIndex) => (
                         <div key={quizIndex}>
                           <Typography
