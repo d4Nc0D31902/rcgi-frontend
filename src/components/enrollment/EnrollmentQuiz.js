@@ -47,17 +47,31 @@ const EnrollmentQuizDetails = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      "quizState",
-      JSON.stringify({
-        answers,
-        score,
-        result,
-        incorrectAnswers,
-        submitted,
-      })
-    );
-  }, [answers, score, result, incorrectAnswers, submitted]);
+    // Check if any of the quizzes are done
+    const isQuizDone = quiz && quiz.quizId && quiz.quizId.status === "Done";
+
+    // Save state to localStorage only if the quiz is done
+    if (isQuizDone) {
+      localStorage.setItem(
+        "quizState",
+        JSON.stringify({
+          answers,
+          score,
+          result,
+          incorrectAnswers,
+          submitted,
+        })
+      );
+    } else {
+      // Reset state if the quiz is not done
+      setAnswers({});
+      setScore(0);
+      setResult(null);
+      setIncorrectAnswers([]);
+      setSubmitted(false);
+      localStorage.removeItem("quizState"); // Remove saved state
+    }
+  }, [answers, score, result, incorrectAnswers, submitted, quiz]);
 
   const handleOptionChange = (event, index) => {
     const { value } = event.target;
@@ -152,10 +166,11 @@ const EnrollmentQuizDetails = () => {
                     </div>
                   ))}
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                     onClick={handleSubmit}
                     endIcon={<ArrowUpwardIcon />}
+                    disabled={result === "Passed" || result === "Failed"}
                   >
                     Submit
                   </Button>
