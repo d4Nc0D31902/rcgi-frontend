@@ -1,7 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSingleQuiz } from "../../actions/enrollmentActions";
+import { getSingleQuiz, markQuizAsDone } from "../../actions/enrollmentActions";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   CircularProgress,
   Typography,
@@ -15,69 +17,25 @@ import {
   Divider,
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import RefreshIcon from "@mui/icons-material/Refresh";
-
 const EnrollmentQuizDetails = () => {
   const dispatch = useDispatch();
   const { loading, error, quiz } = useSelector((state) => state.getSingleQuiz);
-
   const { enrollmentId, moduleId, chapterId, quizId } = useParams();
-
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [result, setResult] = useState(null);
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
-  const [submitted, setSubmitted] = useState(false); // State to track submission
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
   }, [dispatch, enrollmentId, moduleId, chapterId, quizId]);
-
-  useEffect(() => {
-    const savedQuizState = localStorage.getItem("quizState");
-    if (savedQuizState) {
-      const parsedState = JSON.parse(savedQuizState);
-      setAnswers(parsedState.answers);
-      setScore(parsedState.score);
-      setResult(parsedState.result);
-      setIncorrectAnswers(parsedState.incorrectAnswers);
-      setSubmitted(parsedState.submitted);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Check if any of the quizzes are done
-    const isQuizDone = quiz && quiz.quizId && quiz.quizId.status === "Done";
-
-    // Save state to localStorage only if the quiz is done
-    if (isQuizDone) {
-      localStorage.setItem(
-        "quizState",
-        JSON.stringify({
-          answers,
-          score,
-          result,
-          incorrectAnswers,
-          submitted,
-        })
-      );
-    } else {
-      // Reset state if the quiz is not done
-      setAnswers({});
-      setScore(0);
-      setResult(null);
-      setIncorrectAnswers([]);
-      setSubmitted(false);
-      localStorage.removeItem("quizState"); // Remove saved state
-    }
-  }, [answers, score, result, incorrectAnswers, submitted, quiz]);
-
   const handleOptionChange = (event, index) => {
     const { value } = event.target;
     setAnswers({ ...answers, [index]: value });
   };
-
   const handleSubmit = () => {
     let newScore = 0;
     const incorrect = [];
@@ -91,7 +49,7 @@ const EnrollmentQuizDetails = () => {
     setScore(newScore);
     setIncorrectAnswers(incorrect);
     checkResult(newScore);
-    setSubmitted(true); // Set submitted to true after submission
+    setSubmitted(true);
   };
 
   const checkResult = (score) => {
@@ -104,13 +62,10 @@ const EnrollmentQuizDetails = () => {
     }
   };
 
-  const handleRetake = () => {
-    setAnswers({});
-    setScore(0);
-    setResult(null);
-    setIncorrectAnswers([]);
-    setSubmitted(false);
-    localStorage.removeItem("quizState"); // Remove saved state when retaking the quiz
+  const handleMarkAsDone = () => {
+    dispatch(markQuizAsDone(enrollmentId, moduleId, chapterId, quizId));
+    toast.success("Quiz marked as done successfully!");
+    dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
   };
 
   return (
@@ -156,7 +111,7 @@ const EnrollmentQuizDetails = () => {
                             <FormControlLabel
                               key={optionIndex}
                               value={option}
-                              control={<Radio disabled={submitted} />} // Disable radio button if submitted
+                              control={<Radio disabled={submitted} />}
                               label={option}
                             />
                           ))}
@@ -166,24 +121,35 @@ const EnrollmentQuizDetails = () => {
                     </div>
                   ))}
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     color="primary"
                     onClick={handleSubmit}
                     endIcon={<ArrowUpwardIcon />}
-                    disabled={result === "Passed" || result === "Failed"}
                   >
                     Submit
                   </Button>
 
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={handleRetake}
-                    endIcon={<RefreshIcon />}
-                    style={{ display: result === "Failed" ? "block" : "none" }}
-                  >
-                    Retake
-                  </Button>
+                  {result === "Passed" && quiz && quiz.status !== "Done" && (
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={handleMarkAsDone}
+                      style={{ marginLeft: "20px" }}
+                    >
+                      Mark As Done
+                    </Button>
+                  )}
+
+                  {quiz && quiz.status === "Done" && (
+                    <Button
+                      variant="contained"
+                      color="success"
+                      style={{ marginLeft: "20px" }}
+                      startIcon={<CheckOutlinedIcon />}
+                    >
+                      Done
+                    </Button>
+                  )}
 
                   <Typography variant="h6" sx={{ marginTop: "20px" }}>
                     Score: {score}/{quiz.quizId.content.length}
@@ -211,5 +177,4 @@ const EnrollmentQuizDetails = () => {
     </Fragment>
   );
 };
-
 export default EnrollmentQuizDetails;
