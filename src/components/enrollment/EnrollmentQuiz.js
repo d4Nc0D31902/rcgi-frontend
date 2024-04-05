@@ -34,6 +34,31 @@ const EnrollmentQuizDetails = () => {
     dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
   }, [dispatch, enrollmentId, moduleId, chapterId, quizId]);
 
+  useEffect(() => {
+    const savedQuizState = localStorage.getItem("quizState");
+    if (savedQuizState) {
+      const parsedState = JSON.parse(savedQuizState);
+      setAnswers(parsedState.answers);
+      setScore(parsedState.score);
+      setResult(parsedState.result);
+      setIncorrectAnswers(parsedState.incorrectAnswers);
+      setSubmitted(parsedState.submitted);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "quizState",
+      JSON.stringify({
+        answers,
+        score,
+        result,
+        incorrectAnswers,
+        submitted,
+      })
+    );
+  }, [answers, score, result, incorrectAnswers, submitted]);
+
   const handleOptionChange = (event, index) => {
     const { value } = event.target;
     setAnswers({ ...answers, [index]: value });
@@ -71,6 +96,7 @@ const EnrollmentQuizDetails = () => {
     setResult(null);
     setIncorrectAnswers([]);
     setSubmitted(false);
+    localStorage.removeItem("quizState"); // Remove saved state when retaking the quiz
   };
 
   return (
