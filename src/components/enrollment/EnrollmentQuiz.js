@@ -15,7 +15,7 @@ import {
   Divider,
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 const EnrollmentQuizDetails = () => {
   const dispatch = useDispatch();
   const { loading, error, quiz } = useSelector((state) => state.getSingleQuiz);
@@ -104,6 +104,7 @@ const EnrollmentQuizDetails = () => {
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
+                    endIcon={<ArrowUpwardIcon />}
                   >
                     Submit
                   </Button>

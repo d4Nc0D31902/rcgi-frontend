@@ -202,7 +202,11 @@ const EnrollmentChapterDetails = () => {
                       onClick={handleMarkAsDone}
                       disabled={loading}
                     >
-                      Mark As Done
+                      {loading ? (
+                        <CircularProgress size={24} color="primary" />
+                      ) : (
+                        "Mark As Done"
+                      )}
                     </Button>
                   ) : (
                     <Button
