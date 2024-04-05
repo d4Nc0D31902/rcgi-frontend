@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+
 const EnrollmentQuizDetails = () => {
   const dispatch = useDispatch();
   const { loading, error, quiz } = useSelector((state) => state.getSingleQuiz);
@@ -25,6 +26,7 @@ const EnrollmentQuizDetails = () => {
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [result, setResult] = useState(null);
+  const [incorrectAnswers, setIncorrectAnswers] = useState([]);
 
   useEffect(() => {
     dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
@@ -37,12 +39,16 @@ const EnrollmentQuizDetails = () => {
 
   const handleSubmit = () => {
     let newScore = 0;
+    const incorrect = [];
     quiz.quizId.content.forEach((question, index) => {
       if (answers[index] === question.answer) {
         newScore++;
+      } else {
+        incorrect.push(index);
       }
     });
     setScore(newScore);
+    setIncorrectAnswers(incorrect);
     checkResult(newScore);
   };
 
@@ -59,9 +65,7 @@ const EnrollmentQuizDetails = () => {
   return (
     <Fragment>
       <MetaData title={"Enrollment Quiz Details"} />
-      {loading ? (
-        <CircularProgress sx={{ display: "block", margin: "auto" }} />
-      ) : error ? (
+      {error ? (
         <Typography variant="h6" color="error" align="center">
           {error}
         </Typography>
@@ -77,7 +81,17 @@ const EnrollmentQuizDetails = () => {
                   <Divider style={{ margin: "20px 0" }} />
                   {quiz.quizId.content.map((question, index) => (
                     <div key={index}>
-                      <Typography variant="body1" sx={{ marginBottom: "8px" }}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          marginBottom: "8px",
+                          color: incorrectAnswers.includes(index)
+                            ? "red"
+                            : answers[index] === question.answer
+                            ? "green"
+                            : "inherit",
+                        }}
+                      >
                         {index + 1}. {question.questions}
                       </Typography>
                       <FormControl component="fieldset">
