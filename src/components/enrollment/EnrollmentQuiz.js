@@ -33,11 +33,22 @@ const EnrollmentQuizDetails = () => {
 
   useEffect(() => {
     dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
+    const storedStates = JSON.parse(localStorage.getItem("quizStates")) || [];
+    const storedState = storedStates.find((state) => state.quizId === quizId);
+    if (storedState) {
+      setAnswers(storedState.state.answers);
+      setScore(storedState.state.score);
+      setResult(storedState.state.result);
+      setIncorrectAnswers(storedState.state.incorrectAnswers);
+      setSubmitted(storedState.state.submitted);
+    }
   }, [dispatch, enrollmentId, moduleId, chapterId, quizId]);
+
   const handleOptionChange = (event, index) => {
     const { value } = event.target;
     setAnswers({ ...answers, [index]: value });
   };
+
   const handleSubmit = () => {
     let newScore = 0;
     const incorrect = [];
@@ -48,9 +59,9 @@ const EnrollmentQuizDetails = () => {
         incorrect.push(index);
       }
     });
+    checkResult(newScore);
     setScore(newScore);
     setIncorrectAnswers(incorrect);
-    checkResult(newScore);
     setSubmitted(true);
   };
 
@@ -63,6 +74,12 @@ const EnrollmentQuizDetails = () => {
       setResult("Failed");
     }
   };
+
+  useEffect(() => {
+    setScore(0); 
+    setResult(null);
+    setSubmitted(false);
+  }, [quiz]);
 
   const handleRetake = () => {
     setAnswers({});
@@ -77,6 +94,21 @@ const EnrollmentQuizDetails = () => {
       .then(() => {
         toast.success("Lesson marked as done successfully!");
         dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
+        const quizState = {
+          answers,
+          score,
+          result,
+          incorrectAnswers,
+          submitted,
+        };
+        const existingQuizStates =
+          JSON.parse(localStorage.getItem("quizStates")) || [];
+
+        const updatedQuizStates = [
+          ...existingQuizStates,
+          { quizId, state: quizState },
+        ];
+        localStorage.setItem("quizStates", JSON.stringify(updatedQuizStates));
       })
       .catch((error) => {
         toast.error("Failed to mark lesson as done: " + error.message);
@@ -106,10 +138,12 @@ const EnrollmentQuizDetails = () => {
                         variant="body1"
                         sx={{
                           marginBottom: "8px",
-                          color: incorrectAnswers.includes(index)
-                            ? "red"
-                            : answers[index] === question.answer
-                            ? "green"
+                          color: submitted
+                            ? incorrectAnswers.includes(index)
+                              ? "red"
+                              : answers[index] === question.answer
+                              ? "green"
+                              : "inherit"
                             : "inherit",
                         }}
                       >
@@ -126,7 +160,15 @@ const EnrollmentQuizDetails = () => {
                             <FormControlLabel
                               key={optionIndex}
                               value={option}
-                              control={<Radio disabled={submitted} />}
+                              control={
+                                <Radio
+                                  disabled={
+                                    result === "Passed" ||
+                                    result === "Failed" ||
+                                    (quiz && quiz.status === "Done")
+                                  }
+                                />
+                              }
                               label={option}
                             />
                           ))}
