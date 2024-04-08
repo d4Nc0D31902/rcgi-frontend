@@ -245,7 +245,10 @@ const EnrollmentDetails = () => {
                           onClick={() => handleMarkModuleAsDone(id, mod._id)}
                         >
                           {mod.status === "Done" ? (
-                            <IconButton aria-label="check">
+                            <IconButton
+                              aria-label="check"
+                              style={{ color: "white" }}
+                            >
                               <CheckIcon />
                             </IconButton>
                           ) : (
