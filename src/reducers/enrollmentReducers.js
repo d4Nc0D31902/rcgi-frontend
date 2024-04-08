@@ -44,6 +44,9 @@ import {
   MARK_QUIZ_AS_DONE_REQUEST,
   MARK_QUIZ_AS_DONE_SUCCESS,
   MARK_QUIZ_AS_DONE_FAIL,
+  MARK_MODULE_AS_DONE_FAIL,
+  MARK_MODULE_AS_DONE_REQUEST,
+  MARK_MODULE_AS_DONE_SUCCESS,
 } from "../constants/enrollmentConstants";
 
 export const newEnrollmentReducer = (state = {}, action) => {
@@ -406,6 +409,19 @@ export const markQuizAsDoneReducer = (state = {}, action) => {
     case MARK_QUIZ_AS_DONE_SUCCESS:
       return { loading: false, success: true };
     case MARK_QUIZ_AS_DONE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const markModuleAsDoneReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MARK_MODULE_AS_DONE_REQUEST:
+      return { loading: true };
+    case MARK_MODULE_AS_DONE_SUCCESS:
+      return { loading: false, success: true };
+    case MARK_MODULE_AS_DONE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

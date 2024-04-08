@@ -1,7 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { getEnrollmentDetails } from "../../actions/enrollmentActions";
+import {
+  getEnrollmentDetails,
+  markModuleAsDone,
+} from "../../actions/enrollmentActions";
 import {
   CircularProgress,
   Typography,
@@ -13,8 +16,13 @@ import {
   Box,
   Button,
   Avatar,
+  IconButton,
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
+import CheckIcon from "@mui/icons-material/Check";
+import { Check } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EnrollmentDetails = () => {
   const dispatch = useDispatch();
@@ -32,6 +40,32 @@ const EnrollmentDetails = () => {
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
+  };
+
+  const findModuleWithAllDone = () => {
+    if (module) {
+      return module.find((mod) => {
+        return mod.chapter.every(
+          (chapter) =>
+            chapter.lessons.every((lesson) => lesson.status === "Done") &&
+            chapter.quizzes.every((quiz) => quiz.status === "Done")
+        );
+      });
+    }
+    return undefined;
+  };
+
+  const doneModule = findModuleWithAllDone();
+
+  const handleMarkModuleAsDone = async (enrollmentId, moduleId) => {
+    try {
+      await dispatch(markModuleAsDone(enrollmentId, moduleId));
+      toast.success("Module marked as done successfully!");
+      dispatch(getEnrollmentDetails(id));
+    } catch (error) {
+      console.error("Error marking module as done:", error);
+      toast.error("Failed to mark module as done. Please try again.");
+    }
   };
 
   return (
@@ -180,6 +214,44 @@ const EnrollmentDetails = () => {
                             View
                           </Button>
                         </Link>
+                        <Button
+                          variant="contained"
+                          color="success"
+                          fullWidth
+                          style={{
+                            marginTop: "20px",
+                            height: "40px",
+                            width: "50%",
+                            marginLeft: "85px",
+                          }}
+                          disabled={
+                            (module.findIndex((m) => m === mod) > 0 &&
+                              module[module.findIndex((m) => m === mod) - 1]
+                                .status !== "Done") ||
+                            (mod.chapter.length > 0 &&
+                              (!mod.chapter.every(
+                                (chapter) => chapter.status === "Done"
+                              ) ||
+                                !mod.chapter.every(
+                                  (chapter) =>
+                                    chapter.lessons.every(
+                                      (lesson) => lesson.status === "Done"
+                                    ) &&
+                                    chapter.quizzes.every(
+                                      (quiz) => quiz.status === "Done"
+                                    )
+                                )))
+                          }
+                          onClick={() => handleMarkModuleAsDone(id, mod._id)}
+                        >
+                          {mod.status === "Done" ? (
+                            <IconButton aria-label="check">
+                              <CheckIcon />
+                            </IconButton>
+                          ) : (
+                            "Mark As Done"
+                          )}
+                        </Button>
                       </CardContent>
                     </Card>
                   ))}

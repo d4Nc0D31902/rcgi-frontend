@@ -42,6 +42,9 @@ import {
   MARK_QUIZ_AS_DONE_REQUEST,
   MARK_QUIZ_AS_DONE_SUCCESS,
   MARK_QUIZ_AS_DONE_FAIL,
+  MARK_MODULE_AS_DONE_REQUEST,
+  MARK_MODULE_AS_DONE_SUCCESS,
+  MARK_MODULE_AS_DONE_FAIL,
   CLEAR_ERRORS,
 } from "../constants/enrollmentConstants";
 
@@ -394,6 +397,36 @@ export const markQuizAsDone =
       console.error("Failed to mark quiz as done:", error);
       dispatch({
         type: MARK_QUIZ_AS_DONE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const markModuleAsDone =
+  (enrollmentId, moduleId) => async (dispatch) => {
+    try {
+      dispatch({ type: MARK_MODULE_AS_DONE_REQUEST });
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_API}/api/v1/enrollment/${enrollmentId}/module/${moduleId}/mark-as-done`,
+        {},
+        config
+      );
+
+      dispatch({
+        type: MARK_MODULE_AS_DONE_SUCCESS,
+        payload: data.success,
+      });
+    } catch (error) {
+      dispatch({
+        type: MARK_MODULE_AS_DONE_FAIL,
         payload: error.response.data.message,
       });
     }
