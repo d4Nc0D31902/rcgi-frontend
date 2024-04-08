@@ -113,7 +113,7 @@ const EnrollmentLessonDetails = () => {
                           backgroundColor: "lightgray",
                         }}
                       >
-                        <div>
+                        {/* <div>
                           <ul>
                             {chapter.lessons.map((lesson, lessonIndex) => (
                               <li key={lessonIndex}>
@@ -146,6 +146,55 @@ const EnrollmentLessonDetails = () => {
                                 </Typography>
                               </li>
                             ))}
+                          </ul>
+                        </div> */}
+                        <div>
+                          <ul>
+                            {chapter.lessons.map((lesson, lessonIndex) => {
+                              // Check if all previous lessons are done and the chapter itself is done
+                              const isPreviousDone = chapter.lessons
+                                .slice(0, lessonIndex)
+                                .every(
+                                  (prevLesson) => prevLesson.status === "Done"
+                                );
+                              const isChapterDone = chapter.status === "Done";
+
+                              // Check if the current lesson should be enabled
+                              const isLessonEnabled =
+                                isPreviousDone && isChapterDone;
+
+                              return (
+                                <li key={lessonIndex}>
+                                  <Typography variant="body1" gutterBottom>
+                                    {isLessonEnabled ? (
+                                      <Link
+                                        to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
+                                        style={{
+                                          textDecoration: "none",
+                                          color:
+                                            lesson.status === "Done"
+                                              ? "green"
+                                              : "black",
+                                        }}
+                                      >
+                                        {lesson.lessonId.title}
+                                      </Link>
+                                    ) : (
+                                      <span
+                                        style={{
+                                          color:
+                                            lesson.status === "Not Done"
+                                              ? "gray"
+                                              : "",
+                                        }}
+                                      >
+                                        {lesson.lessonId.title}
+                                      </span>
+                                    )}
+                                  </Typography>
+                                </li>
+                              );
+                            })}
                           </ul>
                         </div>
                         <div>

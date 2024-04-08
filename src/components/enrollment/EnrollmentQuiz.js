@@ -76,7 +76,7 @@ const EnrollmentQuizDetails = () => {
   };
 
   useEffect(() => {
-    setScore(0); 
+    setScore(0);
     setResult(null);
     setSubmitted(false);
   }, [quiz]);
@@ -220,6 +220,7 @@ const EnrollmentQuizDetails = () => {
                       variant="contained"
                       color="success"
                       style={{ marginLeft: "20px" }}
+                      onClick={handleSubmit}
                       startIcon={<CheckOutlinedIcon />}
                     >
                       Done
