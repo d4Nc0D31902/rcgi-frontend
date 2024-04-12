@@ -148,6 +148,34 @@ const EnrollmentQuizDetails = () => {
   //     });
   // };
 
+  // const handleMarkAsDone = () => {
+  //   dispatch(markQuizAsDone(enrollmentId, moduleId, chapterId, quizId))
+  //     .then(() => {
+  //       toast.success("Lesson marked as done successfully!");
+  //       dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
+  //       dispatch(getEnrollmentModule(enrollmentId, moduleId));
+  //       const quizState = {
+  //         answers,
+  //         score,
+  //         result,
+  //         incorrectAnswers,
+  //         submitted,
+  //       };
+  //       const existingQuizStates =
+  //         JSON.parse(localStorage.getItem("quizStates")) || {};
+
+  //       const updatedQuizStates = {
+  //         ...existingQuizStates,
+  //         [`${enrollmentId}-${moduleId}-${chapterId}-${quizId}`]: quizState,
+  //       };
+
+  //       localStorage.setItem("quizStates", JSON.stringify(updatedQuizStates));
+  //     })
+  //     .catch((error) => {
+  //       toast.error("Failed to mark lesson as done: " + error.message);
+  //     });
+  // };
+
   const handleMarkAsDone = () => {
     dispatch(markQuizAsDone(enrollmentId, moduleId, chapterId, quizId))
       .then(() => {
@@ -170,6 +198,20 @@ const EnrollmentQuizDetails = () => {
         };
 
         localStorage.setItem("quizStates", JSON.stringify(updatedQuizStates));
+
+        // Find the index of the current chapter
+        const currentChapterIndex = enrollmentModule.chapter.findIndex(
+          (chapter) => chapter._id === chapterId
+        );
+
+        // Check if there is a next chapter available
+        const nextChapter = enrollmentModule.chapter[currentChapterIndex + 1];
+        if (nextChapter) {
+          // Navigate to the next chapter
+          navigate(
+            `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapter._id}`
+          );
+        }
       })
       .catch((error) => {
         toast.error("Failed to mark lesson as done: " + error.message);
@@ -443,7 +485,7 @@ const EnrollmentQuizDetails = () => {
                         border: "1px solid black",
                       }}
                     >
-                      {/* <AccordionSummary
+                      <AccordionSummary
                         style={{
                           backgroundColor: "white",
                         }}
@@ -458,8 +500,8 @@ const EnrollmentQuizDetails = () => {
                         >
                           {chapter.chapterId.title}
                         </Typography>
-                      </AccordionSummary> */}
-                      <AccordionSummary
+                      </AccordionSummary>
+                      {/* <AccordionSummary
                         style={{
                           backgroundColor: "white",
                         }}
@@ -494,7 +536,7 @@ const EnrollmentQuizDetails = () => {
                             {chapter.chapterId.title}
                           </Typography>
                         )}
-                      </AccordionSummary>
+                      </AccordionSummary> */}
                       <AccordionDetails
                         style={{
                           backgroundColor: "lightgray",
@@ -523,7 +565,7 @@ const EnrollmentQuizDetails = () => {
                         <div>
                           <ul>
                             {chapter.quizzes
-                              .filter((quiz) => quiz.status === "Done") // Filter to include only the current quiz
+                              .filter((quiz) => quiz.status === "Done")
                               .map((quiz, quizIndex) => (
                                 <li key={quizIndex}>
                                   <Typography variant="body1" gutterBottom>
