@@ -47,6 +47,7 @@ const UpdateLesson = () => {
     } else {
       setTitle(lesson.title);
       setContent(lesson.content);
+      setVideoURL(lesson.videoURL); 
     }
     if (error) {
       errMsg(error);
@@ -119,7 +120,7 @@ const UpdateLesson = () => {
                 <Grid item xs={12}>
                   <ReactQuill
                     id="content_field"
-                    theme="snow" // You can choose a theme
+                    theme="snow" 
                     value={content}
                     onChange={(value) => setContent(value)}
                     modules={{
@@ -184,9 +185,9 @@ const UpdateLesson = () => {
                     <div>
                       <video
                         controls
+                        src={videoURL}
                         style={{ maxWidth: "100%", maxHeight: "400px" }}
                       >
-                        <source src={videoURL} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
                     </div>

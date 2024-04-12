@@ -145,15 +145,12 @@ const EnrollmentChapterDetails = () => {
                       <div>
                         <ul>
                           {chapter.lessons.map((lesson, lessonIndex) => {
-                            // Check if all previous lessons are done and the chapter itself is done
                             const isPreviousDone = chapter.lessons
                               .slice(0, lessonIndex)
                               .every(
                                 (prevLesson) => prevLesson.status === "Done"
                               );
                             const isChapterDone = chapter.status === "Done";
-
-                            // Check if the current lesson should be enabled
                             const isLessonEnabled =
                               isPreviousDone && isChapterDone;
 
@@ -191,7 +188,7 @@ const EnrollmentChapterDetails = () => {
                           })}
                         </ul>
                       </div>
-                      <div>
+                      {/* <div>
                         <ul>
                           {chapter.lessons.every(
                             (lesson) => lesson.status === "Done"
@@ -210,6 +207,37 @@ const EnrollmentChapterDetails = () => {
                                   >
                                     {quiz.quizId.title}
                                   </Link>
+                                </Typography>
+                              </li>
+                            ))}
+                        </ul>
+                      </div> */}
+                      <div>
+                        <ul>
+                          {chapter.lessons.every(
+                            (lesson) => lesson.status === "Done"
+                          ) &&
+                            chapter.status !== "Not Done" &&
+                            chapter.quizzes.map((quiz, quizIndex) => (
+                              <li key={quizIndex}>
+                                <Typography variant="body1" gutterBottom>
+                                  {chapter.status === "Done" ? (
+                                    <Link
+                                      to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
+                                      style={{
+                                        color:
+                                          quiz.status === "Done"
+                                            ? "green"
+                                            : "black",
+                                      }}
+                                    >
+                                      {quiz.quizId.title}
+                                    </Link>
+                                  ) : (
+                                    <span style={{ color: "gray" }}>
+                                      {quiz.quizId.title}
+                                    </span>
+                                  )}
                                 </Typography>
                               </li>
                             ))}

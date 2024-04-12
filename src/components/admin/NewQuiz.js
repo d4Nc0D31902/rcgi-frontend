@@ -53,7 +53,7 @@ const AddQuiz = () => {
     try {
       await dispatch(addQuiz(chapterId, quizData));
       toast.success("Quiz added successfully!");
-      navigate(`/admin/courses`);
+      navigate(-1);
     } catch (error) {
       console.error("Error adding quiz:", error);
       toast.error(
