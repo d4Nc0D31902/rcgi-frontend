@@ -36,7 +36,7 @@ const EnrollmentLessonDetails = () => {
 
   const { enrollmentId, moduleId, chapterId, lessonId } = useParams();
 
-  const [videoKey, setVideoKey] = useState(0); 
+  const [videoKey, setVideoKey] = useState(0);
 
   useEffect(() => {
     dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
@@ -47,12 +47,110 @@ const EnrollmentLessonDetails = () => {
     setVideoKey((prevKey) => prevKey + 1);
   }, [lesson?.lessonId?.videoURL]);
 
+  // const handleMarkAsDone = () => {
+  //   dispatch(markLessonAsDone(enrollmentId, moduleId, chapterId, lessonId))
+  //     .then(() => {
+  //       toast.success("Lesson marked as done successfully!");
+  //       dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
+  //       dispatch(getEnrollmentModule(enrollmentId, moduleId));
+  //     })
+  //     .catch((error) => {
+  //       toast.error("Failed to mark lesson as done: " + error.message);
+  //     });
+  // };
+
+  // const handleMarkAsDone = () => {
+  //   dispatch(markLessonAsDone(enrollmentId, moduleId, chapterId, lessonId))
+  //     .then(() => {
+  //       toast.success("Lesson marked as done successfully!");
+  //       dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
+  //       dispatch(getEnrollmentModule(enrollmentId, moduleId)).then(() => {
+  //         // Find the current chapter and lesson index
+  //         const currentChapterIndex = enrollmentModule.chapter.findIndex(
+  //           (chapter) => chapter._id === chapterId
+  //         );
+  //         const currentLessonIndex = enrollmentModule.chapter[
+  //           currentChapterIndex
+  //         ].lessons.findIndex((lesson) => lesson._id === lessonId);
+
+  //         // Check if there's a next lesson in the current chapter
+  //         if (
+  //           currentLessonIndex <
+  //           enrollmentModule.chapter[currentChapterIndex].lessons.length - 1
+  //         ) {
+  //           const nextLessonId =
+  //             enrollmentModule.chapter[currentChapterIndex].lessons[
+  //               currentLessonIndex + 1
+  //             ]._id;
+  //           const nextLessonUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/lesson/${nextLessonId}`;
+  //           navigate(nextLessonUrl); // Navigate to the next lesson
+  //         } else {
+  //           // If there's no next lesson, navigate to the next chapter if available
+  //           if (currentChapterIndex < enrollmentModule.chapter.length - 1) {
+  //             const nextChapterId =
+  //               enrollmentModule.chapter[currentChapterIndex + 1]._id;
+  //             const nextChapterUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapterId}`;
+  //             navigate(nextChapterUrl); // Navigate to the next chapter
+  //           } else {
+  //             // If there's no next chapter, navigate to a specific page or handle it accordingly
+  //             navigate("/"); // Navigate to a specific page
+  //           }
+  //         }
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       toast.error("Failed to mark lesson as done: " + error.message);
+  //     });
+  // };
+
   const handleMarkAsDone = () => {
     dispatch(markLessonAsDone(enrollmentId, moduleId, chapterId, lessonId))
       .then(() => {
         toast.success("Lesson marked as done successfully!");
         dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
-        dispatch(getEnrollmentModule(enrollmentId, moduleId));
+        dispatch(getEnrollmentModule(enrollmentId, moduleId)).then(() => {
+          // Find the current chapter and lesson index
+          const currentChapterIndex = enrollmentModule.chapter.findIndex(
+            (chapter) => chapter._id === chapterId
+          );
+          const currentLessonIndex = enrollmentModule.chapter[
+            currentChapterIndex
+          ].lessons.findIndex((lesson) => lesson._id === lessonId);
+
+          // Check if there's a next lesson in the current chapter
+          if (
+            currentLessonIndex <
+            enrollmentModule.chapter[currentChapterIndex].lessons.length - 1
+          ) {
+            const nextLessonId =
+              enrollmentModule.chapter[currentChapterIndex].lessons[
+                currentLessonIndex + 1
+              ]._id;
+            const nextLessonUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/lesson/${nextLessonId}`;
+            navigate(nextLessonUrl); // Navigate to the next lesson
+          } else {
+            // Check if there's a quiz in the current chapter
+            if (
+              enrollmentModule.chapter[currentChapterIndex].quizzes.length > 0
+            ) {
+              const quizId =
+                enrollmentModule.chapter[currentChapterIndex].quizzes[0]._id; // Assuming there's only one quiz per chapter
+              const quizUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/quiz/${quizId}`;
+              navigate(quizUrl); // Navigate to the quiz
+            } else {
+              // If there's no next lesson or quiz, navigate to the next chapter if available
+              if (currentChapterIndex < enrollmentModule.chapter.length - 1) {
+                const nextChapterId =
+                  enrollmentModule.chapter[currentChapterIndex + 1]._id;
+                const nextChapterUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapterId}`;
+                navigate(nextChapterUrl); // Navigate to the next chapter
+              } else {
+                // If there's no next chapter, navigate to a specific page or handle it accordingly
+                navigate("/"); // Navigate to a specific page
+              }
+            }
+          }
+        });
       })
       .catch((error) => {
         toast.error("Failed to mark lesson as done: " + error.message);

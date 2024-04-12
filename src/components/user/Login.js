@@ -27,7 +27,7 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated && redirect === "shipping") {
       navigate(`/${redirect}`, { replace: true });
-    } else if (isAuthenticated) navigate("/");
+    } else if (isAuthenticated) navigate("/enrollment/me");
     if (error) {
       // alert.error(error);
       console.log(error);

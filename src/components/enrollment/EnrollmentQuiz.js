@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getSingleQuiz, markQuizAsDone } from "../../actions/enrollmentActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,6 +30,7 @@ const EnrollmentQuizDetails = () => {
   const [result, setResult] = useState(null);
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
@@ -92,6 +93,7 @@ const EnrollmentQuizDetails = () => {
   const handleMarkAsDone = () => {
     dispatch(markQuizAsDone(enrollmentId, moduleId, chapterId, quizId))
       .then(() => {
+        navigate(-1);
         toast.success("Lesson marked as done successfully!");
         dispatch(getSingleQuiz(enrollmentId, moduleId, chapterId, quizId));
         const quizState = {
