@@ -102,25 +102,30 @@ const ListEnrollments = () => {
 
   const renderProgress = (progress) => {
     return (
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "green",
+        }}
+      >
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "40px",
-            height: "40px",
+            width: "30px",
+            height: "30px",
             marginRight: "8px",
-            border: "2px solid #3f51b5",
-            borderRadius: "50%",
           }}
         >
           <CircularProgress
             variant="determinate"
             value={progress}
-            size={30}
-            thickness={5}
-            style={{ color: "#3f51b5" }}
+            size={40}
+            thickness={10}
+            style={{ color: "green", position: "relative", zIndex: 1 }}
           />
         </div>
         <span>{progress.toFixed(2)}%</span>
