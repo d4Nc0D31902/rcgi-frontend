@@ -1,36 +1,46 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
-import Loader from "../layout/Loader";
-import MetaData from "../layout/MetaData";
+import {
+  TextField,
+  Button,
+  Typography,
+  CircularProgress,
+  Grid,
+  Container,
+  InputAdornment,
+  Paper, 
+} from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
+import MetaData from "../layout/MetaData";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import LoginIcon from "@mui/icons-material/Login";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let location = useLocation();
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
-  // const redirect = location.search ? location.search.split('=')[1] : ''
   const redirect = new URLSearchParams(location.search).get("redirect");
   const notify = (error = "") =>
     toast.error(error, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
+
   useEffect(() => {
     if (isAuthenticated && redirect === "shipping") {
       navigate(`/${redirect}`, { replace: true });
     } else if (isAuthenticated) navigate("/enrollment/me");
     if (error) {
-      // alert.error(error);
-      console.log(error);
       notify(error);
       dispatch(clearErrors());
     }
@@ -41,60 +51,112 @@ const Login = () => {
     dispatch(login(email, password));
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <Fragment>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Fragment>
-          <MetaData title={"Login"} />
+      <MetaData title={"Login"} />
+      <Container maxWidth="sm">
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          style={{ minHeight: "70vh" }}
+        >
+          <Grid item xs={12}>
+            <Paper elevation={3} style={{ padding: "20px" }}>
+              <form onSubmit={submitHandler}>
+                <Typography variant="h4" align="center" gutterBottom>
+                  Login
+                </Typography>
+                <TextField
+                  type="email"
+                  id="email_field"
+                  label="Email"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  placeholder="Email"
+                  margin="normal"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircleIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
 
-          <div className="row wrapper">
-            <div className="col-10 col-lg-5">
-              <form className="shadow-lg" onSubmit={submitHandler}>
-                <h1 className="mb-3">Login</h1>
-                <div className="form-group">
-                  <label htmlFor="email_field">Email</label>
-                  <input
-                    type="email"
-                    id="email_field"
-                    className="form-control"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="password_field">Password</label>
-                  <input
-                    type="password"
-                    id="password_field"
-                    className="form-control"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-
-                <Link to="/password/forgot" className="float-right mb-4">
-                  Forgot Password?
-                </Link>
-
-                <button
-                  id="login_button"
+                <TextField
+                  type={showPassword ? "text" : "password"}
+                  id="password_field"
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  placeholder="Password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <VpnKeyIcon />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {showPassword ? (
+                          <VisibilityOff
+                            onClick={toggleShowPassword}
+                            style={{ cursor: "pointer" }}
+                          />
+                        ) : (
+                          <Visibility
+                            onClick={toggleShowPassword}
+                            style={{ cursor: "pointer" }}
+                          />
+                        )}
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <Typography variant="body2" align="right" gutterBottom>
+                  <Link to="/password/forgot">Forgot Password?</Link>
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
                   type="submit"
-                  className="btn btn-block py-3"
+                  fullWidth
+                  size="large"
+                  disabled={loading}
+                  endIcon={<LoginIcon />}
+                  sx={{ mt: 2 }}
                 >
-                  LOGIN
-                </button>
-
-                <Link to="/register" className="float-right mt-3">
-                  New User?
-                </Link>
+                  {loading ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "LOGIN"
+                  )}
+                </Button>
+                <Typography
+                  variant="body2"
+                  align="center"
+                  gutterBottom
+                  style={{ marginTop: "20px" }}
+                >
+                  <Link to="/register">New User?</Link>
+                </Typography>
               </form>
-            </div>
-          </div>
-        </Fragment>
-      )}
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
     </Fragment>
   );
 };

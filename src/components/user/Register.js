@@ -5,18 +5,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Grid from "@mui/material/Unstable_Grid2";
-import Box from "@mui/material/Box";
+import {
+  TextField,
+  Button,
+  Typography,
+  CircularProgress,
+  Grid,
+  Container,
+  InputAdornment,
+  Box,
+  MenuItem,
+} from "@mui/material";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
-import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
-import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import EmailIcon from "@mui/icons-material/Email";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import BusinessIcon from "@mui/icons-material/Business";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import BadgeIcon from "@mui/icons-material/Badge";
+import "../../App.css";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -84,7 +92,7 @@ const Register = () => {
         spacing={2}
         justifyContent="center"
         alignItems="center"
-        style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}
+        style={{ minHeight: "100vh" }}
       >
         <Grid item xs={12} sm={8} md={6} lg={4}>
           <Box
@@ -100,17 +108,20 @@ const Register = () => {
 
               <TextField
                 id="name_field"
-                label="Name"
+                label="Full Name"
                 variant="outlined"
                 name="name"
                 value={name}
                 onChange={onChange}
                 fullWidth
                 margin="normal"
+                placeholder="Full Name"
                 required
                 InputProps={{
                   startAdornment: (
-                    <DriveFileRenameOutlineOutlinedIcon color="action" />
+                    <InputAdornment position="start">
+                      <DriveFileRenameOutlineIcon />
+                    </InputAdornment>
                   ),
                 }}
               />
@@ -124,35 +135,16 @@ const Register = () => {
                 onChange={onChange}
                 fullWidth
                 margin="normal"
+                placeholder="Email"
                 required
                 InputProps={{
-                  startAdornment: <EmailOutlinedIcon color="action" />,
-                }}
-              />
-
-              {/* <TextField
-                id="password_field"
-                label="Password"
-                variant="outlined"
-                name="password"
-                value={password}
-                onChange={onChange}
-                fullWidth
-                margin="normal"
-                required
-                type={showPassword ? "text" : "password"} 
-                InputProps={{
-                  endAdornment: (
-                    <Button onClick={togglePasswordVisibility}>
-                      {showPassword ? (
-                        <VisibilityIcon />
-                      ) : (
-                        <VisibilityOffIcon />
-                      )}
-                    </Button>
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon />
+                    </InputAdornment>
                   ),
                 }}
-              /> */}
+              />
 
               <TextField
                 id="password_field"
@@ -163,9 +155,15 @@ const Register = () => {
                 onChange={onChange}
                 fullWidth
                 margin="normal"
+                placeholder="Password"
                 required
                 type={showPassword ? "text" : "password"}
                 InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <VpnKeyIcon />
+                    </InputAdornment>
+                  ),
                   endAdornment: (
                     <Button onClick={togglePasswordVisibility}>
                       {showPassword ? (
@@ -188,11 +186,18 @@ const Register = () => {
                 onChange={onChange}
                 fullWidth
                 margin="normal"
-                required
+                placeholder="Select a company"
                 InputProps={{
-                  startAdornment: <ApartmentOutlinedIcon color="action" />,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <BusinessIcon />
+                    </InputAdornment>
+                  ),
                 }}
               >
+                <MenuItem disabled value="">
+                  <em>Choose a company</em>
+                </MenuItem>
                 {["Barcino", "Meat Depot", "Single Origin", "Bluesmith"].map(
                   (option) => (
                     <MenuItem key={option} value={option}>
@@ -211,9 +216,13 @@ const Register = () => {
                 onChange={onChange}
                 fullWidth
                 margin="normal"
-                required
+                placeholder="Employee ID"
                 InputProps={{
-                  startAdornment: <BadgeOutlinedIcon color="action" />,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <BadgeIcon />
+                    </InputAdornment>
+                  ),
                 }}
               />
 
@@ -224,12 +233,12 @@ const Register = () => {
                     <figure className="avatar mr-3 item-rtl">
                       <img
                         src={avatarPreview}
-                        className="rounded-circle"
+                        className="rounded-circle avatar-preview"
                         alt="Avatar Preview"
                       />
                     </figure>
                   </div>
-                  <div className="custom-file">
+                  <div className="custom-file" style={{ cursor: "pointer" }}>
                     <input
                       type="file"
                       name="avatar"
@@ -250,9 +259,9 @@ const Register = () => {
                 type="submit"
                 variant="contained"
                 className="btn btn-block py-3"
-                color="success"
+                color="primary"
                 disabled={loading ? true : false}
-                startIcon={<HowToRegOutlinedIcon />}
+                endIcon={<HowToRegOutlinedIcon />}
               >
                 REGISTER
               </Button>

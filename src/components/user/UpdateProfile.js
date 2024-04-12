@@ -1,13 +1,13 @@
-import React, { Fragment, useState, useEffect } from "react";
-import MetaData from "../layout/MetaData";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Typography, Button, Grid, Avatar, TextField } from "@mui/material";
+import MetaData from "../layout/MetaData";
 import {
   updateProfile,
   loadUser,
   clearErrors,
 } from "../../actions/userActions";
-
 import { UPDATE_PROFILE_RESET } from "../../constants/userConstants";
 
 const UpdateProfile = () => {
@@ -22,20 +22,16 @@ const UpdateProfile = () => {
   const { user } = useSelector((state) => state.auth);
   const { error, isUpdated, loading } = useSelector((state) => state.user);
 
-  // console.log(error)
   useEffect(() => {
-    console.log(isUpdated);
     if (user) {
       setName(user.name);
       setEmail(user.email);
       setAvatarPreview(user.avatar.url);
     }
     if (error) {
-      // alert.error(error);
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      // alert.success('User updated successfully')
       dispatch(loadUser());
       navigate("/me", { replace: true });
       dispatch({
@@ -43,6 +39,7 @@ const UpdateProfile = () => {
       });
     }
   }, [dispatch, error, isUpdated, navigate, user]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -51,6 +48,7 @@ const UpdateProfile = () => {
     formData.set("avatar", avatar);
     dispatch(updateProfile(formData));
   };
+
   const onChange = (e) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -61,58 +59,58 @@ const UpdateProfile = () => {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
+
   return (
-    <Fragment>
+    <>
       <MetaData title={"Update Profile"} />
-      <div className="row wrapper">
-        <div className="col-10 col-lg-5">
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        className="wrapper"
+      >
+        <Grid item xs={10} lg={5}>
           <form
             className="shadow-lg"
             onSubmit={submitHandler}
             encType="multipart/form-data"
           >
-            <h1 className="mt-2 mb-5">Update Profile</h1>
+            <Typography variant="h4" sx={{ mt: 2, mb: 5 }}>
+              Update Profile
+            </Typography>
+
+            <TextField
+              type="name"
+              id="name_field"
+              label="Name"
+              variant="outlined"
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              sx={{ mb: 3 }}
+            />
+
+            <TextField
+              type="email"
+              id="email_field"
+              label="Email"
+              variant="outlined"
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              sx={{ mb: 3 }}
+            />
 
             <div className="form-group">
-              <label htmlFor="email_field">Name</label>
-
-              <input
-                type="name"
-                id="name_field"
-                className="form-control"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email_field">Email</label>
-
-              <input
-                type="email"
-                id="email_field"
-                className="form-control"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="avatar_upload">Avatar</label>
-
+              <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                Avatar
+              </Typography>
               <div className="d-flex align-items-center">
-                <div>
-                  <figure className="avatar mr-3 item-rtl">
-                    <img
-                      src={avatarPreview}
-                      className="rounded-circle"
-                      alt="Avatar Preview"
-                    />
-                  </figure>
-                </div>
-
+                <Avatar
+                  alt="Avatar Preview"
+                  src={avatarPreview}
+                  sx={{ mr: 3 }}
+                />
                 <div className="custom-file">
                   <input
                     type="file"
@@ -122,7 +120,6 @@ const UpdateProfile = () => {
                     accept="image/*"
                     onChange={onChange}
                   />
-
                   <label className="custom-file-label" htmlFor="customFile">
                     Choose Avatar
                   </label>
@@ -130,17 +127,20 @@ const UpdateProfile = () => {
               </div>
             </div>
 
-            <button
+            <Button
               type="submit"
-              className="btn update-btn btn-block mt-4 mb-3"
-              disabled={loading ? true : false}
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 4, mb: 3 }}
+              disabled={loading}
             >
               Update
-            </button>
+            </Button>
           </form>
-        </div>
-      </div>
-    </Fragment>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 

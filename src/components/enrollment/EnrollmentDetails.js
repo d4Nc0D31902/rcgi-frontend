@@ -36,10 +36,13 @@ const EnrollmentDetails = () => {
     dispatch(getEnrollmentDetails(id));
   }, [dispatch, id]);
 
-  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState({});
 
-  const toggleDescription = () => {
-    setShowFullDescription(!showFullDescription);
+  const toggleDescription = (moduleId) => {
+    setShowFullDescription((prevState) => ({
+      ...prevState,
+      [moduleId]: !prevState[moduleId],
+    }));
   };
 
   const findModuleWithAllDone = () => {
@@ -182,18 +185,20 @@ const EnrollmentDetails = () => {
                           {mod.moduleId.title}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                          {showFullDescription
+                          {showFullDescription[mod._id]
                             ? mod.moduleId.description
                             : `${mod.moduleId.description.substring(
                                 0,
                                 350
                               )}...`}
                           <Button
-                            onClick={toggleDescription}
+                            onClick={() => toggleDescription(mod._id)}
                             color="primary"
                             size="small"
                           >
-                            {showFullDescription ? "See Less" : "See More"}
+                            {showFullDescription[mod._id]
+                              ? "See Less"
+                              : "See More"}
                           </Button>
                         </Typography>
                         <Link

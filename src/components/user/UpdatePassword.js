@@ -1,42 +1,41 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword, clearErrors } from "../../actions/userActions";
-
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Paper,
+} from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
 
 const UpdatePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const { error, isUpdated, loading } = useSelector((state) => state.user);
-  const success = (message = "") =>
-    toast.success(message, {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-  const notify = (error = "") =>
-    toast.error(error, {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
+
   useEffect(() => {
     if (error) {
-      console.log(error);
-      notify(error);
+      toast.error(error, { position: toast.POSITION.BOTTOM_CENTER });
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      success("Password updated successfully");
-      navigate("/me");
-      dispatch({
-        type: UPDATE_PASSWORD_RESET,
+      toast.success("Password updated successfully", {
+        position: toast.POSITION.BOTTOM_CENTER,
       });
+      navigate("/me");
+      dispatch({ type: UPDATE_PASSWORD_RESET });
     }
-  }, [dispatch, error, navigate, isUpdated]);
+  }, [dispatch, error, isUpdated, navigate]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -44,50 +43,58 @@ const UpdatePassword = () => {
     formData.set("password", password);
     dispatch(updatePassword(formData));
   };
+
   return (
-    <Fragment>
+    <Container component="main" maxWidth="lg">
       <MetaData title={"Change Password"} />
-
-      <div className="row wrapper">
-        <div className="col-10 col-lg-5">
-          <form className="shadow-lg" onSubmit={submitHandler}>
-            <h1 className="mt-2 mb-5">Update Password</h1>
-
-            <div className="form-group">
-              <label htmlFor="old_password_field">Old Password</label>
-
-              <input
+      <Grid container justifyContent="center">
+        <Grid item xs={12} sm={8} md={6}>
+          <Paper
+            elevation={3}
+            sx={{ padding: 3 }}
+            style={{ marginTop: "100px" }}
+          >
+            <Typography variant="h4" align="center" gutterBottom>
+              Update Password
+            </Typography>
+            <form onSubmit={submitHandler}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="oldPassword"
+                label="Old Password"
                 type="password"
-                id="old_password_field"
-                className="form-control"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
               />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="new_password_field">New Password</label>
-
-              <input
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="password"
+                label="New Password"
                 type="password"
-                id="new_password_field"
-                className="form-control"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </div>
-
-            <button
-              type="submit"
-              className="btn update-btn btn-block mt-4 mb-3"
-              disabled={loading ? true : false}
-            >
-              Update Password
-            </button>
-          </form>
-        </div>
-      </div>
-    </Fragment>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{ mt: 3, mb: 2 }}
+                disabled={loading}
+              >
+                Update Password
+              </Button>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

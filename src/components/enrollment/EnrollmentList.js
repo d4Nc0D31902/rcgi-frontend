@@ -76,11 +76,6 @@ const ListEnrollments = () => {
     let totalItems = 0;
     let completedItems = 0;
 
-    enrollment.course.forEach((course) => {
-      totalItems++;
-      if (course.status === "Done") completedItems++;
-    });
-
     enrollment.module.forEach((module) => {
       totalItems++;
       if (module.status === "Done") completedItems++;
@@ -96,7 +91,8 @@ const ListEnrollments = () => {
       });
     });
 
-    const progress = (completedItems / totalItems) * 100;
+    const progress =
+      totalItems === 0 ? 100 : (completedItems / totalItems) * 100;
     return progress;
   };
 

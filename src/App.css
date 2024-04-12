@@ -500,8 +500,8 @@ footer {
 #sidebar {
   min-width: 100%;
   max-width: 100%;
-  background: #232f3e;
-  color: #fff;
+  background: white;
+  color: white;
   transition: all 0.3s;
 }
 #sidebar.active {
@@ -510,23 +510,23 @@ footer {
 
 #sidebar .sidebar-header {
   padding: 20px;
-  background: #232f3e;
+  background: black;
 }
 #sidebar ul.components {
   padding: 5px 0px;
-  border-bottom: 1px solid #232f3e;
+  border-bottom: 1px solid white;
 }
 
 #sidebar ul li a {
   padding: 10px;
   font-size: 1.1em;
   display: block;
-  color: white;
+  color: black;
   text-decoration: none;
 }
 #sidebar ul li a:hover {
-  color: #232f3e;
-  background: #fff;
+  color: black;
+  background: gray;
 }
 
 #sidebar ul li a i {
@@ -535,8 +535,8 @@ footer {
 
 #sidebar ul li.active > a,
 a[aria-expanded="true"] {
-  color: #fff;
-  background: #232f3e;
+  color: black;
+  background: white;
 }
 a[data-toggle="collapse"] {
   position: relative;
@@ -615,4 +615,9 @@ ul.CTAs a {
 .review_user {
   font-size: 0.8rem;
   color: grey;
+}
+
+.avatar-preview {
+  width: 100px; 
+  height: 100px; 
 }

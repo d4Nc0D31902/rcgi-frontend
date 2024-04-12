@@ -1,120 +1,133 @@
-import React, { Fragment } from "react";
-import "../../App.css";
-// import Search from "./Search";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Button,
+  Avatar,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import { Logout, School as SchoolIcon } from "@mui/icons-material";
 import { logout } from "../../actions/userActions";
+
 const Header = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.cart);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const logoutHandler = () => {
     dispatch(logout());
   };
 
   return (
     <Fragment>
-      <nav className="navbar row">
-        <div className="col-12 col-md-3">
-          <div className="navbar-brand">
+      <AppBar position="static" sx={{ backgroundColor: "white", height: 80 }}>
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/">
               <img
                 src="/images/rcgi_logo.png"
                 alt="RCGI Logo"
-                style={{ width: "90px", height: "auto" }}
+                style={{ width: "90px", height: "auto", marginTop: "10px" }}
               />
             </Link>
-          </div>
-        </div>
-        {/* <div className="col-12 col-md-6 mt-2 mt-md-0">
-          <Search />
-        </div> */}
-
-        <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-          {/* <Link to="/cart" style={{ textDecoration: "none" }}>
-            <span id="cart" className="ml-3">
-              Cart
-            </span>
-
-            <span className="ml-1" id="cart_count">
-              {cartItems.length}
-            </span>
-          </Link> */}
-          
+          </Typography>
           <Link
             to="/courses"
-            style={{ textDecoration: "none", marginLeft: "10px" }}
+            style={{
+              textDecoration: "none",
+              marginLeft: "10px",
+              marginTop: "10px",
+            }}
           >
-            <span id="cart">
-              <i className="fa fa-book"></i> Courses
-            </span>
+            <Button
+              color="inherit"
+              startIcon={<SchoolIcon />}
+              sx={{ color: "black" }}
+            >
+              Courses
+            </Button>
           </Link>
-
+          <div style={{ flexGrow: 1 }}></div>
           {user ? (
-            <div className="ml-4 dropdown d-inline">
-              <Link
-                to="#!"
-                className="btn dropdown-toggle text-white mr-4"
-                type="button"
-                id="dropDownMenuButton"
-                data-toggle="dropdown"
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
                 aria-haspopup="true"
-                aria-expanded="false"
+                onClick={handleMenu}
+                color="inherit"
+                style={{ marginTop: "10px" }}
               >
-                <figure className="avatar avatar-nav">
-                  <img
-                    src={user.avatar && user.avatar.url}
-                    alt={user && user.name}
-                    className="rounded-circle"
-                  />
-                </figure>
-
-                {/* <span>{user && user.name}</span> */}
-                <span style={{ color: "black" }}>{user && user.name}</span>
-              </Link>
-              <div
-                className="dropdown-menu"
-                aria-labelledby="dropDownMenuButton"
+                <Avatar alt={user.name} src={user.avatar && user.avatar.url} />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                style={{ marginTop: "43px" }}
               >
-                {user && user.role === "admin" && (
-                  <Link className="dropdown-item" to="/dashboard">
+                {user.role === "admin" && (
+                  <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to="/dashboard"
+                  >
                     Dashboard
-                  </Link>
+                  </MenuItem>
                 )}
-
-                {/* <Link className="dropdown-item" to="/orders/me">
-                  Orders
-                </Link> */}
-
-                <Link className="dropdown-item" to="/enrollment/me">
-                  Enrollments
-                </Link>
-
-                <Link className="dropdown-item" to="/me">
-                  Profile
-                </Link>
-
-                {/*<Link className="dropdown-item text-danger" to="/" onClick={logoutHandler}>*/}
-
-                <Link
-                  className="dropdown-item text-danger"
-                  to="/"
-                  onClick={logoutHandler}
+                <MenuItem
+                  onClick={handleClose}
+                  component={Link}
+                  to="/enrollment/me"
                 >
+                  Enrollments
+                </MenuItem>
+                <MenuItem onClick={handleClose} component={Link} to="/me">
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={logoutHandler}>
+                  <Logout color="error" />
                   Logout
-                </Link>
-              </div>
+                </MenuItem>
+              </Menu>
             </div>
           ) : (
             !loading && (
-              <Link to="/login" className="btn ml-4" id="login_btn">
+              <Button
+                color="inherit"
+                component={Link}
+                to="/login"
+                sx={{ color: "black" }}
+                style={{ marginTop: "10px" }}
+              >
                 Login
-              </Link>
+              </Button>
             )
           )}
-        </div>
-      </nav>
+        </Toolbar>
+      </AppBar>
     </Fragment>
   );
 };

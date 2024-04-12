@@ -124,7 +124,11 @@ const UsersList = () => {
           <Fragment>
             <div className="d-flex justify-content-between align-items-center">
               <h1 className="my-5">All Users</h1>
-              <Link to={"/register"} className="btn btn-primary">
+              <Link
+                to={"/register"}
+                className="btn btn-primary"
+                style={{ marginRight: "25px" }}
+              >
                 Register Employee
               </Link>
             </div>
