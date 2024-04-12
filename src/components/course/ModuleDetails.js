@@ -47,8 +47,8 @@ const ModuleDetails = () => {
   const handleDelete = (chapterId) => {
     if (window.confirm("Are you sure you want to delete this chapter?")) {
       dispatch(deleteChapter(chapterId)).then(() => {
+        dispatch(getModuleDetails(id));
         toast.success("Chapter deleted successfully");
-        navigate("/admin/courses");
       });
     }
   };
@@ -56,6 +56,7 @@ const ModuleDetails = () => {
   const handleDeleteQuiz = (quizId) => {
     if (window.confirm("Are you sure you want to delete this quiz?")) {
       dispatch(deleteQuiz(quizId)).then(() => {
+        dispatch(getModuleDetails(id));
         toast.success("Quiz deleted successfully");
       });
     }
@@ -64,8 +65,8 @@ const ModuleDetails = () => {
   const handleDeleteLesson = (lessonId) => {
     if (window.confirm("Are you sure you want to delete this lesson?")) {
       dispatch(deleteLesson(lessonId)).then(() => {
+        dispatch(getModuleDetails(id));
         toast.success("Lesson deleted successfully");
-        navigate("/admin/courses");
       });
     }
   };

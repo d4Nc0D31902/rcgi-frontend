@@ -36,7 +36,7 @@ const EnrollmentLessonDetails = () => {
 
   const { enrollmentId, moduleId, chapterId, lessonId } = useParams();
 
-  const [videoKey, setVideoKey] = useState(0); // Add state to track video source changes
+  const [videoKey, setVideoKey] = useState(0); 
 
   useEffect(() => {
     dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
@@ -44,7 +44,6 @@ const EnrollmentLessonDetails = () => {
   }, [dispatch, enrollmentId, moduleId, chapterId, lessonId]);
 
   useEffect(() => {
-    // When the lessonId or lessonId.videoURL changes, update the videoKey to force reload the video
     setVideoKey((prevKey) => prevKey + 1);
   }, [lesson?.lessonId?.videoURL]);
 

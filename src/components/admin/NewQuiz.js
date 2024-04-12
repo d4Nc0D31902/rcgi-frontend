@@ -32,16 +32,16 @@ const AddQuiz = () => {
       position: toast.POSITION.BOTTOM_CENTER,
     });
 
-  useEffect(() => {
-    if (error) {
-      dispatch(clearErrors());
-    }
+  // useEffect(() => {
+  //   if (error) {
+  //     dispatch(clearErrors());
+  //   }
 
-    if (success) {
-      navigate("/admin/courses");
-      message("Quiz created successfully");
-    }
-  }, [dispatch, error, success, navigate]);
+  //   if (success) {
+  //     navigate("/admin/courses");
+  //     message("Quiz created successfully");
+  //   }
+  // }, [dispatch, error, success, navigate]);
 
   useEffect(() => {
     dispatch(getChapterDetails(chapterId));

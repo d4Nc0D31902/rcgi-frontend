@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteModule } from "../../actions/moduleActions";
+import { deleteModule, getModuleDetails } from "../../actions/moduleActions";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,7 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const CourseModuleCard = ({ module, isFirst, prevModuleStatus }) => {
+const CourseModuleCard = ({ module }) => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
@@ -31,6 +31,7 @@ const CourseModuleCard = ({ module, isFirst, prevModuleStatus }) => {
     if (window.confirm("Are you sure you want to delete this module?")) {
       dispatch(deleteModule(module._id))
         .then(() => {
+          dispatch(getModuleDetails(module._id));
           toast.success("Module deleted successfully!");
         })
         .catch((error) => {
