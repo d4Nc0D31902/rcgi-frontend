@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   CircularProgress,
   Typography,
@@ -32,12 +32,21 @@ const EnrollmentLessonDetails = () => {
     (state) => state.getEnrollmentModule
   );
 
+  const navigate = useNavigate();
+
   const { enrollmentId, moduleId, chapterId, lessonId } = useParams();
+
+  const [videoKey, setVideoKey] = useState(0); // Add state to track video source changes
 
   useEffect(() => {
     dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
     dispatch(getEnrollmentModule(enrollmentId, moduleId));
   }, [dispatch, enrollmentId, moduleId, chapterId, lessonId]);
+
+  useEffect(() => {
+    // When the lessonId or lessonId.videoURL changes, update the videoKey to force reload the video
+    setVideoKey((prevKey) => prevKey + 1);
+  }, [lesson?.lessonId?.videoURL]);
 
   const handleMarkAsDone = () => {
     dispatch(markLessonAsDone(enrollmentId, moduleId, chapterId, lessonId))
@@ -113,53 +122,15 @@ const EnrollmentLessonDetails = () => {
                           backgroundColor: "lightgray",
                         }}
                       >
-                        {/* <div>
-                          <ul>
-                            {chapter.lessons.map((lesson, lessonIndex) => (
-                              <li key={lessonIndex}>
-                                <Typography variant="body1" gutterBottom>
-                                  {chapter.status === "Done" ? (
-                                    <Link
-                                      to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
-                                      style={{
-                                        textDecoration: "none",
-                                        color:
-                                          lesson.status === "Done"
-                                            ? "green"
-                                            : "black",
-                                      }}
-                                    >
-                                      {lesson.lessonId.title}
-                                    </Link>
-                                  ) : (
-                                    <span
-                                      style={{
-                                        color:
-                                          lesson.status === "Not Done"
-                                            ? "gray"
-                                            : "",
-                                      }}
-                                    >
-                                      {lesson.lessonId.title}
-                                    </span>
-                                  )}
-                                </Typography>
-                              </li>
-                            ))}
-                          </ul>
-                        </div> */}
                         <div>
                           <ul>
                             {chapter.lessons.map((lesson, lessonIndex) => {
-                              // Check if all previous lessons are done and the chapter itself is done
                               const isPreviousDone = chapter.lessons
                                 .slice(0, lessonIndex)
                                 .every(
                                   (prevLesson) => prevLesson.status === "Done"
                                 );
                               const isChapterDone = chapter.status === "Done";
-
-                              // Check if the current lesson should be enabled
                               const isLessonEnabled =
                                 isPreviousDone && isChapterDone;
 
@@ -197,30 +168,6 @@ const EnrollmentLessonDetails = () => {
                             })}
                           </ul>
                         </div>
-                        {/* <div>
-                          <ul>
-                            {chapter.lessons.every(
-                              (lesson) => lesson.status === "Done"
-                            ) &&
-                              chapter.quizzes.map((quiz, quizIndex) => (
-                                <li key={quizIndex}>
-                                  <Typography variant="body1" gutterBottom>
-                                    <Link
-                                      to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
-                                      style={{
-                                        color:
-                                          quiz.status === "Done"
-                                            ? "green"
-                                            : "black",
-                                      }}
-                                    >
-                                      {quiz.quizId.title}
-                                    </Link>
-                                  </Typography>
-                                </li>
-                              ))}
-                          </ul>
-                        </div> */}
                         <div>
                           <ul>
                             {chapter.lessons.every(
@@ -277,6 +224,7 @@ const EnrollmentLessonDetails = () => {
                   {lesson.lessonId.videoURL && (
                     <Paper elevation={3} style={{ marginTop: 20 }}>
                       <video
+                        key={videoKey} // Add key to force reload the video
                         controls
                         controlsList="nodownload"
                         disablePictureInPicture
