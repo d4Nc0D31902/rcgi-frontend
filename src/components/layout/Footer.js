@@ -5,7 +5,7 @@ const Footer = () => {
         <Fragment>
             <footer className="py-1">
                 <p className="text-center mt-1">
-                   Restaurant Concept Group Inc. - 2019-2020, All Rights Reserved
+                   Restaurant Concept Group Inc., All Rights Reserved
                 </p>
             </footer>
         </Fragment>

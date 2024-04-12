@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -34,17 +34,96 @@ const EnrollmentChapterDetails = () => {
 
   const { enrollmentId, moduleId, chapterId } = useParams();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getEnrollmentChapter(enrollmentId, moduleId, chapterId));
     dispatch(getEnrollmentModule(enrollmentId, moduleId));
   }, [dispatch, enrollmentId, moduleId, chapterId]);
 
+  // const handleMarkAsDone = () => {
+  //   dispatch(markChapterAsDone(enrollmentId, moduleId, chapterId))
+  //     .then(() => {
+  //       toast.success("Chapter marked as done successfully!");
+  //       dispatch(getEnrollmentChapter(enrollmentId, moduleId, chapterId));
+  //       dispatch(getEnrollmentModule(enrollmentId, moduleId));
+  //     })
+  //     .catch((error) => {
+  //       toast.error("Failed to mark chapter as done: " + error.message);
+  //     });
+  // };
+
   const handleMarkAsDone = () => {
     dispatch(markChapterAsDone(enrollmentId, moduleId, chapterId))
       .then(() => {
         toast.success("Chapter marked as done successfully!");
+
+        // Fetch updated data after marking chapter as done
         dispatch(getEnrollmentChapter(enrollmentId, moduleId, chapterId));
-        dispatch(getEnrollmentModule(enrollmentId, moduleId));
+        dispatch(getEnrollmentModule(enrollmentId, moduleId)).then(() => {
+          const currentChapter = enrollmentModule.chapter.find(
+            (chap) => chap._id === chapterId
+          );
+          const hasLessons =
+            currentChapter && currentChapter.lessons.length > 0;
+
+          if (!hasLessons) {
+            const nextChapter = enrollmentModule.chapter.find(
+              (chap) =>
+                chap.status === "Not Done" &&
+                chap.lessons.length > 0 &&
+                chap._id !== chapterId
+            );
+
+            if (nextChapter) {
+              navigate(
+                `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapter._id}/lesson/${nextChapter.lessons[0].lessonId}`
+              );
+            } else {
+              navigate(`/enrollment/${enrollmentId}/module/${moduleId}`);
+            }
+          } else {
+            const currentChapterIndex = enrollmentModule.chapter.findIndex(
+              (chap) => chap._id === chapterId
+            );
+
+            const currentLessonIndex = currentChapter.lessons.findIndex(
+              (lesson) => lesson.status === "Not Done"
+            );
+
+            if (currentLessonIndex !== -1) {
+              const nextLessonId =
+                currentChapter.lessons[currentLessonIndex]._id;
+              navigate(
+                `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/lesson/${nextLessonId}`
+              );
+            } else {
+              const currentQuizIndex = currentChapter.quizzes.findIndex(
+                (quiz) => quiz.status === "Not Done"
+              );
+
+              if (currentQuizIndex !== -1) {
+                const nextQuizId = currentChapter.quizzes[currentQuizIndex]._id;
+                navigate(
+                  `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/quiz/${nextQuizId}`
+                );
+              } else {
+                const nextChapterId =
+                  currentChapterIndex < enrollmentModule.chapter.length - 1
+                    ? enrollmentModule.chapter[currentChapterIndex + 1]._id
+                    : null;
+
+                if (nextChapterId) {
+                  navigate(
+                    `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapterId}`
+                  );
+                } else {
+                  navigate(`/enrollment/${enrollmentId}/module/${moduleId}`);
+                }
+              }
+            }
+          }
+        });
       })
       .catch((error) => {
         toast.error("Failed to mark chapter as done: " + error.message);
@@ -276,6 +355,7 @@ const EnrollmentChapterDetails = () => {
                     <Button
                       variant="outlined"
                       color="primary"
+                      style={{ borderRadius: "20px" }}
                       onClick={handleMarkAsDone}
                       disabled={loading}
                     >
@@ -289,7 +369,9 @@ const EnrollmentChapterDetails = () => {
                     <Button
                       variant="contained"
                       color="success"
+                      style={{ borderRadius: "20px" }}
                       startIcon={<CheckOutlinedIcon />}
+                      disabled
                     >
                       Done
                     </Button>

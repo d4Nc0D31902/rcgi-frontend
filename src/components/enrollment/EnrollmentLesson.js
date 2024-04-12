@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import parse from "html-react-parser";
 import {
   CircularProgress,
   Typography,
@@ -109,7 +110,6 @@ const EnrollmentLessonDetails = () => {
         toast.success("Lesson marked as done successfully!");
         dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
         dispatch(getEnrollmentModule(enrollmentId, moduleId)).then(() => {
-          // Find the current chapter and lesson index
           const currentChapterIndex = enrollmentModule.chapter.findIndex(
             (chapter) => chapter._id === chapterId
           );
@@ -117,7 +117,6 @@ const EnrollmentLessonDetails = () => {
             currentChapterIndex
           ].lessons.findIndex((lesson) => lesson._id === lessonId);
 
-          // Check if there's a next lesson in the current chapter
           if (
             currentLessonIndex <
             enrollmentModule.chapter[currentChapterIndex].lessons.length - 1
@@ -127,26 +126,23 @@ const EnrollmentLessonDetails = () => {
                 currentLessonIndex + 1
               ]._id;
             const nextLessonUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/lesson/${nextLessonId}`;
-            navigate(nextLessonUrl); // Navigate to the next lesson
+            navigate(nextLessonUrl);
           } else {
-            // Check if there's a quiz in the current chapter
             if (
               enrollmentModule.chapter[currentChapterIndex].quizzes.length > 0
             ) {
               const quizId =
-                enrollmentModule.chapter[currentChapterIndex].quizzes[0]._id; // Assuming there's only one quiz per chapter
+                enrollmentModule.chapter[currentChapterIndex].quizzes[0]._id;
               const quizUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/quiz/${quizId}`;
-              navigate(quizUrl); // Navigate to the quiz
+              navigate(quizUrl);
             } else {
-              // If there's no next lesson or quiz, navigate to the next chapter if available
               if (currentChapterIndex < enrollmentModule.chapter.length - 1) {
                 const nextChapterId =
                   enrollmentModule.chapter[currentChapterIndex + 1]._id;
                 const nextChapterUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapterId}`;
-                navigate(nextChapterUrl); // Navigate to the next chapter
+                navigate(nextChapterUrl);
               } else {
-                // If there's no next chapter, navigate to a specific page or handle it accordingly
-                navigate("/"); // Navigate to a specific page
+                navigate("/");
               }
             }
           }
@@ -336,19 +332,23 @@ const EnrollmentLessonDetails = () => {
                     </Paper>
                   )}
                   <Divider style={{ margin: "20px 0" }} />
-                  <Typography
+                  {/* <Typography
                     variant="body1"
                     style={{ marginTop: "20px" }}
                     dangerouslySetInnerHTML={{
                       __html: lesson.lessonId.content,
                     }}
-                  />
+                  /> */}
+                  <Typography variant="body1" style={{ marginTop: "20px" }}>
+                    {parse(lesson.lessonId.content)}
+                  </Typography>
                   {lesson.status === "Not Done" ? (
                     <Button
                       variant="outlined"
                       color="primary"
                       onClick={handleMarkAsDone}
                       disabled={loading}
+                      style={{ borderRadius: "20px" }}
                     >
                       {loading ? (
                         <CircularProgress size={24} color="primary" />
@@ -361,6 +361,8 @@ const EnrollmentLessonDetails = () => {
                       variant="contained"
                       color="success"
                       startIcon={<CheckOutlinedIcon />}
+                      disabled
+                      style={{ borderRadius: "20px" }}
                     >
                       Done
                     </Button>

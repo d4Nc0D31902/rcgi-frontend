@@ -204,7 +204,7 @@ const EnrollmentDetails = () => {
                             variant="outlined"
                             color="primary"
                             fullWidth
-                            style={{ marginTop: "20px" }}
+                            style={{ marginTop: "20px", borderRadius: "20px" }}
                             disabled={
                               index === 0
                                 ? false
@@ -223,6 +223,7 @@ const EnrollmentDetails = () => {
                             height: "40px",
                             width: "50%",
                             marginLeft: "85px",
+                            borderRadius: "20px",
                           }}
                           disabled={
                             (module.findIndex((m) => m === mod) > 0 &&
@@ -247,7 +248,7 @@ const EnrollmentDetails = () => {
                           {mod.status === "Done" ? (
                             <IconButton
                               aria-label="check"
-                              style={{ color: "white" }}
+                              style={{ color: "white", borderRadius: "20px" }}
                             >
                               <CheckIcon />
                             </IconButton>
