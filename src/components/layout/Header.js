@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   AppBar,
   Toolbar,
@@ -17,7 +19,10 @@ import { logout } from "../../actions/userActions";
 const Header = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
-
+  const notify = (error = "") =>
+    toast.error(error, {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -30,7 +35,15 @@ const Header = () => {
   };
 
   const logoutHandler = () => {
-    dispatch(logout());
+    dispatch(logout())
+      .then(() => {
+        toast.success("Logout successful!", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      })
+      .catch((error) => {
+        notify(error.message);
+      });
   };
 
   return (

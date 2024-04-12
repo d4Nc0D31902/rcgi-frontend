@@ -47,11 +47,6 @@ const UsersList = () => {
     const data = {
       columns: [
         {
-          label: "User ID",
-          field: "id",
-          sort: "asc",
-        },
-        {
           label: "Name",
           field: "name",
           sort: "asc",
@@ -86,7 +81,6 @@ const UsersList = () => {
 
     users.forEach((user) => {
       data.rows.push({
-        id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
@@ -125,7 +119,7 @@ const UsersList = () => {
             <div className="d-flex justify-content-between align-items-center">
               <h1 className="my-5">All Users</h1>
               <Link
-                to={"/register"}
+                to={"/admin/newUser"}
                 className="btn btn-primary"
                 style={{ marginRight: "25px" }}
               >

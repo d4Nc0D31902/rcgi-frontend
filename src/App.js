@@ -251,7 +251,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* 
+        
         <Route
           path="/admin/newUser"
           element={
@@ -259,7 +259,7 @@ function App() {
               <NewUser />
             </ProtectedRoute>
           }
-        /> */}
+        />
 
         <Route
           path="/admin/courses"

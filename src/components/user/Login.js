@@ -8,7 +8,7 @@ import {
   Grid,
   Container,
   InputAdornment,
-  Paper, 
+  Paper,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -48,7 +48,15 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(login(email, password))
+      .then(() => {
+        toast.success("Login successful!", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      })
+      .catch((error) => {
+        notify(error.message);
+      });
   };
 
   const toggleShowPassword = () => {

@@ -37,11 +37,6 @@ const CoursesList = () => {
     const data = {
       columns: [
         {
-          label: "ID",
-          field: "id",
-          sort: "asc",
-        },
-        {
           label: "Title",
           field: "title",
           sort: "asc",
@@ -60,7 +55,6 @@ const CoursesList = () => {
     };
     courses.forEach((course) => {
       data.rows.push({
-        id: course._id,
         title: course.title,
         description: course.description,
         actions: (
