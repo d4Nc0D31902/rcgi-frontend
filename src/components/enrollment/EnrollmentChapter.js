@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Fab, // Import Fab for Floating Action Button
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import {
@@ -22,6 +23,7 @@ import {
 } from "../../actions/enrollmentActions";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"; // Import ArrowUp Icon
 
 const EnrollmentChapterDetails = () => {
   const dispatch = useDispatch();
@@ -40,18 +42,6 @@ const EnrollmentChapterDetails = () => {
     dispatch(getEnrollmentChapter(enrollmentId, moduleId, chapterId));
     dispatch(getEnrollmentModule(enrollmentId, moduleId));
   }, [dispatch, enrollmentId, moduleId, chapterId]);
-
-  // const handleMarkAsDone = () => {
-  //   dispatch(markChapterAsDone(enrollmentId, moduleId, chapterId))
-  //     .then(() => {
-  //       toast.success("Chapter marked as done successfully!");
-  //       dispatch(getEnrollmentChapter(enrollmentId, moduleId, chapterId));
-  //       dispatch(getEnrollmentModule(enrollmentId, moduleId));
-  //     })
-  //     .catch((error) => {
-  //       toast.error("Failed to mark chapter as done: " + error.message);
-  //     });
-  // };
 
   const handleMarkAsDone = () => {
     dispatch(markChapterAsDone(enrollmentId, moduleId, chapterId))
@@ -128,6 +118,12 @@ const EnrollmentChapterDetails = () => {
       .catch((error) => {
         toast.error("Failed to mark chapter as done: " + error.message);
       });
+  };
+
+  const scrollRef = useRef(null);
+
+  const scrollToTop = () => {
+    scrollRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -381,6 +377,21 @@ const EnrollmentChapterDetails = () => {
             </Paper>
           )}
         </Grid>
+        {/* Scroll to top button */}
+        <Fab
+          color="primary"
+          aria-label="scroll-to-top"
+          style={{
+            position: "fixed",
+            bottom: 20,
+            right: 20,
+            backgroundColor: "transparent",
+          }}
+          onClick={scrollToTop}
+        >
+          <KeyboardArrowUpIcon style={{ color: "black" }} />
+        </Fab>
+        <div ref={scrollRef}></div>
       </Grid>
     </Fragment>
   );

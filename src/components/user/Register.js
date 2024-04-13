@@ -104,7 +104,9 @@ const Register = () => {
             }}
           >
             <form onSubmit={submitHandler} encType="multipart/form-data">
-              <h1 className="mb-3">Register</h1>
+              <Typography variant="h4" align="center" gutterBottom>
+                Register
+              </Typography>
 
               <TextField
                 id="name_field"

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
@@ -12,6 +12,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Fab, // Import Fab for Floating Action Button
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import {
@@ -23,6 +24,7 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"; // Import ArrowUp Icon
 
 const EnrollmentLessonDetails = () => {
   const dispatch = useDispatch();
@@ -47,62 +49,6 @@ const EnrollmentLessonDetails = () => {
   useEffect(() => {
     setVideoKey((prevKey) => prevKey + 1);
   }, [lesson?.lessonId?.videoURL]);
-
-  // const handleMarkAsDone = () => {
-  //   dispatch(markLessonAsDone(enrollmentId, moduleId, chapterId, lessonId))
-  //     .then(() => {
-  //       toast.success("Lesson marked as done successfully!");
-  //       dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
-  //       dispatch(getEnrollmentModule(enrollmentId, moduleId));
-  //     })
-  //     .catch((error) => {
-  //       toast.error("Failed to mark lesson as done: " + error.message);
-  //     });
-  // };
-
-  // const handleMarkAsDone = () => {
-  //   dispatch(markLessonAsDone(enrollmentId, moduleId, chapterId, lessonId))
-  //     .then(() => {
-  //       toast.success("Lesson marked as done successfully!");
-  //       dispatch(getSingleLesson(enrollmentId, moduleId, chapterId, lessonId));
-  //       dispatch(getEnrollmentModule(enrollmentId, moduleId)).then(() => {
-  //         // Find the current chapter and lesson index
-  //         const currentChapterIndex = enrollmentModule.chapter.findIndex(
-  //           (chapter) => chapter._id === chapterId
-  //         );
-  //         const currentLessonIndex = enrollmentModule.chapter[
-  //           currentChapterIndex
-  //         ].lessons.findIndex((lesson) => lesson._id === lessonId);
-
-  //         // Check if there's a next lesson in the current chapter
-  //         if (
-  //           currentLessonIndex <
-  //           enrollmentModule.chapter[currentChapterIndex].lessons.length - 1
-  //         ) {
-  //           const nextLessonId =
-  //             enrollmentModule.chapter[currentChapterIndex].lessons[
-  //               currentLessonIndex + 1
-  //             ]._id;
-  //           const nextLessonUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/lesson/${nextLessonId}`;
-  //           navigate(nextLessonUrl); // Navigate to the next lesson
-  //         } else {
-  //           // If there's no next lesson, navigate to the next chapter if available
-  //           if (currentChapterIndex < enrollmentModule.chapter.length - 1) {
-  //             const nextChapterId =
-  //               enrollmentModule.chapter[currentChapterIndex + 1]._id;
-  //             const nextChapterUrl = `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapterId}`;
-  //             navigate(nextChapterUrl); // Navigate to the next chapter
-  //           } else {
-  //             // If there's no next chapter, navigate to a specific page or handle it accordingly
-  //             navigate("/"); // Navigate to a specific page
-  //           }
-  //         }
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       toast.error("Failed to mark lesson as done: " + error.message);
-  //     });
-  // };
 
   const handleMarkAsDone = () => {
     dispatch(markLessonAsDone(enrollmentId, moduleId, chapterId, lessonId))
@@ -151,6 +97,12 @@ const EnrollmentLessonDetails = () => {
       .catch((error) => {
         toast.error("Failed to mark lesson as done: " + error.message);
       });
+  };
+
+  const scrollRef = useRef(null);
+
+  const scrollToTop = () => {
+    scrollRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -371,6 +323,21 @@ const EnrollmentLessonDetails = () => {
               )}
             </Paper>
           </Grid>
+          {/* Scroll to top button */}
+          <Fab
+            color="primary"
+            aria-label="scroll-to-top"
+            style={{
+              position: "fixed",
+              bottom: 20,
+              right: 20,
+              backgroundColor: "transparent",
+            }}
+            onClick={scrollToTop}
+          >
+            <KeyboardArrowUpIcon style={{ color: "black" }} />
+          </Fab>
+          <div ref={scrollRef}></div>
         </Grid>
       )}
     </Fragment>

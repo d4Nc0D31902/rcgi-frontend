@@ -12,10 +12,10 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  Divider,
 } from "@mui/material";
 import { Logout, School as SchoolIcon } from "@mui/icons-material";
 import { logout } from "../../actions/userActions";
-
 const Header = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
@@ -99,7 +99,7 @@ const Header = () => {
                 keepMounted
                 open={open}
                 onClose={handleClose}
-                style={{ marginTop: "43px" }}
+                style={{ marginTop: "43px", textAlign: "center" }} // Add textAlign: "center"
               >
                 {user.role === "admin" && (
                   <MenuItem
@@ -120,6 +120,7 @@ const Header = () => {
                 <MenuItem onClick={handleClose} component={Link} to="/me">
                   Profile
                 </MenuItem>
+                <Divider style={{ margin: "5px 0" }} />
                 <MenuItem onClick={logoutHandler}>
                   <Logout color="error" />
                   Logout
