@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CourseCard from "./CourseCard";
-import { getCourses } from "../../actions/courseActions"; 
+import Loader from "../layout/Loader";
+import { getCourses } from "../../actions/courseActions";
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -9,9 +10,10 @@ const Courses = () => {
 
   useEffect(() => {
     dispatch(getCourses());
-  }, [dispatch]); 
+  }, [dispatch]);
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {

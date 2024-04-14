@@ -74,6 +74,145 @@ const EnrollmentModuleDetails = () => {
                   </Typography>
                   <Divider style={{ margin: "20px 0" }} />
                   {enrollmentModule.chapter.map((chapter, index) => (
+                    // <Accordion
+                    //   key={index}
+                    //   style={{
+                    //     border: "1px solid black",
+                    //   }}
+                    // >
+                    //   <AccordionSummary
+                    //     style={{
+                    //       backgroundColor: "white",
+                    //     }}
+                    //     expandIcon={<ExpandMoreIcon />}
+                    //     aria-controls={`chapter-${index}-content`}
+                    //     id={`chapter-${index}-header`}
+                    //   >
+                    //     {index === 0 ||
+                    //     (enrollmentModule.chapter[index - 1].status ===
+                    //       "Done" &&
+                    //       enrollmentModule.chapter[index - 1].lessons.every(
+                    //         (lesson) => lesson.status === "Done"
+                    //       ) &&
+                    //       enrollmentModule.chapter[index - 1].quizzes.every(
+                    //         (quiz) => quiz.status === "Done"
+                    //       )) ? (
+                    //       <Link
+                    //         to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}`}
+                    //         style={{ textDecoration: "none" }}
+                    //       >
+                    //         <Typography
+                    //           style={{
+                    //             color:
+                    //               chapter.status === "Done" ? "green" : "black",
+                    //           }}
+                    //         >
+                    //           {chapter.chapterId.title}
+                    //         </Typography>
+                    //       </Link>
+                    //     ) : (
+                    //       <Typography style={{ color: "gray" }}>
+                    //         {chapter.chapterId.title}
+                    //       </Typography>
+                    //     )}
+                    //   </AccordionSummary>
+                    //   <AccordionDetails
+                    //     style={{
+                    //       backgroundColor: "lightgray",
+                    //     }}
+                    //   >
+                    //     <div>
+                    //       <ul>
+                    //         {chapter.lessons.map((lesson, lessonIndex) => (
+                    //           <li key={lessonIndex}>
+                    //             <Typography variant="body1" gutterBottom>
+                    //               {chapter.status === "Done" ? (
+                    //                 <Link
+                    //                   to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
+                    //                   style={{
+                    //                     textDecoration: "none",
+                    //                     color:
+                    //                       lesson.status === "Done"
+                    //                         ? "green"
+                    //                         : "black",
+                    //                   }}
+                    //                 >
+                    //                   {lesson.lessonId.title}
+                    //                 </Link>
+                    //               ) : (
+                    //                 <span
+                    //                   style={{
+                    //                     color:
+                    //                       lesson.status === "Not Done"
+                    //                         ? "gray"
+                    //                         : "",
+                    //                   }}
+                    //                 >
+                    //                   {lesson.lessonId.title}
+                    //                 </span>
+                    //               )}
+                    //             </Typography>
+                    //           </li>
+                    //         ))}
+                    //       </ul>
+                    //     </div>
+                    //     {/* <div>
+                    //       <ul>
+                    //         {chapter.lessons.every(
+                    //           (lesson) => lesson.status === "Done"
+                    //         ) &&
+                    //           chapter.quizzes.map((quiz, quizIndex) => (
+                    //             <li key={quizIndex}>
+                    //               <Typography variant="body1" gutterBottom>
+                    //                 <Link
+                    //                   to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
+                    //                   style={{
+                    //                     color:
+                    //                       quiz.status === "Done"
+                    //                         ? "green"
+                    //                         : "black",
+                    //                   }}
+                    //                 >
+                    //                   {quiz.quizId.title}
+                    //                 </Link>
+                    //               </Typography>
+                    //             </li>
+                    //           ))}
+                    //       </ul>
+                    //     </div> */}
+                    //     <div>
+                    //       <ul>
+                    //         {chapter.lessons.every(
+                    //           (lesson) => lesson.status === "Done"
+                    //         ) &&
+                    //           chapter.status !== "Not Done" &&
+                    //           chapter.quizzes.map((quiz, quizIndex) => (
+                    //             <li key={quizIndex}>
+                    //               <Typography variant="body1" gutterBottom>
+                    //                 {chapter.status === "Done" ? (
+                    //                   <Link
+                    //                     to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
+                    //                     style={{
+                    //                       color:
+                    //                         quiz.status === "Done"
+                    //                           ? "green"
+                    //                           : "black",
+                    //                     }}
+                    //                   >
+                    //                     {quiz.quizId.title}
+                    //                   </Link>
+                    //                 ) : (
+                    //                   <span style={{ color: "gray" }}>
+                    //                     {quiz.quizId.title}
+                    //                   </span>
+                    //                 )}
+                    //               </Typography>
+                    //             </li>
+                    //           ))}
+                    //       </ul>
+                    //     </div>
+                    //   </AccordionDetails>
+                    // </Accordion>
                     <Accordion
                       key={index}
                       style={{
@@ -123,63 +262,50 @@ const EnrollmentModuleDetails = () => {
                       >
                         <div>
                           <ul>
-                            {chapter.lessons.map((lesson, lessonIndex) => (
-                              <li key={lessonIndex}>
-                                <Typography variant="body1" gutterBottom>
-                                  {chapter.status === "Done" ? (
-                                    <Link
-                                      to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
-                                      style={{
-                                        textDecoration: "none",
-                                        color:
-                                          lesson.status === "Done"
-                                            ? "green"
-                                            : "black",
-                                      }}
-                                    >
-                                      {lesson.lessonId.title}
-                                    </Link>
-                                  ) : (
-                                    <span
-                                      style={{
-                                        color:
-                                          lesson.status === "Not Done"
-                                            ? "gray"
-                                            : "",
-                                      }}
-                                    >
-                                      {lesson.lessonId.title}
-                                    </span>
-                                  )}
-                                </Typography>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        {/* <div>
-                          <ul>
-                            {chapter.lessons.every(
-                              (lesson) => lesson.status === "Done"
-                            ) &&
-                              chapter.quizzes.map((quiz, quizIndex) => (
-                                <li key={quizIndex}>
+                            {chapter.lessons.map((lesson, lessonIndex) => {
+                              const isPreviousDone = chapter.lessons
+                                .slice(0, lessonIndex)
+                                .every(
+                                  (prevLesson) => prevLesson.status === "Done"
+                                );
+                              const isChapterDone = chapter.status === "Done";
+                              const isLessonEnabled =
+                                isPreviousDone && isChapterDone;
+
+                              return (
+                                <li key={lessonIndex}>
                                   <Typography variant="body1" gutterBottom>
-                                    <Link
-                                      to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
-                                      style={{
-                                        color:
-                                          quiz.status === "Done"
-                                            ? "green"
-                                            : "black",
-                                      }}
-                                    >
-                                      {quiz.quizId.title}
-                                    </Link>
+                                    {isLessonEnabled ? (
+                                      <Link
+                                        to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
+                                        style={{
+                                          textDecoration: "none",
+                                          color:
+                                            lesson.status === "Done"
+                                              ? "green"
+                                              : "black",
+                                        }}
+                                      >
+                                        {lesson.lessonId.title}
+                                      </Link>
+                                    ) : (
+                                      <span
+                                        style={{
+                                          color:
+                                            lesson.status === "Not Done"
+                                              ? "gray"
+                                              : "",
+                                        }}
+                                      >
+                                        {lesson.lessonId.title}
+                                      </span>
+                                    )}
                                   </Typography>
                                 </li>
-                              ))}
+                              );
+                            })}
                           </ul>
-                        </div> */}
+                        </div>
                         <div>
                           <ul>
                             {chapter.lessons.every(
