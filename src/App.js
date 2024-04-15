@@ -33,6 +33,8 @@ import UsersList from "./components/admin/UsersList";
 import UpdateUser from "./components/admin/UpdateUser";
 import ProductReviews from "./components/admin/ProductReviews";
 import AdminEnrollmentList from "./components/admin/AdminEnrollmentList";
+import SubmitQuizList from "./components/admin/SubmitQuizList";
+import RetakeQuizList from "./components/admin/RetakeQuizList";
 
 import NewUser from "./components/admin/NewUser";
 
@@ -490,6 +492,23 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <AdminEnrollmentList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/quizzes"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <SubmitQuizList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/retake"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <RetakeQuizList />
             </ProtectedRoute>
           }
         />

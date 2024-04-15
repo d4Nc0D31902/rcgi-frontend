@@ -70,11 +70,16 @@ const EnrollmentQuizDetails = () => {
       setIncorrectAnswers(incorrect);
       setSubmitted(true);
 
+      const totalQuestions = quiz.quizId.content.length;
       const submissionData = {
         user: userId,
-        chapter: chapterId,
-        quiz: quizId,
-        score: newScore,
+        chapter: enrollmentModule.chapter.find((c) => c._id === chapterId)
+          ?.chapterId,
+        quiz: enrollmentModule.chapter
+          .find((c) => c._id === chapterId)
+          ?.quizzes.find((q) => q._id === quizId)?.quizId,
+        // score: newScore,
+        score: `${newScore}/${totalQuestions}`,
         result: newResult,
       };
 
@@ -103,24 +108,15 @@ const EnrollmentQuizDetails = () => {
     setResult(null);
     setSubmitted(false);
   }, [quiz]);
-  
-  const handleRetake = async () => {
-    setRetakeClicks((prevClicks) => prevClicks + 1);
 
+  const handleRetake = () => {
+    setRetakeClicks(retakeClicks + 1); // Increment retake clicks
+    console.log("Retake Clicks:", retakeClicks); // Log the value of retakeClicks
     setAnswers({});
     setScore(0);
     setResult(null);
     setIncorrectAnswers([]);
     setSubmitted(false);
-
-    const retakeData = {
-      user: userId,
-      chapter: chapterId,
-      quiz: quizId,
-      retake: retakeClicks + 1,
-    };
-
-    dispatch(createRetake(enrollmentId, retakeData));
   };
 
   useEffect(() => {
@@ -181,6 +177,18 @@ const EnrollmentQuizDetails = () => {
       .catch((error) => {
         toast.error("Failed to mark lesson as done: " + error.message);
       });
+
+    const retakeData = {
+      user: userId,
+      chapter: enrollmentModule.chapter.find((c) => c._id === chapterId)
+        ?.chapterId,
+      quiz: enrollmentModule.chapter
+        .find((c) => c._id === chapterId)
+        ?.quizzes.find((q) => q._id === quizId)?.quizId,
+      retake: retakeClicks,
+    };
+
+    dispatch(createRetake(enrollmentId, retakeData));
   };
 
   return (
