@@ -43,8 +43,13 @@ const EnrollmentList = () => {
     const data = {
       columns: [
         {
-          label: "User",
+          label: "Name of Employee",
           field: "user",
+          sort: "asc",
+        },
+        {
+          label: "Company",
+          field: "company",
           sort: "asc",
         },
         {
@@ -70,10 +75,12 @@ const EnrollmentList = () => {
       const courseId = enrollment.course[0].courseId;
       const courseTitle = courseId.title;
       const userName = enrollment.user[0] ? enrollment.user[0].name : "N/A";
+      const company = enrollment.user[0] ? enrollment.user[0].company : "N/A";
 
       data.rows.push({
         id: enrollment._id,
         user: userName,
+        company: company,
         course: courseTitle,
         progress: calculateProgress(enrollment),
         actions: (
