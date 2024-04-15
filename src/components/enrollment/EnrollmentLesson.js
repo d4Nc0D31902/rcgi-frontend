@@ -12,7 +12,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Fab, 
+  Fab,
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import {
@@ -24,7 +24,7 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"; 
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const EnrollmentLessonDetails = () => {
   const dispatch = useDispatch();
@@ -313,33 +313,30 @@ const EnrollmentLessonDetails = () => {
                                   (prevLesson) => prevLesson.status === "Done"
                                 );
                               const isChapterDone = chapter.status === "Done";
-                              const isModuleDone =
-                                enrollmentModule.status === "Done";
                               const isLessonEnabled =
-                                isPreviousDone && isChapterDone && isModuleDone;
+                                isPreviousDone &&
+                                isChapterDone &&
+                                ((enrollmentModule.status === "Done" &&
+                                  lesson.status === "Done") ||
+                                  (enrollmentModule.status === "Not Done" &&
+                                    lesson.status !== "Done"));
 
                               return (
                                 <li key={lessonIndex}>
                                   <Typography variant="body1" gutterBottom>
                                     {isLessonEnabled ? (
-                                      lesson.status === "Not Done" ? (
-                                        <span style={{ color: "gray" }}>
-                                          {lesson.lessonId.title}
-                                        </span>
-                                      ) : (
-                                        <Link
-                                          to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
-                                          style={{
-                                            textDecoration: "none",
-                                            color:
-                                              lesson.status === "Done"
-                                                ? "green"
-                                                : "",
-                                          }}
-                                        >
-                                          {lesson.lessonId.title}
-                                        </Link>
-                                      )
+                                      <Link
+                                        to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
+                                        style={{
+                                          textDecoration: "none",
+                                          color:
+                                            lesson.status === "Done"
+                                              ? "green"
+                                              : "black",
+                                        }}
+                                      >
+                                        {lesson.lessonId.title}
+                                      </Link>
                                     ) : (
                                       <span
                                         style={{
@@ -358,6 +355,7 @@ const EnrollmentLessonDetails = () => {
                             })}
                           </ul>
                         </div>
+
                         <div>
                           <ul>
                             {chapter.lessons.every(

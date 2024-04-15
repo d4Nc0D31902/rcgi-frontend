@@ -384,33 +384,29 @@ const EnrollmentChapterDetails = () => {
                                 (prevLesson) => prevLesson.status === "Done"
                               );
                             const isChapterDone = chapter.status === "Done";
-                            const isModuleDone =
-                              enrollmentModule.status === "Done";
                             const isLessonEnabled =
-                              isPreviousDone && isChapterDone && isModuleDone;
-
+                              isPreviousDone &&
+                              isChapterDone &&
+                              ((enrollmentModule.status === "Done" &&
+                                lesson.status === "Done") ||
+                                (enrollmentModule.status === "Not Done" &&
+                                  lesson.status !== "Done"));
                             return (
                               <li key={lessonIndex}>
                                 <Typography variant="body1" gutterBottom>
                                   {isLessonEnabled ? (
-                                    lesson.status === "Not Done" ? (
-                                      <span style={{ color: "gray" }}>
-                                        {lesson.lessonId.title}
-                                      </span>
-                                    ) : (
-                                      <Link
-                                        to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
-                                        style={{
-                                          textDecoration: "none",
-                                          color:
-                                            lesson.status === "Done"
-                                              ? "green"
-                                              : "",
-                                        }}
-                                      >
-                                        {lesson.lessonId.title}
-                                      </Link>
-                                    )
+                                    <Link
+                                      to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
+                                      style={{
+                                        textDecoration: "none",
+                                        color:
+                                          lesson.status === "Done"
+                                            ? "green"
+                                            : "black",
+                                      }}
+                                    >
+                                      {lesson.lessonId.title}
+                                    </Link>
                                   ) : (
                                     <span
                                       style={{
@@ -429,6 +425,7 @@ const EnrollmentChapterDetails = () => {
                           })}
                         </ul>
                       </div>
+
                       <div>
                         <ul>
                           {chapter.lessons.every(
