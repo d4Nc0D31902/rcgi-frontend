@@ -36,15 +36,22 @@ import {
   MARK_CHAPTER_AS_DONE_REQUEST,
   MARK_CHAPTER_AS_DONE_SUCCESS,
   MARK_CHAPTER_AS_DONE_FAIL,
-  MARK_LESSON_AS_DONE_REQUEST, // Adding MARK_LESSON_AS_DONE_REQUEST
-  MARK_LESSON_AS_DONE_SUCCESS, // Adding MARK_LESSON_AS_DONE_SUCCESS
-  MARK_LESSON_AS_DONE_FAIL, // Adding MARK_LESSON_AS_DONE_FAIL
+  MARK_LESSON_AS_DONE_REQUEST,
+  MARK_LESSON_AS_DONE_SUCCESS,
+  MARK_LESSON_AS_DONE_FAIL,
   MARK_QUIZ_AS_DONE_REQUEST,
   MARK_QUIZ_AS_DONE_SUCCESS,
   MARK_QUIZ_AS_DONE_FAIL,
   MARK_MODULE_AS_DONE_REQUEST,
   MARK_MODULE_AS_DONE_SUCCESS,
   MARK_MODULE_AS_DONE_FAIL,
+  CREATE_SUBMISSION_REQUEST,
+  CREATE_SUBMISSION_SUCCESS,
+  CREATE_SUBMISSION_FAIL,
+  CREATE_RETAKE_REQUEST,
+  CREATE_RETAKE_SUCCESS,
+  CREATE_RETAKE_FAIL,
+  CREATE_RETAKE_RESET,
   CLEAR_ERRORS,
 } from "../constants/enrollmentConstants";
 
@@ -439,4 +446,65 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+export const createSubmit =
+  (enrollmentId, submissionData) => async (dispatch) => {
+    try {
+      dispatch({ type: CREATE_SUBMISSION_REQUEST });
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/enrollment/${enrollmentId}/submit`,
+        submissionData,
+        config
+      );
+
+      dispatch({ type: CREATE_SUBMISSION_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: CREATE_SUBMISSION_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const createRetake = (enrollmentId, retakeData) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_RETAKE_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    console.log("Retake data:", retakeData);
+
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/enrollment/${enrollmentId}/retake`,
+      retakeData,
+      config
+    );
+
+    dispatch({ type: CREATE_RETAKE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: CREATE_RETAKE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };

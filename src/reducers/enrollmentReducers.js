@@ -38,15 +38,23 @@ import {
   MARK_CHAPTER_AS_DONE_REQUEST,
   MARK_CHAPTER_AS_DONE_SUCCESS,
   MARK_CHAPTER_AS_DONE_FAIL,
-  MARK_LESSON_AS_DONE_REQUEST, // Adding MARK_LESSON_AS_DONE_REQUEST
-  MARK_LESSON_AS_DONE_SUCCESS, // Adding MARK_LESSON_AS_DONE_SUCCESS
-  MARK_LESSON_AS_DONE_FAIL, // Adding MARK_LESSON_AS_DONE_FAIL
+  MARK_LESSON_AS_DONE_REQUEST,
+  MARK_LESSON_AS_DONE_SUCCESS,
+  MARK_LESSON_AS_DONE_FAIL,
   MARK_QUIZ_AS_DONE_REQUEST,
   MARK_QUIZ_AS_DONE_SUCCESS,
   MARK_QUIZ_AS_DONE_FAIL,
   MARK_MODULE_AS_DONE_FAIL,
   MARK_MODULE_AS_DONE_REQUEST,
   MARK_MODULE_AS_DONE_SUCCESS,
+  CREATE_SUBMISSION_REQUEST,
+  CREATE_SUBMISSION_SUCCESS,
+  CREATE_SUBMISSION_FAIL,
+  CREATE_SUBMISSION_RESET,
+  CREATE_RETAKE_REQUEST,
+  CREATE_RETAKE_SUCCESS,
+  CREATE_RETAKE_FAIL,
+  CREATE_RETAKE_RESET,
 } from "../constants/enrollmentConstants";
 
 export const newEnrollmentReducer = (state = {}, action) => {
@@ -186,7 +194,7 @@ export const enrollmentReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_ENROLLMENT_REQUEST:
     case DELETE_ENROLLMENT_REQUEST:
-    case JOIN_ENROLLMENT_REQUEST: // Adding JOIN_ENROLLMENT_REQUEST
+    case JOIN_ENROLLMENT_REQUEST:
       return {
         ...state,
         loading: true,
@@ -206,7 +214,7 @@ export const enrollmentReducer = (state = {}, action) => {
         isDeleted: action.payload,
       };
 
-    case JOIN_ENROLLMENT_SUCCESS: // Adding JOIN_ENROLLMENT_SUCCESS
+    case JOIN_ENROLLMENT_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -215,7 +223,7 @@ export const enrollmentReducer = (state = {}, action) => {
 
     case UPDATE_ENROLLMENT_FAIL:
     case DELETE_ENROLLMENT_FAIL:
-    case JOIN_ENROLLMENT_FAIL: // Adding JOIN_ENROLLMENT_FAIL
+    case JOIN_ENROLLMENT_FAIL:
       return {
         ...state,
         error: action.payload,
@@ -423,6 +431,82 @@ export const markModuleAsDoneReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case MARK_MODULE_AS_DONE_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const createSubmitReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CREATE_SUBMISSION_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CREATE_SUBMISSION_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        submission: action.payload.submission,
+      };
+
+    case CREATE_SUBMISSION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case CREATE_SUBMISSION_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const createRetakeReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CREATE_RETAKE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CREATE_RETAKE_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        retake: action.payload.retake,
+      };
+
+    case CREATE_RETAKE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case CREATE_RETAKE_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
     default:
       return state;
   }
