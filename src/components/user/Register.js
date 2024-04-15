@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../actions/userActions";
+import { register, clearErrors } from "../../actions/userActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -39,11 +39,25 @@ const Register = () => {
   const [avatarPreview, setAvatarPreview] = useState(
     "/images/default_avatar.jpg"
   );
+  const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading } = useSelector((state) => state.auth);
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+
+    if (error) {
+      setErrors({ ...errors, registerError: error });
+      dispatch(clearErrors());
+    }
+  }, [dispatch, isAuthenticated, error, navigate, errors]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -256,17 +270,29 @@ const Register = () => {
                 </div>
               </div>
 
-              <Button
-                id="register_button"
-                type="submit"
-                variant="contained"
-                className="btn btn-block py-3"
-                color="primary"
-                disabled={loading ? true : false}
-                endIcon={<HowToRegOutlinedIcon />}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  height: "50px",
+                }}
               >
-                REGISTER
-              </Button>
+                <Button
+                  id="register_button"
+                  type="submit"
+                  variant="contained"
+                  className="btn btn-block py-3"
+                  color="primary"
+                  disabled={loading ? true : false}
+                  endIcon={<HowToRegOutlinedIcon />}
+                  style={{
+                    borderRadius: "50px",
+                    width: "40%",
+                  }}
+                >
+                  REGISTER
+                </Button>
+              </div>
             </form>
           </Box>
         </Grid>

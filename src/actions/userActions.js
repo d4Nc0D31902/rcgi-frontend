@@ -39,6 +39,12 @@ import {
   USER_SALES_SUCCESS,
   USER_SALES_FAIL,
   CLEAR_ERRORS,
+  DEACTIVATE_USER_REQUEST,
+  DEACTIVATE_USER_SUCCESS,
+  DEACTIVATE_USER_FAIL,
+  REACTIVATE_USER_REQUEST,
+  REACTIVATE_USER_SUCCESS,
+  REACTIVATE_USER_FAIL,
 } from "../constants/userConstants";
 
 import { toast } from "react-toastify";
@@ -364,4 +370,44 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+export const deactivateUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DEACTIVATE_USER_REQUEST });
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v1/admin/user/deactivate/${id}`,
+      null,
+      { withCredentials: true }
+    );
+    dispatch({
+      type: DEACTIVATE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DEACTIVATE_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const reactivateUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: REACTIVATE_USER_REQUEST });
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v1/admin/user/reactivate/${id}`,
+      null,
+      { withCredentials: true }
+    );
+    dispatch({
+      type: REACTIVATE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: REACTIVATE_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

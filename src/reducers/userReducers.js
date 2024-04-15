@@ -42,42 +42,24 @@ import {
   USER_SALES_SUCCESS,
   USER_SALES_FAIL,
   CLEAR_ERRORS,
+  DEACTIVATE_USER_REQUEST,
+  DEACTIVATE_USER_SUCCESS,
+  DEACTIVATE_USER_FAIL,
+  REACTIVATE_USER_REQUEST,
+  REACTIVATE_USER_SUCCESS,
+  REACTIVATE_USER_FAIL,
 } from "../constants/userConstants";
-
-export const registerReducer = (state = {}, action) => {
-  switch (action.type) {
-    case REGISTER_USER_REQUEST:
-      return {
-        loading: true,
-      };
-    case REGISTER_USER_SUCCESS:
-      return {
-        loading: false,
-        success: true,
-      };
-    case REGISTER_USER_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        error: null,
-      };
-    default:
-      return state;
-  }
-};
 
 export const authReducer = (state = { user: {} }, action) => {
   switch (action.type) {
+    case REGISTER_USER_REQUEST:
     case LOGIN_REQUEST:
     case LOAD_USER_REQUEST:
       return {
         loading: true,
         isAuthenticated: false,
       };
+    case REGISTER_USER_SUCCESS:
     case LOGIN_SUCCESS:
     case LOAD_USER_SUCCESS:
       return {
@@ -86,6 +68,7 @@ export const authReducer = (state = { user: {} }, action) => {
         isAuthenticated: true,
         user: action.payload,
       };
+    case REGISTER_USER_FAIL:
     case LOGIN_FAIL:
     case LOAD_USER_FAIL:
       return {
@@ -124,6 +107,8 @@ export const userReducer = (state = {}, action) => {
     case UPDATE_PASSWORD_REQUEST:
     case UPDATE_USER_REQUEST:
     case DELETE_USER_REQUEST:
+    case DEACTIVATE_USER_REQUEST:
+    case REACTIVATE_USER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -143,10 +128,19 @@ export const userReducer = (state = {}, action) => {
         ...state,
         isUpdated: false,
       };
+    case DEACTIVATE_USER_SUCCESS:
+    case REACTIVATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
     case UPDATE_PROFILE_FAIL:
     case UPDATE_PASSWORD_FAIL:
     case UPDATE_USER_FAIL:
     case DELETE_USER_FAIL:
+    case DEACTIVATE_USER_FAIL:
+    case REACTIVATE_USER_FAIL:
       return {
         ...state,
         loading: false,

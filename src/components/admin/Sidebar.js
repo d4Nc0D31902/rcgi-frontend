@@ -41,6 +41,12 @@ const Sidebar = () => {
               </li>
             </ul>
           </li>
+
+          <li>
+            <Link to="/admin/enrollments">
+              <i className="fa fa-graduation-cap"></i> Enrollments
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

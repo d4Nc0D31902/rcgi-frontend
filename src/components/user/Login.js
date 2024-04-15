@@ -46,17 +46,22 @@ const Login = () => {
     }
   }, [dispatch, isAuthenticated, error, navigate, redirect]);
 
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   dispatch(login(email, password))
+  //     .then(() => {
+  //       toast.success("Login successful!", {
+  //         position: toast.POSITION.BOTTOM_CENTER,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       notify(error.message);
+  //     });
+  // };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password))
-      .then(() => {
-        toast.success("Login successful!", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      })
-      .catch((error) => {
-        notify(error.message);
-      });
+    dispatch(login(email, password));
   };
 
   const toggleShowPassword = () => {
@@ -136,22 +141,30 @@ const Login = () => {
                 <Typography variant="body2" align="right" gutterBottom>
                   <Link to="/password/forgot">Forgot Password?</Link>
                 </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  fullWidth
-                  size="large"
-                  disabled={loading}
-                  endIcon={<LoginIcon />}
-                  sx={{ mt: 2 }}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    height: "60px",
+                  }}
                 >
-                  {loading ? (
-                    <CircularProgress size={24} color="inherit" />
-                  ) : (
-                    "LOGIN"
-                  )}
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    size="large"
+                    disabled={loading}
+                    endIcon={<LoginIcon />}
+                    sx={{ mt: 2 }}
+                    style={{ borderRadius: "50px", width: "40%" }}
+                  >
+                    {loading ? (
+                      <CircularProgress size={24} color="inherit" />
+                    ) : (
+                      "LOGIN"
+                    )}
+                  </Button>
+                </div>
                 <Typography
                   variant="body2"
                   align="center"

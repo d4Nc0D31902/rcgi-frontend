@@ -12,7 +12,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Fab, // Import Fab for Floating Action Button
+  Fab, 
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import {
@@ -24,7 +24,7 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"; // Import ArrowUp Icon
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"; 
 
 const EnrollmentLessonDetails = () => {
   const dispatch = useDispatch();

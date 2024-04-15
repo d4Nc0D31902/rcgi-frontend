@@ -7,14 +7,26 @@ import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { allUsers, clearErrors, deleteUser } from "../../actions/userActions";
-import { DELETE_USER_RESET } from "../../constants/userConstants";
+import {
+  allUsers,
+  clearErrors,
+  deleteUser,
+  deactivateUser,
+  reactivateUser,
+} from "../../actions/userActions";
+import {
+  DELETE_USER_RESET,
+  DEACTIVATE_USER_RESET,
+  REACTIVATE_USER_RESET,
+} from "../../constants/userConstants";
 
 const UsersList = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const { loading, error, users } = useSelector((state) => state.allUsers);
   const { isDeleted } = useSelector((state) => state.user);
+  const { isDeactivated, isReactivated } =
+    useSelector((state) => state.user) || {};
 
   const errMsg = (message = "") =>
     toast.error(message, {
@@ -32,6 +44,16 @@ const UsersList = () => {
       errMsg(error);
       dispatch(clearErrors());
     }
+    if (isDeactivated) {
+      successMsg("User deactivated successfully");
+      console.log("User deactivated:", isDeactivated);
+      dispatch({ type: DEACTIVATE_USER_RESET });
+    }
+    if (isReactivated) {
+      successMsg("User reactivated successfully");
+      console.log("User reactivated:", isReactivated);
+      dispatch({ type: REACTIVATE_USER_RESET });
+    }
     if (isDeleted) {
       successMsg("User deleted successfully");
       navigate("/admin/users");
@@ -41,6 +63,19 @@ const UsersList = () => {
 
   const deleteUserHandler = (id) => {
     dispatch(deleteUser(id));
+  };
+
+  const toggleUserActivation = async (id, isDeactivated) => {
+    if (isDeactivated) {
+      await dispatch(reactivateUser(id));
+      successMsg("User Reactivated Successfully");
+      console.log("User reactivated:", id);
+    } else {
+      await dispatch(deactivateUser(id));
+      successMsg("User Deactivated Successfully");
+      console.log("User deactivated:", id);
+    }
+    dispatch(allUsers());
   };
 
   const setUsers = () => {
@@ -94,11 +129,27 @@ const UsersList = () => {
             >
               <i className="fa fa-pencil"></i>
             </Link>
-            <button
+            {/* <button
               className="btn btn-danger py-1 px-2 ml-2"
               onClick={() => deleteUserHandler(user._id)}
             >
               <i className="fa fa-trash"></i>
+            </button> */}
+            <button
+              className={`btn ${
+                user.status === "inactive" ? "btn-success" : "btn-danger"
+              } py-1 px-2 ml-2`}
+              onClick={() =>
+                toggleUserActivation(user._id, user.status === "inactive")
+              }
+            >
+              <i
+                className={`fa ${
+                  user.status === "inactive"
+                    ? "fa-check-circle"
+                    : "fa-times-circle"
+                }`}
+              ></i>
             </button>
           </Fragment>
         ),
@@ -118,13 +169,6 @@ const UsersList = () => {
           <Fragment>
             <div className="d-flex justify-content-between align-items-center">
               <h1 className="my-5">All Users</h1>
-              <Link
-                to={"/admin/newUser"}
-                className="btn btn-primary"
-                style={{ marginRight: "25px" }}
-              >
-                Register Employee
-              </Link>
             </div>
             {loading ? (
               <Loader />

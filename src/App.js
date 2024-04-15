@@ -32,6 +32,7 @@ import ProcessOrder from "./components/admin/ProcessOrder";
 import UsersList from "./components/admin/UsersList";
 import UpdateUser from "./components/admin/UpdateUser";
 import ProductReviews from "./components/admin/ProductReviews";
+import AdminEnrollmentList from "./components/admin/AdminEnrollmentList";
 
 import NewUser from "./components/admin/NewUser";
 
@@ -251,7 +252,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/admin/newUser"
           element={
@@ -483,7 +484,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/admin/enrollments"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <AdminEnrollmentList />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
+
       {!loading && (!isAuthenticated || user.role !== "admin") && <Footer />}
     </div>
   );

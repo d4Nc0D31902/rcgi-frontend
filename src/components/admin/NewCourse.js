@@ -76,7 +76,11 @@ const NewCourse = () => {
           <Sidebar />
         </Grid>
         <Grid item xs={12} md={10}>
-          <Paper elevation={3} sx={{ p: 3 }}>
+          <Paper
+            elevation={3}
+            sx={{ p: 3 }}
+            style={{ marginTop: "20px", marginRight: "20px" }}
+          >
             <Typography variant="h4" component="h1" gutterBottom>
               New Course
             </Typography>

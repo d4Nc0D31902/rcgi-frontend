@@ -33,7 +33,59 @@ const CoursesList = () => {
     }
   }, [dispatch, error, navigate, isDeleted, deleteError]);
 
+  // const setCourses = () => {
+  //   const data = {
+  //     columns: [
+  //       {
+  //         label: "Title",
+  //         field: "title",
+  //         sort: "asc",
+  //       },
+  //       {
+  //         label: "Description",
+  //         field: "description",
+  //         sort: "asc",
+  //       },
+  //       {
+  //         label: "Actions",
+  //         field: "actions",
+  //       },
+  //     ],
+  //     rows: [],
+  //   };
+  //   courses.forEach((course) => {
+  //     data.rows.push({
+  //       title: course.title,
+  //       description: course.description,
+  //       actions: (
+  //         <Fragment>
+  //           <Link
+  //             to={`/admin/showCourses`}
+  //             className="btn btn-primary py-1 px-2"
+  //           >
+  //             <i className="fa fa-eye"></i>
+  //           </Link>
+  //           <button
+  //             className="btn btn-danger py-1 px-2 ml-2"
+  //             onClick={() => deleteCourseHandler(course._id)}
+  //           >
+  //             <i className="fa fa-trash"></i>
+  //           </button>
+  //         </Fragment>
+  //       ),
+  //     });
+  //   });
+  //   return data;
+  // };
+
   const setCourses = () => {
+    const truncateDescription = (description, maxLength) => {
+      if (description.length > maxLength) {
+        return description.substring(0, maxLength) + "...";
+      }
+      return description;
+    };
+
     const data = {
       columns: [
         {
@@ -53,10 +105,11 @@ const CoursesList = () => {
       ],
       rows: [],
     };
+
     courses.forEach((course) => {
       data.rows.push({
         title: course.title,
-        description: course.description,
+        description: truncateDescription(course.description, 100),
         actions: (
           <Fragment>
             <Link
@@ -75,6 +128,7 @@ const CoursesList = () => {
         ),
       });
     });
+
     return data;
   };
 

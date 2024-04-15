@@ -146,17 +146,20 @@ export const joinEnrollment = (enrollment) => async (dispatch) => {
 export const allEnrollments = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ENROLLMENTS_REQUEST });
+    console.log("Fetching all enrollments...");
     const { data } = await axios.get(
       `${process.env.REACT_APP_API}/api/v1/admin/enrollments`,
       {
         withCredentials: true,
       }
     );
+    console.log("Enrollments fetched successfully:", data);
     dispatch({
       type: ALL_ENROLLMENTS_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    console.error("Error fetching enrollments:", error);
     dispatch({
       type: ALL_ENROLLMENTS_FAIL,
       payload: error.response.data.message,
