@@ -40,7 +40,9 @@ const ModuleModal = ({ open, handleClose }) => {
       </DialogTitle>
       <DialogContent dividers>
         <Typography variant="body1">
-          Well done on completing the Module!
+          I would like to congratulate you on completing the course. You can now
+          get the hard copy of acknowledgement form by showing and using this as
+          a proof that you have completed the course in HR.
         </Typography>
         <Button
           variant="contained"
