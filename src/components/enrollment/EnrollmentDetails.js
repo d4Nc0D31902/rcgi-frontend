@@ -20,9 +20,9 @@ import {
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import CheckIcon from "@mui/icons-material/Check";
-import { Check } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ModuleModal from "./ModuleModal";
 
 const EnrollmentDetails = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const EnrollmentDetails = () => {
   }, [dispatch, id]);
 
   const [showFullDescription, setShowFullDescription] = useState({});
-
+  const [openModal, setOpenModal] = useState(false);
   const toggleDescription = (moduleId) => {
     setShowFullDescription((prevState) => ({
       ...prevState,
@@ -65,6 +65,7 @@ const EnrollmentDetails = () => {
       await dispatch(markModuleAsDone(enrollmentId, moduleId));
       toast.success("Module marked as done successfully!");
       dispatch(getEnrollmentDetails(id));
+      setOpenModal(true);
     } catch (error) {
       console.error("Error marking module as done:", error);
       toast.error("Failed to mark module as done. Please try again.");
@@ -210,11 +211,6 @@ const EnrollmentDetails = () => {
                             color="primary"
                             fullWidth
                             style={{ marginTop: "20px", borderRadius: "20px" }}
-                            disabled={
-                              index === 0
-                                ? false
-                                : module[index - 1].status !== "Done"
-                            }
                           >
                             View
                           </Button>
@@ -269,6 +265,7 @@ const EnrollmentDetails = () => {
           </Grid>
         </Grid>
       )}
+      <ModuleModal open={openModal} handleClose={() => setOpenModal(false)} />
     </Fragment>
   );
 };

@@ -459,6 +459,7 @@ const EnrollmentQuizDetails = () => {
                       style={{ marginLeft: "10px", borderRadius: "20px" }}
                       onClick={handleSubmit}
                       startIcon={<CheckOutlinedIcon />}
+                      disabled
                     >
                       Done
                     </Button>
