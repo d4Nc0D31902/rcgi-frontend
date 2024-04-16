@@ -11,6 +11,7 @@ import {
   Button,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import jsPDF from "jspdf";
 
 const ModuleModal = ({ open, handleClose }) => {
@@ -24,7 +25,7 @@ const ModuleModal = ({ open, handleClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={handleClose} style={{ borderRadius: "20px" }}>
       <DialogTitle>
         <Typography variant="h6" style={{ fontWeight: "bold", color: "#333" }}>
           Congratulations!
@@ -43,11 +44,12 @@ const ModuleModal = ({ open, handleClose }) => {
         </Typography>
         <Button
           variant="contained"
-          color="primary"
+          color="error"
           onClick={handleDownloadPDF}
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 20, borderRadius: "20px" }}
+          endIcon={<PictureAsPdfIcon />}
         >
-          Download PDF
+          Download
         </Button>
       </DialogContent>
     </Dialog>
