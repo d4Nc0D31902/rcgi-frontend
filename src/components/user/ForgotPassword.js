@@ -1,23 +1,24 @@
 import React, { Fragment, useState, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Paper,
+} from "@mui/material";
 import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { forgotPassword, clearErrors } from "../../actions/userActions";
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
   const { error, loading, message } = useSelector(
     (state) => state.forgotPassword
   );
-  const success = (message = "") =>
-    toast.success(message, {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-  const notify = (error = "") =>
-    toast.error(error, {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
+
   useEffect(() => {
     if (error) {
       notify(error);
@@ -27,43 +28,60 @@ const ForgotPassword = () => {
       success(message);
     }
   }, [dispatch, error, message]);
+
+  const success = (message = "") =>
+    toast.success(message, {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  const notify = (error = "") =>
+    toast.error(error, {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+
   const submitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.set("email", email);
     dispatch(forgotPassword(formData));
   };
+
   return (
     <Fragment>
       <MetaData title={"Forgot Password"} />
-      <div className="row wrapper">
-        <div className="col-10 col-lg-5">
-          <form className="shadow-lg" onSubmit={submitHandler}>
-            <h1 className="mb-3">Forgot Password</h1>
-
-            <div className="form-group">
-              <label htmlFor="email_field">Enter Email</label>
-
-              <input
-                type="email"
-                id="email_field"
-                className="form-control"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <button
-              id="forgot_password_button"
-              type="submit"
-              className="btn btn-block py-3"
-              disabled={loading ? true : false}
-            >
-              Send Email
-            </button>
-          </form>
-        </div>
-      </div>
+      <Container maxWidth="md" sx={{ mt: 5 }}>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} sx={{ p: 4 }}>
+              <Typography variant="h4" align="center" gutterBottom>
+                Forgot Password
+              </Typography>
+              <form onSubmit={submitHandler}>
+                <TextField
+                  id="email"
+                  name="email"
+                  type="email"
+                  label="Enter Email"
+                  variant="outlined"
+                  fullWidth
+                  mb={3}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  disabled={loading}
+                  style={{ marginTop: 20 }}
+                >
+                  Send Email
+                </Button>
+              </form>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
     </Fragment>
   );
 };

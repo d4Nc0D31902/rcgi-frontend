@@ -1,11 +1,20 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import {
+  Grid,
+  Typography,
+  Button,
+  Avatar,
+  Divider,
+  Paper,
+} from "@mui/material";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 
 const Profile = () => {
   const { user, loading } = useSelector((state) => state.auth);
+
   return (
     <Fragment>
       {loading ? (
@@ -14,47 +23,68 @@ const Profile = () => {
         <Fragment>
           <MetaData title={"Your Profile"} />
 
-          <h2 className="mt-5 ml-5">My Profile</h2>
+          <Typography variant="h2" align="center" mt={5} mb={3}>
+            My Profile
+          </Typography>
 
-          <div className="row justify-content-around mt-5 user-info">
-            <div className="col-12 col-md-3">
-              <figure className="avatar avatar-profile">
-                <img
-                  className="rounded-circle img-fluid"
-                  src={user.avatar.url}
+          <Grid container justifyContent="center" spacing={3}>
+            {/* Avatar and Edit Profile Button */}
+            <Grid item xs={12} md={3} align="center">
+              <Paper elevation={3} sx={{ padding: 3 }}>
+                <Avatar
                   alt={user.name}
+                  src={user.avatar.url}
+                  sx={{ width: 150, height: 150, marginBottom: 2 }}
                 />
-              </figure>
-
-              <Link
-                to="/me/update"
-                id="edit_profile"
-                className="btn btn-primary btn-block my-5"
-              >
-                Edit Profile
-              </Link>
-            </div>
-
-            <div className="col-12 col-md-5">
-              <h4>Full Name</h4>
-
-              <p>{user.name}</p>
-
-              <h4>Email Address</h4>
-
-              <p>{user.email}</p>
-
-              <Link
-                to="/password/update"
-                className="btn btn-primary btn-block mt-3"
-              >
-                Change Password
-              </Link>
-            </div>
-          </div>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to="/me/update"
+                  sx={{ width: "100%", borderRadius: 20 }}
+                >
+                  Edit Profile
+                </Button>
+              </Paper>
+            </Grid>
+            {/* User Info */}
+            <Grid item xs={12} md={6}>
+              <Paper elevation={3} sx={{ padding: 3 }}>
+                <Typography variant="h4" gutterBottom>
+                  Full Name
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {user.name}
+                </Typography>
+                <Divider sx={{ marginBottom: 2 }} />
+                <Typography variant="h4" gutterBottom>
+                  Email Address
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {user.email}
+                </Typography>
+                <Divider sx={{ marginTop: 2 }} />
+                <Typography variant="h4" gutterBottom>
+                  Company
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {user.company}
+                </Typography>
+                <Divider sx={{ marginTop: 2 }} />
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to="/password/update"
+                  sx={{ width: "100%", marginTop: 2, borderRadius: 20 }}
+                >
+                  Change Password
+                </Button>
+              </Paper>
+            </Grid>
+          </Grid>
         </Fragment>
       )}
     </Fragment>
   );
 };
+
 export default Profile;
