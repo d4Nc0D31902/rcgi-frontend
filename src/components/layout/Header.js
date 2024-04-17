@@ -15,7 +15,9 @@ import {
   Divider,
 } from "@mui/material";
 import { Logout, School as SchoolIcon } from "@mui/icons-material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { logout } from "../../actions/userActions";
+
 const Header = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
@@ -79,6 +81,15 @@ const Header = () => {
           {user ? (
             <div>
               <IconButton
+                aria-label="notifications"
+                style={{
+                  marginTop: "10px",
+                  color: "black",
+                }}
+              >
+                <NotificationsIcon />
+              </IconButton>
+              <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -99,7 +110,7 @@ const Header = () => {
                 keepMounted
                 open={open}
                 onClose={handleClose}
-                style={{ marginTop: "43px", textAlign: "center" }} // Add textAlign: "center"
+                style={{ marginTop: "43px", textAlign: "center" }}
               >
                 {user.role === "admin" && (
                   <MenuItem

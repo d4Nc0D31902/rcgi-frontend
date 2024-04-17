@@ -107,7 +107,7 @@ const EnrollmentLessonDetails = () => {
 
   return (
     <Fragment>
-      <MetaData title={"Enrollment Lesson Details"} />
+      <MetaData title={"Lesson Details"} />
       {error ? (
         <Typography variant="h6" color="error" align="center">
           {error}
@@ -466,7 +466,6 @@ const EnrollmentLessonDetails = () => {
               )}
             </Paper>
           </Grid>
-          {/* Scroll to top button */}
           <Fab
             color="primary"
             aria-label="scroll-to-top"
