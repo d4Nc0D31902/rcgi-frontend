@@ -108,32 +108,34 @@ const Header = () => {
           <div style={{ flexGrow: 1 }}></div>
           {user ? (
             <div>
-              <IconButton
-                aria-label="notifications"
-                style={{
-                  marginTop: "10px",
-                  color: "black",
-                }}
-                onClick={handleNotificationClick}
-              >
-                {notifications.some(
-                  (notification) => notification.status === "unread"
-                ) && (
-                  <Badge
-                    badgeContent={
-                      notifications.filter(
-                        (notification) => notification.status === "unread"
-                      ).length
-                    }
-                    color="error"
-                  >
-                    <NotificationsIcon />
-                  </Badge>
-                )}
-                {!notifications.some(
-                  (notification) => notification.status === "unread"
-                ) && <NotificationsIcon />}
-              </IconButton>
+              {notifications && notifications.length > 0 && (
+                <IconButton
+                  aria-label="notifications"
+                  style={{
+                    marginTop: "10px",
+                    color: "black",
+                  }}
+                  onClick={handleNotificationClick}
+                >
+                  {notifications.some(
+                    (notification) => notification.status === "unread"
+                  ) && (
+                    <Badge
+                      badgeContent={
+                        notifications.filter(
+                          (notification) => notification.status === "unread"
+                        ).length
+                      }
+                      color="error"
+                    >
+                      <NotificationsIcon />
+                    </Badge>
+                  )}
+                  {!notifications.some(
+                    (notification) => notification.status === "unread"
+                  ) && <NotificationsIcon />}
+                </IconButton>
+              )}
               <Popover
                 open={notificationOpen}
                 anchorEl={notificationAnchorEl}
@@ -147,15 +149,29 @@ const Header = () => {
                   horizontal: "right",
                 }}
               >
-                {notifications.length > 0 ? (
-                  <List>
-                    {notifications.map((notification) => (
-                      <ListItem key={notification.id}>
-                        <Divider style={{ margin: "5px 0" }} />
-                        <ListItemText primary={notification.message} />
-                      </ListItem>
-                    ))}
-                  </List>
+                {notifications && notifications.length > 0 ? (
+                  <Popover
+                    open={notificationOpen}
+                    anchorEl={notificationAnchorEl}
+                    onClose={handleNotificationClose}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                  >
+                    <List>
+                      {notifications.map((notification) => (
+                        <ListItem key={notification.id}>
+                          <Divider style={{ margin: "5px 0" }} />
+                          <ListItemText primary={notification.message} />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Popover>
                 ) : (
                   <Typography style={{ padding: "10px", color: "gray" }}>
                     No New Notifications
