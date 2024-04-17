@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from "react";
+// Import useState hook
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -13,14 +14,20 @@ import {
   Menu,
   MenuItem,
   Divider,
+  Badge, // Import Badge component
 } from "@mui/material";
 import { Logout, School as SchoolIcon } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { logout } from "../../actions/userActions";
+import {
+  getNotifications,
+  markAllNotificationsAsRead, // Import markAllNotificationsAsRead action
+} from "../../actions/notificationActions"; // Import getNotifications action
 
 const Header = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
+  const { notifications } = useSelector((state) => state.notifications); // Get notifications from Redux state
   const notify = (error = "") =>
     toast.error(error, {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -47,6 +54,23 @@ const Header = () => {
         notify(error.message);
       });
   };
+
+  const markAllAsReadHandler = () => {
+    dispatch(markAllNotificationsAsRead())
+      .then(() => {
+        toast.success("All notifications marked as read!", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      })
+      .catch((error) => {
+        notify(error.message);
+      });
+  };
+
+  // Fetch notifications on component mount
+  useEffect(() => {
+    dispatch(getNotifications());
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -86,8 +110,25 @@ const Header = () => {
                   marginTop: "10px",
                   color: "black",
                 }}
+                onClick={markAllAsReadHandler} 
               >
-                <NotificationsIcon />
+                {notifications.some(
+                  (notification) => notification.status === "unread"
+                ) && (
+                  <Badge
+                    badgeContent={
+                      notifications.filter(
+                        (notification) => notification.status === "unread"
+                      ).length
+                    }
+                    color="error"
+                  >
+                    <NotificationsIcon />
+                  </Badge>
+                )}
+                {!notifications.some(
+                  (notification) => notification.status === "unread"
+                ) && <NotificationsIcon />}
               </IconButton>
               <IconButton
                 size="large"

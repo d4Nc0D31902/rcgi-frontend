@@ -55,6 +55,9 @@ import {
   CREATE_RETAKE_SUCCESS,
   CREATE_RETAKE_FAIL,
   CREATE_RETAKE_RESET,
+  CHECK_PROGRESS_REQUEST,
+  CHECK_PROGRESS_SUCCESS,
+  CHECK_PROGRESS_FAIL,
 } from "../constants/enrollmentConstants";
 
 export const newEnrollmentReducer = (state = {}, action) => {
@@ -505,6 +508,33 @@ export const createRetakeReducer = (state = {}, action) => {
       return {
         ...state,
         error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const checkProgressReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CHECK_PROGRESS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case CHECK_PROGRESS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        progress: action.payload,
+      };
+
+    case CHECK_PROGRESS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
 
     default:

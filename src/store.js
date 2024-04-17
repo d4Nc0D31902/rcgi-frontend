@@ -38,8 +38,16 @@ import {
   chapterReducer,
   addLessonReducer,
   addQuizReducer,
-  // markChapterAsDoneReducer,
 } from "./reducers/chapterReducers";
+
+import {
+  notificationsReducer,
+  notificationDetailsReducer,
+  newNotificationReducer,
+  notificationReducer,
+  markNotificationAsReadReducer,
+  markAllNotificationsAsReadReducer,
+} from "./reducers/notificationReducers";
 
 import {
   lessonsReducer,
@@ -72,6 +80,7 @@ import {
   markModuleAsDoneReducer,
   createSubmitReducer,
   createRetakeReducer,
+  checkProgressReducer,
 } from "./reducers/enrollmentReducers";
 
 import {
@@ -156,6 +165,13 @@ const reducer = combineReducers({
   markModuleAsDone: markModuleAsDoneReducer,
   createSubmit: createSubmitReducer,
   createRetake: createRetakeReducer,
+  checkProgress: checkProgressReducer,
+  notifications: notificationsReducer,
+  notificationDetails: notificationDetailsReducer,
+  newNotification: newNotificationReducer,
+  notification: notificationReducer,
+  markNotificationAsRead: markNotificationAsReadReducer,
+  markAllNotificationsAsRead: markAllNotificationsAsReadReducer,
 });
 
 let initialState = {

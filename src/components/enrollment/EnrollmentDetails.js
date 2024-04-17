@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import {
   getEnrollmentDetails,
   markModuleAsDone,
+  checkProgress,
 } from "../../actions/enrollmentActions";
 import {
   CircularProgress,
@@ -65,6 +66,7 @@ const EnrollmentDetails = () => {
       await dispatch(markModuleAsDone(enrollmentId, moduleId));
       toast.success("Module marked as done successfully!");
       dispatch(getEnrollmentDetails(id));
+      dispatch(checkProgress(id));
       setOpenModal(true);
     } catch (error) {
       console.error("Error marking module as done:", error);

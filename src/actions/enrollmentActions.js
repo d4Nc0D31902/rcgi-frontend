@@ -52,6 +52,9 @@ import {
   CREATE_RETAKE_SUCCESS,
   CREATE_RETAKE_FAIL,
   CREATE_RETAKE_RESET,
+  CHECK_PROGRESS_REQUEST,
+  CHECK_PROGRESS_SUCCESS,
+  CHECK_PROGRESS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/enrollmentConstants";
 
@@ -501,6 +504,31 @@ export const createRetake = (enrollmentId, retakeData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_RETAKE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const checkProgress = (enrollmentId) => async (dispatch) => {
+  try {
+    dispatch({ type: CHECK_PROGRESS_REQUEST });
+    console.log("Fetching enrollment progress...");
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API}/api/v1/enrollment/${enrollmentId}/progress`,
+      { withCredentials: true }
+    );
+    console.log("Enrollment progress data:", data.progress);
+    dispatch({
+      type: CHECK_PROGRESS_SUCCESS,
+      payload: data.progress,
+    });
+  } catch (error) {
+    console.error("Error fetching enrollment progress:", error);
+    dispatch({
+      type: CHECK_PROGRESS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
