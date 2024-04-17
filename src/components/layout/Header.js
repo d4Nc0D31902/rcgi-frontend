@@ -157,7 +157,9 @@ const Header = () => {
                     ))}
                   </List>
                 ) : (
-                  <Typography sx={{ p: 2 , color:"gray"}}>Inbox Empty</Typography>
+                  <Typography style={{ padding: "10px", color: "gray" }}>
+                    No New Notifications
+                  </Typography>
                 )}
               </Popover>
               <IconButton
