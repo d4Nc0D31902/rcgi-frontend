@@ -114,26 +114,22 @@ const Header = () => {
                   style={{
                     marginTop: "10px",
                     color: "black",
+                    cursor: "pointer",
                   }}
                   onClick={handleNotificationClick}
                 >
-                  {notifications.some(
-                    (notification) => notification.status === "unread"
-                  ) && (
-                    <Badge
-                      badgeContent={
-                        notifications.filter(
-                          (notification) => notification.status === "unread"
-                        ).length
-                      }
-                      color="error"
-                    >
-                      <NotificationsIcon />
-                    </Badge>
-                  )}
-                  {!notifications.some(
-                    (notification) => notification.status === "unread"
-                  ) && <NotificationsIcon />}
+                  <Badge
+                    badgeContent={
+                      notifications
+                        ? notifications.filter(
+                            (notification) => notification.status === "unread"
+                          ).length
+                        : 0
+                    }
+                    color="error"
+                  >
+                    <NotificationsIcon />
+                  </Badge>
                 </IconButton>
               )}
               <Popover
