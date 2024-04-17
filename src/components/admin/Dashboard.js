@@ -6,12 +6,15 @@ import Sidebar from "./Sidebar";
 import UserSalesChart from "./UserSalesChart";
 import MonthlySalesChart from "./MonthlySalesChart";
 import ProductSalesChart from "./ProductSalesChart";
+import UserCompanyChart from "./UserCompanyChart"; // Import the UserCompanyChart
+import UserEnrollmentChart from "./UserEnrollmentChart";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getAdminProducts } from "../../actions/productActions";
 import { allOrders } from "../../actions/orderActions";
 
 import { allUsers, userSales } from "../../actions/userActions";
+import { allEnrollments } from "../../actions/enrollmentActions";
 import {
   monthlySalesChart,
   productSalesChart,
@@ -20,13 +23,14 @@ import {
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
-  const { users } = useSelector((state) => state.allUsers);
+  const { users } = useSelector((state) => state.allUsers); // Get users from Redux state
   const { orders, totalAmount, loading } = useSelector(
     (state) => state.allOrders
   );
   const { customerSales } = useSelector((state) => state.customerSales);
   const { salesPerMonth } = useSelector((state) => state.salesPerMonth);
   const { productSales } = useSelector((state) => state.productSales);
+  const { enrollments } = useSelector((state) => state.allEnrollments);
   let outOfStock = 0;
   products.forEach((product) => {
     if (product.stock === 0) {
@@ -41,6 +45,7 @@ const Dashboard = () => {
     dispatch(userSales());
     dispatch(monthlySalesChart());
     dispatch(productSalesChart());
+    dispatch(allEnrollments());
   }, [dispatch]);
 
   return (
@@ -61,7 +66,7 @@ const Dashboard = () => {
                   <div className="card text-white bg-primary o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
-                        Users
+                        Number of Employees
                         <br /> <b>{users && users.length}</b>
                       </div>
                     </div>
@@ -78,8 +83,24 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="row pr-4"></div>
               <Fragment>
+                <div className="chart-container">
+                  <h2 className="chart-label">Employee Companies</h2>
+                  <div className="chart-border">
+                    <UserCompanyChart userData={users} />
+                  </div>
+                </div>
+              </Fragment>
+              <Fragment>
+                <div className="chart-container">
+                  <h2 className="chart-label">Employee Enrollments</h2>
+                  <div className="chart-border">
+                    <UserEnrollmentChart enrollmentData={enrollments} />
+                  </div>
+                </div>
+              </Fragment>
+
+              {/* <Fragment>
                 <UserSalesChart data={customerSales} />
               </Fragment>
               <Fragment>
@@ -87,7 +108,7 @@ const Dashboard = () => {
               </Fragment>
               <Fragment>
                 <ProductSalesChart data={productSales} />
-              </Fragment>
+              </Fragment> */}
             </Fragment>
           )}
         </div>
