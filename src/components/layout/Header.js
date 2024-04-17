@@ -1,4 +1,3 @@
-// Import useState hook
 import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,26 +13,34 @@ import {
   Menu,
   MenuItem,
   Divider,
-  Badge, // Import Badge component
+  Badge,
+  Popover,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import { Logout, School as SchoolIcon } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { logout } from "../../actions/userActions";
 import {
   getNotifications,
-  markAllNotificationsAsRead, // Import markAllNotificationsAsRead action
-} from "../../actions/notificationActions"; // Import getNotifications action
+  markAllNotificationsAsRead,
+} from "../../actions/notificationActions";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
-  const { notifications } = useSelector((state) => state.notifications); // Get notifications from Redux state
+  const { notifications } = useSelector((state) => state.notifications);
   const notify = (error = "") =>
     toast.error(error, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
+
   const [anchorEl, setAnchorEl] = useState(null);
+  const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
+
   const open = Boolean(anchorEl);
+  const notificationOpen = Boolean(notificationAnchorEl);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,6 +48,16 @@ const Header = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleNotificationClick = (event) => {
+    setNotificationAnchorEl(event.currentTarget);
+    dispatch(markAllNotificationsAsRead());
+  };
+
+  const handleNotificationClose = () => {
+    dispatch(getNotifications());
+    setNotificationAnchorEl(null);
   };
 
   const logoutHandler = () => {
@@ -55,19 +72,6 @@ const Header = () => {
       });
   };
 
-  const markAllAsReadHandler = () => {
-    dispatch(markAllNotificationsAsRead())
-      .then(() => {
-        toast.success("All notifications marked as read!", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      })
-      .catch((error) => {
-        notify(error.message);
-      });
-  };
-
-  // Fetch notifications on component mount
   useEffect(() => {
     dispatch(getNotifications());
   }, [dispatch]);
@@ -110,7 +114,7 @@ const Header = () => {
                   marginTop: "10px",
                   color: "black",
                 }}
-                onClick={markAllAsReadHandler} 
+                onClick={handleNotificationClick}
               >
                 {notifications.some(
                   (notification) => notification.status === "unread"
@@ -130,6 +134,32 @@ const Header = () => {
                   (notification) => notification.status === "unread"
                 ) && <NotificationsIcon />}
               </IconButton>
+              <Popover
+                open={notificationOpen}
+                anchorEl={notificationAnchorEl}
+                onClose={handleNotificationClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+              >
+                {notifications.length > 0 ? (
+                  <List>
+                    {notifications.map((notification) => (
+                      <ListItem key={notification.id}>
+                        <Divider style={{ margin: "5px 0" }} />
+                        <ListItemText primary={notification.message} />
+                      </ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <Typography sx={{ p: 2 , color:"gray"}}>Inbox Empty</Typography>
+                )}
+              </Popover>
               <IconButton
                 size="large"
                 aria-label="account of current user"

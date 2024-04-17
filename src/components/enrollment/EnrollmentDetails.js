@@ -6,6 +6,7 @@ import {
   markModuleAsDone,
   checkProgress,
 } from "../../actions/enrollmentActions";
+import { getNotifications } from "../../actions/notificationActions";
 import {
   CircularProgress,
   Typography,
@@ -67,6 +68,7 @@ const EnrollmentDetails = () => {
       toast.success("Module marked as done successfully!");
       dispatch(getEnrollmentDetails(id));
       dispatch(checkProgress(id));
+      dispatch(getNotifications());
       setOpenModal(true);
     } catch (error) {
       console.error("Error marking module as done:", error);

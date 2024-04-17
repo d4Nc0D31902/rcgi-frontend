@@ -19,9 +19,9 @@ import {
   MARK_NOTIFICATION_AS_READ_REQUEST,
   MARK_NOTIFICATION_AS_READ_SUCCESS,
   MARK_NOTIFICATION_AS_READ_FAIL,
-  MARK_ALL_NOTIFICATIONS_AS_READ_REQUEST, 
-  MARK_ALL_NOTIFICATIONS_AS_READ_SUCCESS, 
-  MARK_ALL_NOTIFICATIONS_AS_READ_FAIL, 
+  MARK_ALL_NOTIFICATIONS_AS_READ_REQUEST,
+  MARK_ALL_NOTIFICATIONS_AS_READ_SUCCESS,
+  MARK_ALL_NOTIFICATIONS_AS_READ_FAIL,
   CLEAR_ERRORS,
 } from "../constants/notificationConstants";
 
@@ -46,6 +46,7 @@ export const getNotificationDetails = (id) => async (dispatch) => {
 export const getNotifications = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_NOTIFICATIONS_REQUEST });
+    console.log("Fetching notifications...");
     const { data } = await axios.get(
       `${process.env.REACT_APP_API}/api/v1/notifications`,
       {
@@ -56,11 +57,13 @@ export const getNotifications = () => async (dispatch) => {
       type: ADMIN_NOTIFICATIONS_SUCCESS,
       payload: data.notifications,
     });
+    console.log("Notifications fetched successfully.");
   } catch (error) {
     dispatch({
       type: ADMIN_NOTIFICATIONS_FAIL,
       payload: error.response.data.message,
     });
+    console.error("Failed to fetch notifications:", error);
   }
 };
 
@@ -164,11 +167,12 @@ export const markNotificationAsRead = (id) => async (dispatch) => {
 export const markAllNotificationsAsRead = () => async (dispatch) => {
   try {
     dispatch({ type: MARK_ALL_NOTIFICATIONS_AS_READ_REQUEST });
+    console.log("Marking all notifications as read...");
     const config = {
       withCredentials: true,
     };
     const { data } = await axios.put(
-      `${process.env.REACT_APP_API}/api/v1/notifications/markAllAsRead`, 
+      `${process.env.REACT_APP_API}/api/v1/notifications/markAllAsRead`,
       null,
       config
     );
@@ -176,11 +180,13 @@ export const markAllNotificationsAsRead = () => async (dispatch) => {
       type: MARK_ALL_NOTIFICATIONS_AS_READ_SUCCESS,
       payload: data.success,
     });
+    console.log("All notifications marked as read successfully.");
   } catch (error) {
     dispatch({
       type: MARK_ALL_NOTIFICATIONS_AS_READ_FAIL,
       payload: error.response.data.message,
     });
+    console.error("Failed to mark all notifications as read:", error);
   }
 };
 
