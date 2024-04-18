@@ -28,7 +28,7 @@ const UserCompanyChart = ({ userData }) => {
     count: usersByCompany[company],
   }));
 
-  const pieColors = ["#EADFB4", "#9BB0C1", "#51829B", "#F6995C"];
+  const pieColors = ["#EADFB4", "#9BB0C1", "#51829B", "#F6995C", "#D37676"];
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
