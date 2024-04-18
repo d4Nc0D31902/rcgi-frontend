@@ -167,7 +167,6 @@ const Header = () => {
                   vertical: "top",
                   horizontal: "right",
                 }}
-                style={{ cursor: "pointer" }} // Add cursor pointer when hovering
               >
                 <Box style={{ width: 300 }}>
                   {" "}

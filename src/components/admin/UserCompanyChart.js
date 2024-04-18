@@ -9,7 +9,7 @@ import {
 } from "recharts";
 
 const UserCompanyChart = ({ userData }) => {
-  const companies = ["Barcino", "Meat Depot", "Single Origin", "Bluesmith"];
+  const companies = ["Barcino", "Meat Depot", "Single Origin", "Bluesmith", "None"];
 
   const filteredUsers = userData.filter((user) =>
     companies.includes(user.company)

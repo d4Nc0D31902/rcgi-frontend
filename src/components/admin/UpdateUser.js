@@ -126,7 +126,7 @@ const UpdateUser = () => {
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
                     >
-                      <MenuItem value="">Select Company</MenuItem>
+                      <MenuItem value="None">None</MenuItem>
                       <MenuItem value="Barcino">Barcino</MenuItem>
                       <MenuItem value="Meat Depot">Meat Depot</MenuItem>
                       <MenuItem value="Single Origin">Single Origin</MenuItem>
