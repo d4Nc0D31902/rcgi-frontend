@@ -52,9 +52,11 @@ const Footer = () => {
                 <Grid container spacing={2} alignItems="center">
                   <Grid item xs={8}>
                     <TextField
-                      id="outlined-basic"
+                      id="outlined-multiline"
                       label="Your Feedback"
                       variant="outlined"
+                      multiline
+                      rows={4} 
                       fullWidth
                       margin="normal"
                     />

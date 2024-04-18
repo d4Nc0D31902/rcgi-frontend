@@ -76,6 +76,10 @@ const EnrollmentDetails = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(getNotifications());
+  }, [dispatch]);
+
   return (
     <Fragment>
       <MetaData title={"Enrollment Details"} />

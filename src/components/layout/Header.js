@@ -18,6 +18,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Box,
 } from "@mui/material";
 import { Logout, School as SchoolIcon } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -108,31 +109,29 @@ const Header = () => {
           <div style={{ flexGrow: 1 }}></div>
           {user ? (
             <div>
-              {notifications && notifications.length > 0 && (
-                <IconButton
-                  aria-label="notifications"
-                  style={{
-                    marginTop: "10px",
-                    color: "black",
-                    cursor: "pointer",
-                  }}
-                  onClick={handleNotificationClick}
+              <IconButton
+                aria-label="notifications"
+                style={{
+                  marginTop: "10px",
+                  color: "black",
+                  cursor: "pointer",
+                }}
+                onClick={handleNotificationClick}
+              >
+                <Badge
+                  badgeContent={
+                    notifications
+                      ? notifications.filter(
+                          (notification) => notification.status === "unread"
+                        ).length
+                      : 0
+                  }
+                  color="error"
                 >
-                  <Badge
-                    badgeContent={
-                      notifications
-                        ? notifications.filter(
-                            (notification) => notification.status === "unread"
-                          ).length
-                        : 0
-                    }
-                    color="error"
-                  >
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-              )}
-              <Popover
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              {/* <Popover
                 open={notificationOpen}
                 anchorEl={notificationAnchorEl}
                 onClose={handleNotificationClose}
@@ -145,35 +144,100 @@ const Header = () => {
                   horizontal: "right",
                 }}
               >
-                {notifications && notifications.length > 0 ? (
-                  <Popover
-                    open={notificationOpen}
-                    anchorEl={notificationAnchorEl}
-                    onClose={handleNotificationClose}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "right",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                  >
+                {notifications && notifications.length > 0 && (
+                  <List>
+                    {notifications.map((notification) => (
+                      <ListItem key={notification.id}>
+                        <Divider style={{ margin: "5px 0" }} />
+                        <ListItemText primary={notification.message} />
+                      </ListItem>
+                    ))}
+                  </List>
+                )}
+              </Popover> */}
+              <Popover
+                open={notificationOpen}
+                anchorEl={notificationAnchorEl}
+                onClose={handleNotificationClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                style={{ cursor: "pointer" }} // Add cursor pointer when hovering
+              >
+                <Box style={{ width: 300 }}>
+                  {" "}
+                  {/* Adjust the width as needed */}
+                  {notifications && notifications.length > 0 ? (
                     <List>
+                      <Typography
+                        variant="subtitle1"
+                        align="center"
+                        style={{ fontWeight: "bold", marginBottom: "10px" }}
+                      >
+                        Latest Notifications
+                      </Typography>
                       {notifications.map((notification) => (
+                        // <ListItem key={notification.id}>
+                        //   <Divider style={{ margin: "5px 0" }} />
+                        //   <ListItemText
+                        //     primary={
+                        //       <span
+                        //         style={{ color: "black" }}
+                        //         onMouseEnter={(e) =>
+                        //           (e.target.style.color = "blue")
+                        //         }
+                        //         onMouseLeave={(e) =>
+                        //           (e.target.style.color = "black")
+                        //         }
+                        //       >
+                        //         {notification.message}
+                        //       </span>
+                        //     }
+                        //   />
+                        // </ListItem>
                         <ListItem key={notification.id}>
                           <Divider style={{ margin: "5px 0" }} />
-                          <ListItemText primary={notification.message} />
+                          <ListItemText
+                            primary={
+                              <span
+                                style={{ color: "black" }}
+                                onMouseEnter={(e) =>
+                                  (e.target.style.color = "blue")
+                                }
+                                onMouseLeave={(e) =>
+                                  (e.target.style.color = "black")
+                                }
+                                dangerouslySetInnerHTML={{
+                                  __html: notification.message,
+                                }}
+                              />
+                            }
+                          />
                         </ListItem>
                       ))}
+                      <Typography
+                        variant="subtitle1"
+                        align="center"
+                        style={{ fontWeight: "bold", marginTop: "10px" }}
+                      >
+                        Oldest Notifications
+                      </Typography>
                     </List>
-                  </Popover>
-                ) : (
-                  <Typography style={{ padding: "10px", color: "gray" }}>
-                    No New Notifications
-                  </Typography>
-                )}
+                  ) : (
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <Typography style={{ padding: "10px", color: "gray" }}>
+                        Inbox is Empty
+                      </Typography>
+                    </div>
+                  )}
+                </Box>
               </Popover>
+
               <IconButton
                 size="large"
                 aria-label="account of current user"
