@@ -40,7 +40,7 @@ const First = () => {
           transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
         />
       </Box>
-      <Grid
+      {/* <Grid
         container
         justifyContent="flex-start" // Changed justifyContent to flex-start
         sx={{ marginTop: { xs: 3, md: 5 } }}
@@ -48,7 +48,7 @@ const First = () => {
         <Typography variant="h3" sx={{ color: "black" }}>
           Overview
         </Typography>
-      </Grid>
+      </Grid> */}
     </Container>
   );
 };
