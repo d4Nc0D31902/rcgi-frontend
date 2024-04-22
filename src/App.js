@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -79,442 +79,452 @@ function App() {
     store.dispatch(loadUser());
   }, []);
   const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   return (
     <div className="App">
       <Header />
-      <Routes>
-        {/* <Route path="/" element={<Home />} exact="true" /> */}
-        <Route path="/" element={<HomePage />} exact="true" />
-        <Route path="/courses" element={<Courses />} exact="true" />
-        <Route path="/product/:id" element={<ProductDetails />} exact="true" />
-        <Route path="/search/:keyword" element={<Home />} exact="true" />
-        <Route path="/login" element={<Login />} exact="true" />
-        <Route path="/register" element={<Register />} exact="true" />
-        <Route
-          path="/password/forgot"
-          element={<ForgotPassword />}
-          exact="true"
-        />
-        <Route
-          path="/password/reset/:token"
-          element={<NewPassword />}
-          exact="true"
-        />
-        <Route path="/cart" element={<Cart />} exact="true" />
+      <div style={{ marginTop: "150px" }}>
+        {" "}
+        <Routes>
+          {/* <Route path="/" element={<Home />} exact="true" /> */}
 
-        <Route
-          path="/me"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-          exact="true"
-        />
-        <Route
-          path="/me/update"
-          element={
-            <ProtectedRoute>
-              <UpdateProfile />
-            </ProtectedRoute>
-          }
-          exact="true"
-        />
-        <Route
-          path="/password/update"
-          element={
-            <ProtectedRoute>
-              <UpdatePassword />
-            </ProtectedRoute>
-          }
-          exact="true"
-        />
+          <Route path="/" element={<HomePage />} exact="true" />
+          <Route path="/courses" element={<Courses />} exact="true" />
+          <Route
+            path="/product/:id"
+            element={<ProductDetails />}
+            exact="true"
+          />
+          <Route path="/search/:keyword" element={<Home />} exact="true" />
+          <Route path="/login" element={<Login />} exact="true" />
+          <Route path="/register" element={<Register />} exact="true" />
+          <Route
+            path="/password/forgot"
+            element={<ForgotPassword />}
+            exact="true"
+          />
+          <Route
+            path="/password/reset/:token"
+            element={<NewPassword />}
+            exact="true"
+          />
+          <Route path="/cart" element={<Cart />} exact="true" />
 
-        <Route
-          path="/shipping"
-          element={
-            <ProtectedRoute>
-              <Shipping />
-            </ProtectedRoute>
-          }
-          exact="true"
-        />
+          <Route
+            path="/me"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+            exact="true"
+          />
+          <Route
+            path="/me/update"
+            element={
+              <ProtectedRoute>
+                <UpdateProfile />
+              </ProtectedRoute>
+            }
+            exact="true"
+          />
+          <Route
+            path="/password/update"
+            element={
+              <ProtectedRoute>
+                <UpdatePassword />
+              </ProtectedRoute>
+            }
+            exact="true"
+          />
 
-        <Route
-          path="/confirm"
-          element={
-            <ProtectedRoute>
-              <ConfirmOrder />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/payment"
-          element={
-            <ProtectedRoute>
-              <Payment />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/shipping"
+            element={
+              <ProtectedRoute>
+                <Shipping />
+              </ProtectedRoute>
+            }
+            exact="true"
+          />
 
-        <Route
-          path="/success"
-          element={
-            <ProtectedRoute>
-              <OrderSuccess />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/orders/me"
-          element={
-            <ProtectedRoute>
-              <ListOrders />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/order/:id"
-          element={
-            <ProtectedRoute>
-              <OrderDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/products"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <ProductsList />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/product"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <NewProduct />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/product/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <UpdateProduct />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/orders"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <OrdersList />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/order/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <ProcessOrder />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/users"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <UsersList />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/user/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <UpdateUser />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/confirm"
+            element={
+              <ProtectedRoute>
+                <ConfirmOrder />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/reviews"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <ProductReviews />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/success"
+            element={
+              <ProtectedRoute>
+                <OrderSuccess />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders/me"
+            element={
+              <ProtectedRoute>
+                <ListOrders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <ProtectedRoute>
+                <OrderDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/products"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ProductsList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/product"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewProduct />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/product/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateProduct />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <OrdersList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/order/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ProcessOrder />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UsersList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/user/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateUser />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/newUser"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <NewUser />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/reviews"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ProductReviews />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/courses"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <CourseList />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/newUser"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewUser />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/course"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <NewCourse />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/courses"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <CourseList />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/showCourses"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <Courses />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/course"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewCourse />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/courseDetails/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <CourseDetails />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/showCourses"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <Courses />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/courseDetails/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <CourseDetails />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/courseDetails/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <CourseDetails />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/moduleDetails/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <ModuleDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/chapterDetails/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <ChapterDetails />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/courseDetails/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <CourseDetails />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/lessonDetails/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <LessonDetails />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/moduleDetails/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ModuleDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/chapterDetails/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ChapterDetails />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/quizDetails/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <QuizDetails />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/lessonDetails/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <LessonDetails />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/course/:id/module"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <NewModule />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/quizDetails/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <QuizDetails />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/enrollment/:id"
-          element={
-            <ProtectedRoute>
-              <EnrollmentDetails />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/course/:id/module"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewModule />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/enrollment/:id/module/:moduleId"
-          element={
-            <ProtectedRoute>
-              <EnrollmentModule />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/enrollment/:id"
+            element={
+              <ProtectedRoute>
+                <EnrollmentDetails />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId"
-          element={
-            <ProtectedRoute>
-              <EnrollmentChapter />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/enrollment/:id/module/:moduleId"
+            element={
+              <ProtectedRoute>
+                <EnrollmentModule />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId/lesson/:lessonId"
-          element={
-            <ProtectedRoute>
-              <EnrollmentLesson />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId"
+            element={
+              <ProtectedRoute>
+                <EnrollmentChapter />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId/quiz/:quizId"
-          element={
-            <ProtectedRoute>
-              <EnrollmentQuiz />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId/lesson/:lessonId"
+            element={
+              <ProtectedRoute>
+                <EnrollmentLesson />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/module/:moduleId/chapter/new"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <NewChapter />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/enrollment/:enrollmentId/module/:moduleId/chapter/:chapterId/quiz/:quizId"
+            element={
+              <ProtectedRoute>
+                <EnrollmentQuiz />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/chapter/:chapterId/lesson/new"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <NewLesson />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/module/:moduleId/chapter/new"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewChapter />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/chapter/:chapterId/quiz/new"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <NewQuiz />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/chapter/:chapterId/lesson/new"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewLesson />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/enrollment/new"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <NewEnrollment />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/chapter/:chapterId/quiz/new"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewQuiz />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/enrollment/me"
-          element={
-            <ProtectedRoute>
-              <EnrollmentList />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/enrollment/new"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewEnrollment />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/course/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <UpdateCourse />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/module/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <UpdateModule />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/enrollment/me"
+            element={
+              <ProtectedRoute>
+                <EnrollmentList />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/chapter/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <UpdateChapter />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/course/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateCourse />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/module/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateModule />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/lesson/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <UpdateLesson />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/chapter/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateChapter />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/quiz/:id"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <UpdateQuiz />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/lesson/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateLesson />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/enrollments"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <AdminEnrollmentList />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/quiz/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateQuiz />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/quizzes"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <SubmitQuizList />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/retake"
-          element={
-            <ProtectedRoute isAdmin={true}>
-              <RetakeQuizList />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+          <Route
+            path="/admin/enrollments"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <AdminEnrollmentList />
+              </ProtectedRoute>
+            }
+          />
 
-      {!loading && (!isAuthenticated || user.role !== "admin") && <Footer />}
+          <Route
+            path="/admin/quizzes"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <SubmitQuizList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/retake"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <RetakeQuizList />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
+
+      {!isHomePage && <Footer />}
     </div>
   );
 }

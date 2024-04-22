@@ -19,6 +19,7 @@ import {
   ListItem,
   ListItemText,
   Box,
+  Container,
 } from "@mui/material";
 import { Logout, School as SchoolIcon } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -78,8 +79,18 @@ const Header = () => {
   }, [dispatch]);
 
   return (
-    <Fragment>
-      <AppBar position="static" sx={{ backgroundColor: "white", height: 80 }}>
+    <Container maxWidth="md" sx={{ display: "flex", justifyContent: "center" }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: "white",
+          height: 80,
+          borderRadius: "20px",
+          marginTop: "20px",
+          width: "50%",
+          left: "25%",
+        }}
+      >
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/">
@@ -131,30 +142,6 @@ const Header = () => {
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              {/* <Popover
-                open={notificationOpen}
-                anchorEl={notificationAnchorEl}
-                onClose={handleNotificationClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-              >
-                {notifications && notifications.length > 0 && (
-                  <List>
-                    {notifications.map((notification) => (
-                      <ListItem key={notification.id}>
-                        <Divider style={{ margin: "5px 0" }} />
-                        <ListItemText primary={notification.message} />
-                      </ListItem>
-                    ))}
-                  </List>
-                )}
-              </Popover> */}
               <Popover
                 open={notificationOpen}
                 anchorEl={notificationAnchorEl}
@@ -170,7 +157,6 @@ const Header = () => {
               >
                 <Box style={{ width: 300 }}>
                   {" "}
-                  {/* Adjust the width as needed */}
                   {notifications && notifications.length > 0 ? (
                     <List>
                       <Typography
@@ -181,24 +167,6 @@ const Header = () => {
                         Latest Notifications
                       </Typography>
                       {notifications.map((notification) => (
-                        // <ListItem key={notification.id}>
-                        //   <Divider style={{ margin: "5px 0" }} />
-                        //   <ListItemText
-                        //     primary={
-                        //       <span
-                        //         style={{ color: "black" }}
-                        //         onMouseEnter={(e) =>
-                        //           (e.target.style.color = "blue")
-                        //         }
-                        //         onMouseLeave={(e) =>
-                        //           (e.target.style.color = "black")
-                        //         }
-                        //       >
-                        //         {notification.message}
-                        //       </span>
-                        //     }
-                        //   />
-                        // </ListItem>
                         <ListItem key={notification.id}>
                           <Divider style={{ margin: "5px 0" }} />
                           <ListItemText
@@ -301,7 +269,7 @@ const Header = () => {
           )}
         </Toolbar>
       </AppBar>
-    </Fragment>
+    </Container>
   );
 };
 
