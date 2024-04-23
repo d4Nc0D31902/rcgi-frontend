@@ -21,7 +21,14 @@ const Courses = () => {
   }
 
   return (
-    <div className="row">
+    <div
+      className="row"
+      style={{
+        justifyContent: "center",
+        alignContent: "center",
+        display: "flex",
+      }}
+    >
       {courses.map((course) => (
         <CourseCard key={course._id} course={course} />
       ))}

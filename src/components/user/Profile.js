@@ -62,7 +62,7 @@ const Profile = () => {
                 <Typography variant="body1" gutterBottom>
                   {user.email}
                 </Typography>
-                <Divider sx={{ marginTop: 2 }} />
+                <Divider sx={{ marginBottom: 2 }} />
                 <Typography variant="h4" gutterBottom>
                   Company
                 </Typography>

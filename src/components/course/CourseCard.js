@@ -125,7 +125,13 @@ const Course = ({ course }) => {
     <div className="col-sm-12 col-md-6 col-lg-3 my-3">
       <Card
         // sx={{ maxWidth: 345 }}
-        style={{ width: "100%", marginLeft: "20px", border: "1px solid #ccc" }}
+        elevation={5}
+        style={{
+          width: "100%",
+          marginLeft: "20px",
+          border: "1px solid #ccc",
+          borderRadius: "20px",
+        }}
       >
         <CardMedia
           component="img"
