@@ -140,7 +140,7 @@ const HomePage = () => {
             style={{
               padding: "20px",
               width: "400px",
-              height: "80%",
+              height: "50%",
               borderRadius: "20px",
               textAlign: "center",
             }}
@@ -166,7 +166,7 @@ const HomePage = () => {
             style={{
               padding: "20px",
               width: "400px",
-              height: "80%",
+              height: "50%",
               borderRadius: "20px",
               textAlign: "center",
             }}
