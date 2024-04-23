@@ -27,7 +27,6 @@ const HomePage = () => {
         {/* Mustard BG */}
         <ParallaxLayer
           speed={1}
-          factor={0}
           style={{
             backgroundImage: 'url("/images/mustard.png")',
             backgroundSize: "cover",
@@ -128,7 +127,7 @@ const HomePage = () => {
         {/* Papers */}
         <ParallaxLayer
           offset={1}
-          speed={0.5}
+          speed={1.2}
           style={{
             display: "flex",
             top: "8%",
@@ -154,7 +153,7 @@ const HomePage = () => {
 
         <ParallaxLayer
           offset={1}
-          speed={0.5}
+          speed={1.2}
           style={{
             display: "flex",
             top: "8%",
@@ -177,6 +176,10 @@ const HomePage = () => {
             <Typography variant="h3">Associated Members</Typography>
           </Paper>
         </ParallaxLayer>
+
+        {/* BBQ */}
+        <ParallaxLayer
+        ></ParallaxLayer>
       </Parallax>
     </div>
   );
