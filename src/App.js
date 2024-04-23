@@ -81,14 +81,12 @@ function App() {
   const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const mainDivStyle = isHomePage ? { margin: 0 } : { marginTop: "100px" };
   return (
     <div className="App">
       <Header />
-      <div style={{ marginTop: "150px" }}>
-        {" "}
+      <div style={mainDivStyle}>
         <Routes>
-          {/* <Route path="/" element={<Home />} exact="true" /> */}
-
           <Route path="/" element={<HomePage />} exact="true" />
           <Route path="/courses" element={<Courses />} exact="true" />
           <Route
