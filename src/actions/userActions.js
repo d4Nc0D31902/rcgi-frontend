@@ -50,7 +50,40 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const login = (email, password) => async (dispatch) => {
+// export const login = (email, password) => async (dispatch) => {
+//   const notify = (error) =>
+//     toast.error(error, {
+//       position: toast.POSITION.BOTTOM_CENTER,
+//     });
+//   try {
+//     dispatch({ type: LOGIN_REQUEST });
+//     const config = {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       withCredentials: true,
+//     };
+
+//     const { data } = await axios.post(
+//       `${process.env.REACT_APP_API}/api/v1/login`,
+//       { email, password },
+//       config
+//     );
+//     dispatch({
+//       type: LOGIN_SUCCESS,
+//       payload: data.user,
+//     });
+//   } catch (error) {
+//     console.log(error.response);
+//     notify(error);
+//     dispatch({
+//       type: LOGIN_FAIL,
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
+
+export const login = (employee_id, password) => async (dispatch) => {
   const notify = (error) =>
     toast.error(error, {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -66,7 +99,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/login`,
-      { email, password },
+      { employee_id, password }, // Change email to employee_id
       config
     );
     dispatch({
@@ -256,7 +289,7 @@ export const allUsers = () => async (dispatch) => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_API}/api/v1/admin/users`,
       {
-        withCredentials: true, 
+        withCredentials: true,
       }
     );
     dispatch({

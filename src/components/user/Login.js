@@ -21,7 +21,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LoginIcon from "@mui/icons-material/Login";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
@@ -37,15 +38,6 @@ const Login = () => {
       position: toast.POSITION.BOTTOM_CENTER,
     });
 
-  // useEffect(() => {
-  //   if (isAuthenticated && redirect === "shipping") {
-  //     navigate(`/${redirect}`, { replace: true });
-  //   } else if (isAuthenticated) navigate("/enrollment/me");
-  //   if (error) {
-  //     notify(error);
-  //     dispatch(clearErrors());
-  //   }
-  // }, [dispatch, isAuthenticated, error, navigate, redirect]);
   useEffect(() => {
     if (isAuthenticated) {
       if (isAdmin) {
@@ -63,22 +55,10 @@ const Login = () => {
     }
   }, [dispatch, isAuthenticated, isAdmin, error, navigate, redirect]);
 
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   dispatch(login(email, password))
-  //     .then(() => {
-  //       toast.success("Login successful!", {
-  //         position: toast.POSITION.BOTTOM_CENTER,
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       notify(error.message);
-  //     });
-  // };
-
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    // dispatch(login(email, password));
+    dispatch(login(employeeId, password));
   };
 
   const toggleShowPassword = () => {
@@ -101,7 +81,7 @@ const Login = () => {
                 <Typography variant="h4" align="center" gutterBottom>
                   Login
                 </Typography>
-                <TextField
+                {/* <TextField
                   type="email"
                   id="email_field"
                   label="Email"
@@ -112,6 +92,25 @@ const Login = () => {
                   margin="normal"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircleIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                /> */}
+                <TextField
+                  type="text" // Changed type to text for employee ID input
+                  id="employee_id_field" // Changed id to employee_id_field
+                  label="Employee ID" // Changed label to Employee ID
+                  variant="outlined"
+                  required
+                  fullWidth
+                  placeholder="Employee ID" // Changed placeholder to Employee ID
+                  margin="normal"
+                  value={employeeId} // Updated value to use employeeId
+                  onChange={(e) => setEmployeeId(e.target.value)} // Updated onChange to setEmployeeId
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
