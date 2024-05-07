@@ -71,7 +71,7 @@ const NewCourse = () => {
   return (
     <Fragment>
       <MetaData title={"New Course"} />
-      <Grid container spacing={3}>
+      <Grid container spacing={3} >
         <Grid item xs={12} md={2}>
           <Sidebar />
         </Grid>
@@ -79,7 +79,7 @@ const NewCourse = () => {
           <Paper
             elevation={3}
             sx={{ p: 3 }}
-            style={{ marginTop: "20px", marginRight: "20px" }}
+            style={{ marginTop: "40px", marginRight: "150px" }}
           >
             <Typography variant="h4" component="h1" gutterBottom>
               New Course

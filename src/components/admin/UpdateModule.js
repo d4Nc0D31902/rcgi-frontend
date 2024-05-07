@@ -123,7 +123,11 @@ const UpdateModule = () => {
           <Sidebar />
         </Grid>
         <Grid item xs={12} md={10}>
-          <Paper elevation={3} sx={{ p: 3 }}>
+          <Paper
+            elevation={3}
+            sx={{ p: 3 }}
+            style={{ marginTop: "40px", marginRight: "150px" }}
+          >
             <Typography variant="h4" component="h1" gutterBottom>
               Update Module
             </Typography>

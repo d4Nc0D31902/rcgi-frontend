@@ -79,7 +79,7 @@ const ModuleDetails = () => {
       <MetaData title={module.title} />
       <Grid container justifyContent="center">
         <Grid item xs={12} lg={8}>
-          <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
+          <Paper elevation={3} style={{ padding: "20px", marginTop: "50px" }} >
             <div style={{ marginBottom: "20px" }}>
               {module.images && (
                 <div

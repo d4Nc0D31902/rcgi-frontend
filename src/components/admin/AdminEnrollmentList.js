@@ -163,7 +163,7 @@ const EnrollmentList = () => {
   return (
     <Fragment>
       <MetaData title={"All Enrollments"} />
-      <div className="row">
+      <div className="row" style={{ marginRight: "120px" }}>
         <div className="col-12 col-md-2">
           <Sidebar />
         </div>

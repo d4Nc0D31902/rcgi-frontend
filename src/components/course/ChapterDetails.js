@@ -52,7 +52,7 @@ const ChapterDetails = () => {
       <MetaData title={chapter.title} />
       <Grid container justifyContent="center">
         <Grid item xs={12} lg={8}>
-          <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
+          <Paper elevation={3} style={{ padding: "20px", marginTop: "50px" }}>
             <Typography variant="h3" gutterBottom>
               {chapter.title}
             </Typography>

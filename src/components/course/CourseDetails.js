@@ -43,7 +43,7 @@ const CourseDetails = () => {
   return (
     <Fragment>
       <MetaData title={course.title} />
-      <Box mt={5} mx={2}>
+      <Box mt={5} mx={2} sx={{ marginTop: "150px" }}>
         <Paper elevation={3} style={{ padding: "20px" }}>
           <Typography variant="h3" gutterBottom>
             {course.title}
