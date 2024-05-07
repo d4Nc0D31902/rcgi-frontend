@@ -221,12 +221,16 @@ const Header = () => {
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "left",
                 }}
                 keepMounted
                 open={open}
                 onClose={handleClose}
-                style={{ marginTop: "43px", textAlign: "center" }}
+                style={{
+                  marginTop: "60px",
+                  textAlign: "center",
+                  marginRight: "60px",
+                }}
               >
                 {user.role === "admin" && (
                   <MenuItem

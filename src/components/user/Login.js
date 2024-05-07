@@ -27,24 +27,41 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let location = useLocation();
-  const { isAuthenticated, error, loading } = useSelector(
+  const { isAuthenticated, error, loading, user } = useSelector(
     (state) => state.auth
   );
+  const isAdmin = user && user.role === "admin";
   const redirect = new URLSearchParams(location.search).get("redirect");
   const notify = (error = "") =>
     toast.error(error, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
 
+  // useEffect(() => {
+  //   if (isAuthenticated && redirect === "shipping") {
+  //     navigate(`/${redirect}`, { replace: true });
+  //   } else if (isAuthenticated) navigate("/enrollment/me");
+  //   if (error) {
+  //     notify(error);
+  //     dispatch(clearErrors());
+  //   }
+  // }, [dispatch, isAuthenticated, error, navigate, redirect]);
   useEffect(() => {
-    if (isAuthenticated && redirect === "shipping") {
-      navigate(`/${redirect}`, { replace: true });
-    } else if (isAuthenticated) navigate("/enrollment/me");
+    if (isAuthenticated) {
+      if (isAdmin) {
+        navigate("/dashboard", { replace: true });
+      } else if (redirect === "shipping") {
+        navigate(`/${redirect}`, { replace: true });
+      } else {
+        navigate("/enrollment/me");
+      }
+    }
+
     if (error) {
       notify(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, isAuthenticated, error, navigate, redirect]);
+  }, [dispatch, isAuthenticated, isAdmin, error, navigate, redirect]);
 
   // const submitHandler = (e) => {
   //   e.preventDefault();

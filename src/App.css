@@ -6,6 +6,13 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+section {
+  height: 100vh;
+  scroll-snap-align: center;
 }
 
 /* Scroll Bar */

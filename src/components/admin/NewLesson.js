@@ -37,7 +37,7 @@ const AddLesson = () => {
     }
 
     if (success) {
-      navigate(-1);
+      navigate(-2);
 
       message("Lesson created successfully");
     }

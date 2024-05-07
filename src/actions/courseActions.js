@@ -16,9 +16,17 @@ import {
   UPDATE_COURSE_REQUEST,
   UPDATE_COURSE_SUCCESS,
   UPDATE_COURSE_FAIL,
-  ADD_MODULE_REQUEST, // Add new action type for adding modules
-  ADD_MODULE_SUCCESS, // Add new action type for adding modules
-  ADD_MODULE_FAIL, // Add new action type for adding modules
+  ADD_MODULE_REQUEST,
+  ADD_MODULE_SUCCESS,
+  ADD_MODULE_FAIL,
+  DEACTIVATE_COURSE_FAIL,
+  DEACTIVATE_COURSE_REQUEST,
+  DEACTIVATE_COURSE_RESET,
+  DEACTIVATE_COURSE_SUCCESS,
+  REACTIVATE_COURSE_FAIL,
+  REACTIVATE_COURSE_REQUEST,
+  REACTIVATE_COURSE_RESET,
+  REACTIVATE_COURSE_SUCCESS,
   CLEAR_ERRORS,
 } from "../constants/courseConstants";
 
@@ -157,6 +165,46 @@ export const addModule = (courseId, moduleData) => async (dispatch) => {
     dispatch({
       type: ADD_MODULE_FAIL,
       payload: error.response.data.error,
+    });
+  }
+};
+
+export const deactivateCourse = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DEACTIVATE_COURSE_REQUEST });
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v1/admin/course/deactivate/${id}`,
+      null,
+      { withCredentials: true }
+    );
+    dispatch({
+      type: DEACTIVATE_COURSE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DEACTIVATE_COURSE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const reactivateCourse = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: REACTIVATE_COURSE_REQUEST });
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v1/admin/course/reactivate/${id}`,
+      null,
+      { withCredentials: true }
+    );
+    dispatch({
+      type: REACTIVATE_COURSE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: REACTIVATE_COURSE_FAIL,
+      payload: error.response.data.message,
     });
   }
 };

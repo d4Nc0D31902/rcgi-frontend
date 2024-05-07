@@ -131,7 +131,7 @@ const ModuleDetails = () => {
             <div>
               {module.chapters &&
                 module.chapters.map((chapter, index) => (
-                  <Accordion key={index}>
+                  <Accordion key={index} defaultExpanded={true}>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls={`chapter-${index}-content`}

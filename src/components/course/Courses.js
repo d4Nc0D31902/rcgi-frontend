@@ -7,6 +7,8 @@ import { getCourses } from "../../actions/courseActions";
 const Courses = () => {
   const dispatch = useDispatch();
   const { courses, loading, error } = useSelector((state) => state.courses);
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user.role === "admin";
 
   useEffect(() => {
     dispatch(getCourses());
@@ -29,9 +31,13 @@ const Courses = () => {
         display: "flex",
       }}
     >
-      {courses.map((course) => (
-        <CourseCard key={course._id} course={course} />
-      ))}
+      {courses.map((course) => {
+        if (course.status === "active" || isAdmin) {
+          return <CourseCard key={course._id} course={course} />;
+        } else {
+          return null; // Hide the Course
+        }
+      })}
     </div>
   );
 };

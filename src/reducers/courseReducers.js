@@ -20,9 +20,17 @@ import {
   UPDATE_COURSE_SUCCESS,
   UPDATE_COURSE_RESET,
   UPDATE_COURSE_FAIL,
-  ADD_MODULE_REQUEST, // Add new action type for adding modules
-  ADD_MODULE_SUCCESS, // Add new action type for adding modules
-  ADD_MODULE_FAIL, // Add new action type for adding modules
+  ADD_MODULE_REQUEST,
+  ADD_MODULE_SUCCESS,
+  ADD_MODULE_FAIL,
+  DEACTIVATE_COURSE_FAIL,
+  DEACTIVATE_COURSE_REQUEST,
+  DEACTIVATE_COURSE_RESET,
+  DEACTIVATE_COURSE_SUCCESS,
+  REACTIVATE_COURSE_FAIL,
+  REACTIVATE_COURSE_REQUEST,
+  REACTIVATE_COURSE_RESET,
+  REACTIVATE_COURSE_SUCCESS,
   CLEAR_ERRORS,
 } from "../constants/courseConstants";
 
@@ -126,6 +134,8 @@ export const courseReducer = (state = {}, action) => {
   switch (action.type) {
     case DELETE_COURSE_REQUEST:
     case UPDATE_COURSE_REQUEST:
+    case DEACTIVATE_COURSE_REQUEST:
+    case REACTIVATE_COURSE_REQUEST:
       return {
         ...state,
         loading: true,
@@ -142,8 +152,17 @@ export const courseReducer = (state = {}, action) => {
         loading: false,
         isUpdated: action.payload,
       };
+    case DEACTIVATE_COURSE_SUCCESS:
+    case REACTIVATE_COURSE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
     case DELETE_COURSE_FAIL:
     case UPDATE_COURSE_FAIL:
+    case DEACTIVATE_COURSE_FAIL:
+    case REACTIVATE_COURSE_FAIL:
       return {
         ...state,
         error: action.payload,

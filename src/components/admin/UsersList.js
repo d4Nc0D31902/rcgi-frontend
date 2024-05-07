@@ -129,12 +129,6 @@ const UsersList = () => {
             >
               <i className="fa fa-pencil"></i>
             </Link>
-            {/* <button
-              className="btn btn-danger py-1 px-2 ml-2"
-              onClick={() => deleteUserHandler(user._id)}
-            >
-              <i className="fa fa-trash"></i>
-            </button> */}
             <button
               className={`btn ${
                 user.status === "inactive" ? "btn-success" : "btn-danger"

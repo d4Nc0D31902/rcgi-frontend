@@ -186,10 +186,11 @@ const Course = ({ course }) => {
                 color="primary"
                 style={{ marginTop: "10px" }}
                 startIcon={<EditOutlinedIcon />}
+                // sx={{ marginLeft: "auto", marginRight: "auto" }}
               >
                 Edit
               </Button>
-              <Button
+              {/* <Button
                 variant="outlined"
                 size="small"
                 color="error"
@@ -198,7 +199,7 @@ const Course = ({ course }) => {
                 onClick={() => deleteHandler(course._id)}
               >
                 Delete
-              </Button>
+              </Button> */}
             </>
           )}
         </CardContent>

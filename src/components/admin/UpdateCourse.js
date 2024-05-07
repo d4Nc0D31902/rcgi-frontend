@@ -70,11 +70,39 @@ const UpdateCourse = () => {
     const formData = new FormData();
     formData.set("title", title);
     formData.set("description", description);
-    images.forEach((image) => {
-      formData.append("images", image);
-    });
+    // images.forEach((image) => {
+    //   formData.append("images", image);
+    // });
+
+    // * If new images are selected, append them, else keep the old images
+    if (images.length > 0) {
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
+    } else {
+      oldImages.forEach((image) => {
+        formData.append("images", image.url);
+      });
+    }
     dispatch(updateCourse(course._id, formData));
   };
+
+  // const onChange = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   setImagesPreview([]);
+  //   setImages([]);
+  //   setOldImages([]);
+  //   files.forEach((file) => {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       if (reader.readyState === 2) {
+  //         setImagesPreview((oldArray) => [...oldArray, reader.result]);
+  //         setImages((oldArray) => [...oldArray, reader.result]);
+  //       }
+  //     };
+  //     reader.readAsDataURL(file);
+  //   });
+  // };
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
