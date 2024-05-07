@@ -81,7 +81,7 @@ function App() {
   const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-  const mainDivStyle = isHomePage ? { margin: 0 } : { marginTop: "150px" };
+  const mainDivStyle = isHomePage ? { margin: 0 } : { marginTop: "90px" };
   return (
     <div className="App">
       <Header />

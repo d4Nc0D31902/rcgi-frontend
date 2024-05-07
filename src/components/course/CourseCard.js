@@ -130,7 +130,7 @@ const Course = ({ course }) => {
           width: "100%",
           marginLeft: "20px",
           border: "1px solid #ccc",
-          borderRadius: "20px",
+          // borderRadius: "20px",
         }}
       >
         <CardMedia
@@ -138,6 +138,7 @@ const Course = ({ course }) => {
           height="140"
           image={course.images[0].url}
           alt={course.title}
+          sx={{ marginTop: "20px" }}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

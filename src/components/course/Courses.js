@@ -29,6 +29,7 @@ const Courses = () => {
         justifyContent: "center",
         alignContent: "center",
         display: "flex",
+        marginTop: "120px",
       }}
     >
       {courses.map((course) => {
