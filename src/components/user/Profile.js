@@ -8,6 +8,7 @@ import {
   Avatar,
   Divider,
   Paper,
+  Box,
 } from "@mui/material";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
@@ -23,11 +24,18 @@ const Profile = () => {
         <Fragment>
           <MetaData title={"Your Profile"} />
 
-          <Typography variant="h2" align="center" mt={5} mb={3}>
-            My Profile
-          </Typography>
+          <Box sx={{ marginTop: "120px" }}>
+            <Typography variant="h2" align="center" mt={5} mb={3}>
+              My Profile
+            </Typography>
+          </Box>
 
-          <Grid container justifyContent="center" spacing={3}>
+          <Grid
+            container
+            justifyContent="center"
+            spacing={3}
+            sx={{ marginTop: "20px" }}
+          >
             {/* Avatar and Edit Profile Button */}
             <Grid item xs={12} md={3} align="center">
               <Paper elevation={3} sx={{ padding: 3 }}>

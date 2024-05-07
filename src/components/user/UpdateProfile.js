@@ -68,6 +68,7 @@ const UpdateProfile = () => {
         justifyContent="center"
         alignItems="center"
         className="wrapper"
+        sx={{ marginTop: "120px" }}
       >
         <Grid item xs={10} lg={5}>
           <form
