@@ -91,7 +91,11 @@ const UpdateUser = () => {
         <Grid item xs={12} md={10}>
           <Grid container justifyContent="center">
             <Grid item xs={10} lg={5}>
-              <Paper elevation={3} className="p-4" sx={{ marginTop: "20px" }}>
+              <Paper
+                elevation={3}
+                className="p-4"
+                sx={{ marginTop: "50px", marginRight: "200px", width: "100%" }}
+              >
                 <form onSubmit={submitHandler}>
                   <h1 className="mt-2 mb-5">Update User</h1>
                   <TextField
@@ -119,9 +123,7 @@ const UpdateUser = () => {
                     </Select>
                   </FormControl>
                   <FormControl fullWidth sx={{ marginTop: "20px" }}>
-                    <InputLabel>
-                      Company
-                    </InputLabel>
+                    <InputLabel>Company</InputLabel>
                     <Select
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}

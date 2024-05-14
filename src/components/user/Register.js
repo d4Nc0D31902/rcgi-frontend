@@ -142,7 +142,7 @@ const Register = () => {
                 }}
               />
 
-              <TextField
+              {/* <TextField
                 id="email_field"
                 label="Email"
                 variant="outlined"
@@ -160,7 +160,7 @@ const Register = () => {
                     </InputAdornment>
                   ),
                 }}
-              />
+              /> */}
 
               <TextField
                 id="password_field"

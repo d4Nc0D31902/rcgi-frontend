@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import io from "socket.io-client";
 import {
   AppBar,
   Toolbar,
@@ -44,6 +45,15 @@ const Header = () => {
   const open = Boolean(anchorEl);
   const notificationOpen = Boolean(notificationAnchorEl);
 
+  // const socket = io.connect("http://localhost:4000", {
+  //   withCredentials: true,
+  // });
+
+  const socket = io("http://localhost:4000", {
+    transports: ["websocket"],
+    withCredentials: true,
+  });
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -74,9 +84,19 @@ const Header = () => {
       });
   };
 
+  // useEffect(() => {
+  //   dispatch(getNotifications());
+  // }, [dispatch]);
+
   useEffect(() => {
-    dispatch(getNotifications());
-  }, [dispatch]);
+    // console.log("Test")
+    // socket.on("connection", () => {
+    //   console.log("Connected to Socket io");
+    // });
+    socket.on("notification", () => {
+      dispatch(getNotifications());
+    });
+  }, [socket, dispatch]);
 
   return (
     <Container maxWidth="md" sx={{ display: "flex", justifyContent: "center" }}>
@@ -167,33 +187,41 @@ const Header = () => {
                         Latest Notifications
                       </Typography>
                       {notifications.map((notification) => (
-                        <ListItem key={notification.id}>
+                        <ListItem
+                          key={notification.id}
+                          style={{ cursor: "pointer" }}
+                        >
                           <Divider style={{ margin: "5px 0" }} />
                           <ListItemText
                             primary={
-                              <span
-                                style={{ color: "black" }}
-                                onMouseEnter={(e) =>
-                                  (e.target.style.color = "blue")
-                                }
-                                onMouseLeave={(e) =>
-                                  (e.target.style.color = "black")
-                                }
-                                dangerouslySetInnerHTML={{
-                                  __html: notification.message,
-                                }}
-                              />
+                              <>
+                                <span
+                                  style={{ color: "black" }}
+                                  onMouseEnter={(e) =>
+                                    (e.target.style.color = "blue")
+                                  }
+                                  onMouseLeave={(e) =>
+                                    (e.target.style.color = "black")
+                                  }
+                                  dangerouslySetInnerHTML={{
+                                    __html: notification.message,
+                                  }}
+                                />
+                                <span
+                                  style={{
+                                    marginLeft: "10px",
+                                    fontSize: "10px",
+                                  }}
+                                >
+                                  {new Date(
+                                    notification.createdAt
+                                  ).toLocaleDateString()}
+                                </span>
+                              </>
                             }
                           />
                         </ListItem>
                       ))}
-                      <Typography
-                        variant="subtitle1"
-                        align="center"
-                        style={{ fontWeight: "bold", marginTop: "10px" }}
-                      >
-                        Oldest Notifications
-                      </Typography>
                     </List>
                   ) : (
                     <div style={{ display: "flex", justifyContent: "center" }}>

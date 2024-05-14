@@ -51,7 +51,7 @@ const ForgotPassword = () => {
       <Container maxWidth="md" sx={{ mt: 5 }}>
         <Grid container justifyContent="center">
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} sx={{ p: 4 }}>
+            <Paper elevation={3} sx={{ p: 4, marginTop: "50px" }}>
               <Typography variant="h4" align="center" gutterBottom>
                 Forgot Password
               </Typography>
