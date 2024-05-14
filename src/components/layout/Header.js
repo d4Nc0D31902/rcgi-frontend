@@ -49,7 +49,7 @@ const Header = () => {
   //   withCredentials: true,
   // });
 
-  const socket = io("http://localhost:4000", {
+  const socket = io("http://localhost:4000", "https://rcgi-frontend.vercel.app", {
     transports: ["websocket"],
     withCredentials: true,
   });
