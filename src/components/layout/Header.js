@@ -45,21 +45,13 @@ const Header = () => {
   const open = Boolean(anchorEl);
   const notificationOpen = Boolean(notificationAnchorEl);
 
+  const REACT_APP_API = process.env.REACT_APP_API;
+  
   // const socket = io.connect("http://localhost:4000", {
   //   withCredentials: true,
   // });
 
-  // const socket = io(["http://localhost:4000", "https://rcgi-backend.vercel.app"], {
-  //   transports: ["websocket"],
-  //   withCredentials: true,
-  // });
-
-  // const socket = io(process.env.REACT_APP_API, {
-  //   transports: ["websocket"],
-  //   withCredentials: true,
-  // });
-
-  const socket = io.connect("https://rcgi-backend.vercel.app", {
+  const socket = io(REACT_APP_API, {
     transports: ["websocket"],
     withCredentials: true,
   });
