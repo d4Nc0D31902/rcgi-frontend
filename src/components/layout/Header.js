@@ -46,7 +46,7 @@ const Header = () => {
   const notificationOpen = Boolean(notificationAnchorEl);
 
   const REACT_APP_API = process.env.REACT_APP_API;
-  
+
   // const socket = io.connect("http://localhost:4000", {
   //   withCredentials: true,
   // });
@@ -90,15 +90,22 @@ const Header = () => {
   //   dispatch(getNotifications());
   // }, [dispatch]);
 
+  // useEffect(() => {
+  //   // console.log("Test")
+  //   // socket.on("connection", () => {
+  //   //   console.log("Connected to Socket io");
+  //   // });
+  //   socket.on("notification", () => {
+  //     dispatch(getNotifications());
+  //   });
+  // }, [socket, dispatch]);
+
   useEffect(() => {
-    // console.log("Test")
-    // socket.on("connection", () => {
-    //   console.log("Connected to Socket io");
-    // });
-    socket.on("notification", () => {
-      dispatch(getNotifications());
+    console.log("Test");
+    socket.on("connection", () => {
+      alert("Connected to Socket io");
     });
-  }, [socket, dispatch]);
+  }, [socket]);
 
   return (
     <Container maxWidth="md" sx={{ display: "flex", justifyContent: "center" }}>
