@@ -49,16 +49,19 @@ const Header = () => {
   //   withCredentials: true,
   // });
 
-  const socket = io(["http://localhost:4000", "https://rcgi-backend.vercel.app"], {
-    transports: ["websocket"],
-    withCredentials: true,
-  });
+  // const socket = io(["http://localhost:4000", "https://rcgi-backend.vercel.app"], {
+  //   transports: ["websocket"],
+  //   withCredentials: true,
+  // });
 
   // const socket = io(process.env.REACT_APP_API, {
   //   transports: ["websocket"],
   //   withCredentials: true,
   // });
 
+ const socket = io.connect("https://rcgi-backend.vercel.app", {
+    withCredentials: true,
+  });
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
