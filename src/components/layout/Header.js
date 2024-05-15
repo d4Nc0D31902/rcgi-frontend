@@ -59,7 +59,8 @@ const Header = () => {
   //   withCredentials: true,
   // });
 
- const socket = io.connect("https://rcgi-backend.vercel.app", {
+  const socket = io.connect("https://rcgi-backend.vercel.app", {
+    transports: ["websocket"],
     withCredentials: true,
   });
 
