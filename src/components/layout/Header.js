@@ -45,9 +45,9 @@ const Header = () => {
   const open = Boolean(anchorEl);
   const notificationOpen = Boolean(notificationAnchorEl);
 
-  // const socket = io.connect("http://localhost:4000", {
-  //   withCredentials: true,
-  // });
+  const socket = io.connect("http://localhost:4000", {
+    withCredentials: true,
+  });
 
   // const socket = io(["http://localhost:4000", "https://rcgi-backend.vercel.app"], {
   //   transports: ["websocket"],
@@ -59,9 +59,9 @@ const Header = () => {
   //   withCredentials: true,
   // });
 
- const socket = io.connect("https://rcgi-backend.vercel.app", {
-    withCredentials: true,
-  });
+//  const socket = io.connect("https://rcgi-backend.vercel.app", {
+//     withCredentials: true,
+//   });
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
