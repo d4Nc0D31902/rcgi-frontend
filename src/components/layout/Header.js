@@ -45,6 +45,8 @@ const Header = () => {
   const open = Boolean(anchorEl);
   const notificationOpen = Boolean(notificationAnchorEl);
 
+  const isAdmin = user && user.role === "admin";
+
   const REACT_APP_API = process.env.REACT_APP_API;
 
   // const socket = io.connect("http://localhost:4000", {
@@ -281,13 +283,22 @@ const Header = () => {
                     Dashboard
                   </MenuItem>
                 )}
-                <MenuItem
+                {/* <MenuItem
                   onClick={handleClose}
                   component={Link}
                   to="/enrollment/me"
                 >
                   Enrollments
-                </MenuItem>
+                </MenuItem> */}
+                {!isAdmin && (
+                  <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to="/enrollment/me"
+                  >
+                    Enrollments
+                  </MenuItem>
+                )}
                 <MenuItem onClick={handleClose} component={Link} to="/me">
                   Profile
                 </MenuItem>
