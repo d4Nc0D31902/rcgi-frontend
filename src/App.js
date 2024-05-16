@@ -70,6 +70,8 @@ import NewQuiz from "./components/admin/NewQuiz";
 import UpdateQuiz from "./components/admin/UpdateQuiz";
 import QuizDetails from "./components/course/QuizDetails";
 
+import NewFeedback from "./components/feedback/NewFeedback";
+
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -114,6 +116,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+            exact="true"
+          />
+          <Route
+            path="/feedback"
+            element={
+              <ProtectedRoute>
+                <NewFeedback />
               </ProtectedRoute>
             }
             exact="true"

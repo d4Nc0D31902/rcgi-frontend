@@ -81,36 +81,17 @@ const Login = () => {
                 <Typography variant="h4" align="center" gutterBottom>
                   Login
                 </Typography>
-                {/* <TextField
-                  type="email"
-                  id="email_field"
-                  label="Email"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  placeholder="Email"
-                  margin="normal"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircleIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                /> */}
                 <TextField
-                  type="text" // Changed type to text for employee ID input
-                  id="employee_id_field" // Changed id to employee_id_field
-                  label="Employee ID" // Changed label to Employee ID
+                  type="text"
+                  id="employee_id_field"
+                  label="Employee ID"
                   variant="outlined"
                   required
                   fullWidth
-                  placeholder="Employee ID" // Changed placeholder to Employee ID
+                  placeholder="Employee ID"
                   margin="normal"
-                  value={employeeId} // Updated value to use employeeId
-                  onChange={(e) => setEmployeeId(e.target.value)} // Updated onChange to setEmployeeId
+                  value={employeeId}
+                  onChange={(e) => setEmployeeId(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -155,7 +136,12 @@ const Login = () => {
                   }}
                 />
                 <Typography variant="body2" align="right" gutterBottom>
-                  <Link to="/password/forgot">Forgot Password?</Link>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to="/password/forgot"
+                  >
+                    Forgot Password?
+                  </Link>
                 </Typography>
                 <div
                   style={{
@@ -166,7 +152,7 @@ const Login = () => {
                 >
                   <Button
                     variant="contained"
-                    color="primary"
+                    color="success"
                     type="submit"
                     size="large"
                     disabled={loading}
@@ -187,7 +173,9 @@ const Login = () => {
                   gutterBottom
                   style={{ marginTop: "20px" }}
                 >
-                  <Link to="/register">New User?</Link>
+                  <Link style={{ textDecoration: "none" }} to="/register">
+                    New User?
+                  </Link>
                 </Typography>
               </form>
             </Paper>

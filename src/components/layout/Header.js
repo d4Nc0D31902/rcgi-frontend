@@ -29,6 +29,7 @@ import {
   getNotifications,
   markAllNotificationsAsRead,
 } from "../../actions/notificationActions";
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -151,6 +152,22 @@ const Header = () => {
               Courses
             </Button>
           </Link>
+          <Link
+            to="/feedback"
+            style={{
+              textDecoration: "none",
+              marginLeft: "10px",
+              marginTop: "10px",
+            }}
+          >
+            <Button
+              color="inherit"
+              startIcon={<InsertCommentIcon />}
+              sx={{ color: "black" }}
+            >
+              Feedback
+            </Button>
+          </Link>
           <div style={{ flexGrow: 1 }}></div>
           {user ? (
             <div>
@@ -190,53 +207,60 @@ const Header = () => {
                 }}
               >
                 <Box style={{ width: 300 }}>
-                  {" "}
                   {notifications && notifications.length > 0 ? (
-                    <List>
-                      <Typography
-                        variant="subtitle1"
-                        align="center"
-                        style={{ fontWeight: "bold", marginBottom: "10px" }}
-                      >
-                        Latest Notifications
-                      </Typography>
-                      {notifications.map((notification) => (
-                        <ListItem
-                          key={notification.id}
-                          style={{ cursor: "pointer" }}
+                    <div style={{ maxHeight: 300, overflowY: "auto" }}>
+                      <List>
+                        <Typography
+                          variant="subtitle1"
+                          align="center"
+                          style={{ fontWeight: "bold", marginBottom: "10px" }}
                         >
-                          <Divider style={{ margin: "5px 0" }} />
-                          <ListItemText
-                            primary={
-                              <>
-                                <span
-                                  style={{ color: "black" }}
-                                  onMouseEnter={(e) =>
-                                    (e.target.style.color = "blue")
-                                  }
-                                  onMouseLeave={(e) =>
-                                    (e.target.style.color = "black")
-                                  }
-                                  dangerouslySetInnerHTML={{
-                                    __html: notification.message,
-                                  }}
-                                />
-                                <span
-                                  style={{
-                                    marginLeft: "10px",
-                                    fontSize: "10px",
-                                  }}
-                                >
-                                  {new Date(
-                                    notification.createdAt
-                                  ).toLocaleDateString()}
-                                </span>
-                              </>
-                            }
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
+                          Latest Notifications
+                        </Typography>
+                        {notifications
+                          .slice()
+                          .sort(
+                            (a, b) =>
+                              new Date(b.createdAt) - new Date(a.createdAt)
+                          )
+                          .map((notification) => (
+                            <ListItem
+                              key={notification.id}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <Divider style={{ margin: "5px 0" }} />
+                              <ListItemText
+                                primary={
+                                  <>
+                                    <span
+                                      style={{ color: "black" }}
+                                      onMouseEnter={(e) =>
+                                        (e.target.style.color = "blue")
+                                      }
+                                      onMouseLeave={(e) =>
+                                        (e.target.style.color = "black")
+                                      }
+                                      dangerouslySetInnerHTML={{
+                                        __html: notification.message,
+                                      }}
+                                    />
+                                    <span
+                                      style={{
+                                        marginLeft: "10px",
+                                        fontSize: "10px",
+                                      }}
+                                    >
+                                      {new Date(
+                                        notification.createdAt
+                                      ).toLocaleDateString()}
+                                    </span>
+                                  </>
+                                }
+                              />
+                            </ListItem>
+                          ))}
+                      </List>
+                    </div>
                   ) : (
                     <div style={{ display: "flex", justifyContent: "center" }}>
                       <Typography style={{ padding: "10px", color: "gray" }}>

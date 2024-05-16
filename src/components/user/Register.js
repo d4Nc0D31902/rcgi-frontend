@@ -106,7 +106,9 @@ const Register = () => {
         spacing={2}
         justifyContent="center"
         alignItems="center"
-        style={{ minHeight: "100vh" }}
+        style={{
+          height: "100vh",
+        }}
       >
         <Grid item xs={12} sm={8} md={6} lg={4}>
           <Box
@@ -141,27 +143,6 @@ const Register = () => {
                   ),
                 }}
               />
-
-              {/* <TextField
-                id="email_field"
-                label="Email"
-                variant="outlined"
-                name="email"
-                value={email}
-                onChange={onChange}
-                fullWidth
-                margin="normal"
-                placeholder="Email"
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              /> */}
-
               <TextField
                 id="password_field"
                 label="Password"
@@ -282,7 +263,7 @@ const Register = () => {
                   type="submit"
                   variant="contained"
                   className="btn btn-block py-3"
-                  color="primary"
+                  color="success"
                   disabled={loading ? true : false}
                   endIcon={<HowToRegOutlinedIcon />}
                   style={{

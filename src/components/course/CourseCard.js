@@ -128,7 +128,7 @@ const Course = ({ course }) => {
         elevation={5}
         style={{
           width: "100%",
-          marginLeft: "20px",
+          // marginLeft: "20px",
           border: "1px solid #ccc",
           // borderRadius: "20px",
         }}

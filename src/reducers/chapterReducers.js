@@ -26,10 +26,10 @@ import {
   ADD_QUIZ_REQUEST,
   ADD_QUIZ_SUCCESS,
   ADD_QUIZ_FAIL,
-  MARK_CHAPTER_AS_DONE_REQUEST, // Added new action constant
-  MARK_CHAPTER_AS_DONE_SUCCESS, // Added new action constant
-  MARK_CHAPTER_AS_DONE_FAIL, // Added new action constant
-  MARK_CHAPTER_AS_DONE_RESET, // Added new action constant
+  MARK_CHAPTER_AS_DONE_REQUEST, 
+  MARK_CHAPTER_AS_DONE_SUCCESS, 
+  MARK_CHAPTER_AS_DONE_FAIL,
+  MARK_CHAPTER_AS_DONE_RESET,
   CLEAR_ERRORS,
 } from "../constants/chapterConstants";
 
