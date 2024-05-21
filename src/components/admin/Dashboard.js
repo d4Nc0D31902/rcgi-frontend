@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import UserSalesChart from "./UserSalesChart";
 import MonthlySalesChart from "./MonthlySalesChart";
 import ProductSalesChart from "./ProductSalesChart";
-import UserCompanyChart from "./UserCompanyChart"; // Import the UserCompanyChart
+import UserCompanyChart from "./UserCompanyChart"; 
 import UserEnrollmentChart from "./UserEnrollmentChart";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,7 +23,7 @@ import {
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
-  const { users } = useSelector((state) => state.allUsers); // Get users from Redux state
+  const { users } = useSelector((state) => state.allUsers);
   const { orders, totalAmount, loading } = useSelector(
     (state) => state.allOrders
   );

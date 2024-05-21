@@ -45,43 +45,14 @@ import {
   REACTIVATE_USER_REQUEST,
   REACTIVATE_USER_SUCCESS,
   REACTIVATE_USER_FAIL,
+  IMPORT_USER_REQUEST,
+  IMPORT_USER_SUCCESS,
+  IMPORT_USER_RESET,
+  IMPORT_USER_FAIL,
 } from "../constants/userConstants";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// export const login = (email, password) => async (dispatch) => {
-//   const notify = (error) =>
-//     toast.error(error, {
-//       position: toast.POSITION.BOTTOM_CENTER,
-//     });
-//   try {
-//     dispatch({ type: LOGIN_REQUEST });
-//     const config = {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       withCredentials: true,
-//     };
-
-//     const { data } = await axios.post(
-//       `${process.env.REACT_APP_API}/api/v1/login`,
-//       { email, password },
-//       config
-//     );
-//     dispatch({
-//       type: LOGIN_SUCCESS,
-//       payload: data.user,
-//     });
-//   } catch (error) {
-//     console.log(error.response);
-//     notify(error);
-//     dispatch({
-//       type: LOGIN_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
 
 export const login = (employee_id, password) => async (dispatch) => {
   const notify = (error) =>
@@ -99,7 +70,7 @@ export const login = (employee_id, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/login`,
-      { employee_id, password }, // Change email to employee_id
+      { employee_id, password },
       config
     );
     dispatch({
@@ -245,8 +216,13 @@ export const forgotPassword = (email) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
-    const { data } = await axios.post("/api/v1/password/forgot", email, config);
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/password/forgot`,
+      email,
+      config
+    );
     dispatch({
       type: FORGOT_PASSWORD_SUCCESS,
       payload: data.message,
@@ -439,6 +415,40 @@ export const reactivateUser = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: REACTIVATE_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+export const importUser = (csvFile) => async (dispatch) => {
+  try {
+    dispatch({ type: IMPORT_USER_REQUEST });
+    console.log("Uploading file...");
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    const formData = new FormData();
+    formData.append("csvFile", csvFile);
+
+    console.log("Sending request to server...");
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/import-users`,
+      formData,
+      config
+    );
+    console.log("File uploaded successfully.");
+
+    dispatch({
+      type: IMPORT_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    console.error("Error while uploading file:", error);
+    dispatch({
+      type: IMPORT_USER_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -15,15 +15,21 @@ import SchoolIcon from "@mui/icons-material/School";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Divider } from "@mui/material";
-
+import TableChartIcon from "@mui/icons-material/TableChart";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 const Sidebar = () => {
   const [openCourses, setOpenCourses] = useState(false);
+  const [openUsers, setOpenUsers] = useState(false);
   const [openQuizzes, setOpenQuizzes] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const location = useLocation(); 
+  const location = useLocation();
 
   const handleCoursesClick = () => {
     setOpenCourses(!openCourses);
+  };
+
+  const handleUsersClick = () => {
+    setOpenUsers(!openUsers);
   };
 
   const handleQuizzesClick = () => {
@@ -69,7 +75,7 @@ const Sidebar = () => {
             component={Link}
             to="/dashboard"
             button
-            selected={isActive("/dashboard")} 
+            selected={isActive("/dashboard")}
           >
             <ListItemIcon>
               <DashboardIcon />
@@ -77,7 +83,7 @@ const Sidebar = () => {
             <ListItemText primary="Dashboard" />
           </ListItem>
 
-          <ListItem
+          {/* <ListItem
             component={Link}
             to="/admin/users"
             button
@@ -87,13 +93,54 @@ const Sidebar = () => {
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Users" />
+          </ListItem> */}
+          <ListItem
+            button
+            onClick={handleUsersClick}
+            component="div"
+            // selected={isActive("/admin/users") || isActive("/admin/users")}
+          >
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Users" />
+            {openUsers ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
+
+          <Collapse in={openUsers} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem
+                sx={{ marginLeft: "20px" }}
+                component={Link}
+                to="/admin/users"
+                button
+                selected={isActive("/admin/users")}
+              >
+                <ListItemIcon>
+                  <TableChartIcon />
+                </ListItemIcon>
+                <ListItemText primary="All Users" />
+              </ListItem>
+              <ListItem
+                sx={{ marginLeft: "20px" }}
+                component={Link}
+                to="/import/user"
+                button
+                selected={isActive("/import/user")}
+              >
+                <ListItemIcon>
+                  <FileUploadIcon />
+                </ListItemIcon>
+                <ListItemText primary="Import" />
+              </ListItem>
+            </List>
+          </Collapse>
 
           <ListItem
             component={Link}
             to="/admin/enrollments"
             button
-            selected={isActive("/admin/enrollments")} 
+            selected={isActive("/admin/enrollments")}
           >
             <ListItemIcon>
               <SchoolIcon />
@@ -105,7 +152,7 @@ const Sidebar = () => {
             button
             onClick={handleCoursesClick}
             component="div"
-            selected={isActive("/admin/courses") || isActive("/admin/course")} 
+            // selected={isActive("/admin/courses") || isActive("/admin/course")}
           >
             <ListItemIcon>
               <LibraryBooksIcon />
@@ -113,6 +160,7 @@ const Sidebar = () => {
             <ListItemText primary="Courses" />
             {openCourses ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
+
           <Collapse in={openCourses} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem
@@ -120,7 +168,7 @@ const Sidebar = () => {
                 component={Link}
                 to="/admin/courses"
                 button
-                selected={isActive("/admin/courses")} 
+                selected={isActive("/admin/courses")}
               >
                 <ListItemIcon>
                   <LibraryBooksIcon />
@@ -132,7 +180,7 @@ const Sidebar = () => {
                 component={Link}
                 to="/admin/course"
                 button
-                selected={isActive("/admin/course")} 
+                selected={isActive("/admin/course")}
               >
                 <ListItemIcon>
                   <AssignmentIcon />
@@ -146,7 +194,7 @@ const Sidebar = () => {
             button
             onClick={handleQuizzesClick}
             component="div"
-            selected={isActive("/admin/quizzes") || isActive("/admin/retake")} 
+            // selected={isActive("/admin/quizzes") || isActive("/admin/retake")}
           >
             <ListItemIcon>
               <LibraryBooksIcon />
@@ -161,7 +209,7 @@ const Sidebar = () => {
                 component={Link}
                 to="/admin/quizzes"
                 button
-                selected={isActive("/admin/quizzes")} 
+                selected={isActive("/admin/quizzes")}
               >
                 <ListItemIcon>
                   <LibraryBooksIcon />
@@ -173,7 +221,7 @@ const Sidebar = () => {
                 component={Link}
                 to="/admin/retake"
                 button
-                selected={isActive("/admin/retake")} 
+                selected={isActive("/admin/retake")}
               >
                 <ListItemIcon>
                   <LibraryBooksIcon />

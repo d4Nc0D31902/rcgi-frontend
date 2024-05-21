@@ -72,6 +72,8 @@ import QuizDetails from "./components/course/QuizDetails";
 
 import NewFeedback from "./components/feedback/NewFeedback";
 
+import ImportUser from "./components/admin/ImportUser";
+
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -527,6 +529,15 @@ function App() {
             element={
               <ProtectedRoute isAdmin={true}>
                 <RetakeQuizList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/import/user"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ImportUser />
               </ProtectedRoute>
             }
           />

@@ -48,6 +48,10 @@ import {
   REACTIVATE_USER_REQUEST,
   REACTIVATE_USER_SUCCESS,
   REACTIVATE_USER_FAIL,
+  IMPORT_USER_REQUEST,
+  IMPORT_USER_SUCCESS,
+  IMPORT_USER_FAIL,
+  IMPORT_USER_RESET,
 } from "../constants/userConstants";
 
 export const authReducer = (state = { user: {} }, action) => {
@@ -103,6 +107,7 @@ export const authReducer = (state = { user: {} }, action) => {
 
 export const userReducer = (state = {}, action) => {
   switch (action.type) {
+    case IMPORT_USER_REQUEST:
     case UPDATE_PROFILE_REQUEST:
     case UPDATE_PASSWORD_REQUEST:
     case UPDATE_USER_REQUEST:
@@ -113,6 +118,7 @@ export const userReducer = (state = {}, action) => {
         ...state,
         loading: true,
       };
+    case IMPORT_USER_SUCCESS:
     case UPDATE_PROFILE_SUCCESS:
     case UPDATE_PASSWORD_SUCCESS:
     case UPDATE_USER_SUCCESS:
@@ -121,6 +127,7 @@ export const userReducer = (state = {}, action) => {
         loading: false,
         isUpdated: action.payload,
       };
+    case IMPORT_USER_RESET:
     case UPDATE_PROFILE_RESET:
     case UPDATE_PASSWORD_RESET:
     case UPDATE_USER_RESET:
@@ -135,6 +142,7 @@ export const userReducer = (state = {}, action) => {
         loading: false,
         isUpdated: action.payload,
       };
+    case IMPORT_USER_FAIL:
     case UPDATE_PROFILE_FAIL:
     case UPDATE_PASSWORD_FAIL:
     case UPDATE_USER_FAIL:
