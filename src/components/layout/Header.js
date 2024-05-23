@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import {
   AppBar,
   Toolbar,
@@ -54,10 +54,11 @@ const Header = () => {
   //   withCredentials: true,
   // });
 
-  const socket = io(REACT_APP_API, {
-    transports: ["websocket"],
-    withCredentials: true,
-  });
+  //TRUE SOCKET USE THIS
+  // const socket = io(REACT_APP_API, {
+  //   transports: ["websocket"],
+  //   withCredentials: true,
+  // });
 
   // const socket = io("https://rcgi-backend.vercel.app", {
   //   transports: ["websocket"],
@@ -99,19 +100,19 @@ const Header = () => {
       });
   };
 
-  // useEffect(() => {
-  //   dispatch(getNotifications());
-  // }, [dispatch]);
-
   useEffect(() => {
-    // console.log("Test")
-    // socket.on("connection", () => {
-    //   console.log("Connected to Socket io");
-    // });
-    socket.on("notification", () => {
-      dispatch(getNotifications());
-    });
-  }, [socket, dispatch]);
+    dispatch(getNotifications());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   // console.log("Test")
+  //   // socket.on("connection", () => {
+  //   //   console.log("Connected to Socket io");
+  //   // });
+  //   socket.on("notification", () => {
+  //     dispatch(getNotifications());
+  //   });
+  // }, [socket, dispatch]); TRUE SOCKET
 
   return (
     <Container maxWidth="md" sx={{ display: "flex", justifyContent: "center" }}>
