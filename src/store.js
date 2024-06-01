@@ -29,6 +29,7 @@ import {
   moduleDetailsReducer,
   newModuleReducer,
   moduleReducer,
+  newForumReducer,
 } from "./reducers/moduleReducers";
 
 import {
@@ -80,6 +81,7 @@ import {
   createSubmitReducer,
   createRetakeReducer,
   checkProgressReducer,
+  createReplyReducer,
 } from "./reducers/enrollmentReducers";
 
 import {
@@ -109,6 +111,13 @@ import {
   salesPerMonthReducer,
   productSalesReducer,
 } from "./reducers/chartReducers";
+import {
+  forumsReducer,
+  forumReducer,
+  forumDetailsReducer,
+  // createReplyReducer,
+  createForumReducer,
+} from "./reducers/forumReducers";
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
@@ -182,6 +191,13 @@ const reducer = combineReducers({
   feedbackDetails: feedbackDetailsReducer,
   newFeedback: newFeedbackReducer,
   feedback: feedbackReducer,
+  forums: forumsReducer,
+  forum: forumReducer,
+  forumDetails: forumDetailsReducer,
+  // createReply: createReplyReducer,
+  newForum: newForumReducer,
+  createForum: createForumReducer,
+  createReply: createReplyReducer,
 });
 
 let initialState = {

@@ -207,10 +207,10 @@ const EnrollmentQuizDetails = () => {
                   {enrollmentModule.chapter.map((chapter, index) => (
                     <Accordion
                       key={index}
-                      defaultExpanded={true}
                       style={{
                         border: "1px solid black",
                       }}
+                      defaultExpanded
                     >
                       <AccordionSummary
                         style={{
@@ -220,6 +220,7 @@ const EnrollmentQuizDetails = () => {
                         aria-controls={`chapter-${index}-content`}
                         id={`chapter-${index}-header`}
                       >
+                        {/* Chapter Title */}
                         {index === 0 ||
                         (enrollmentModule.chapter[index - 1].status ===
                           "Done" &&
@@ -257,12 +258,13 @@ const EnrollmentQuizDetails = () => {
                           </Typography>
                         )}
                       </AccordionSummary>
-
+                      {/* Chapter Details */}
                       <AccordionDetails
                         style={{
                           backgroundColor: "lightgray",
                         }}
                       >
+                        {/* Lesson List */}
                         <div>
                           <ul>
                             {chapter.lessons.map((lesson, lessonIndex) => {
@@ -272,33 +274,30 @@ const EnrollmentQuizDetails = () => {
                                   (prevLesson) => prevLesson.status === "Done"
                                 );
                               const isChapterDone = chapter.status === "Done";
-                              const isModuleDone =
-                                enrollmentModule.status === "Done";
                               const isLessonEnabled =
-                                isPreviousDone && isChapterDone && isModuleDone;
+                                isPreviousDone &&
+                                isChapterDone &&
+                                ((enrollmentModule.status === "Done" &&
+                                  lesson.status === "Done") ||
+                                  (enrollmentModule.status === "Not Done" &&
+                                    lesson.status !== "Done"));
 
                               return (
                                 <li key={lessonIndex}>
                                   <Typography variant="body1" gutterBottom>
                                     {isLessonEnabled ? (
-                                      lesson.status === "Not Done" ? (
-                                        <span style={{ color: "gray" }}>
-                                          {lesson.lessonId.title}
-                                        </span>
-                                      ) : (
-                                        <Link
-                                          to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
-                                          style={{
-                                            textDecoration: "none",
-                                            color:
-                                              lesson.status === "Done"
-                                                ? "green"
-                                                : "",
-                                          }}
-                                        >
-                                          {lesson.lessonId.title}
-                                        </Link>
-                                      )
+                                      <Link
+                                        to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
+                                        style={{
+                                          textDecoration: "none",
+                                          color:
+                                            lesson.status === "Done"
+                                              ? "green"
+                                              : "black",
+                                        }}
+                                      >
+                                        {lesson.lessonId.title}
+                                      </Link>
                                     ) : (
                                       <span
                                         style={{
@@ -317,35 +316,77 @@ const EnrollmentQuizDetails = () => {
                             })}
                           </ul>
                         </div>
+
+                        {/* Forum Section for the last chapter */}
+                        {index === enrollmentModule.chapter.length - 1 && (
+                          <div
+                            style={{ color: "black", textDecoration: "none" }}
+                          >
+                            <ul>
+                              {enrollmentModule.forum?.map(
+                                (forum, forumIndex) => (
+                                  <li key={forumIndex}>
+                                    <Typography
+                                      variant="subtitle1"
+                                      gutterBottom
+                                    >
+                                      {chapter.status === "Not Done" ? (
+                                        <span style={{ color: "gray" }}>
+                                          {forum.forumId?.title ||
+                                            "No Title Available"}
+                                        </span>
+                                      ) : (
+                                        <span style={{ color: "green" }}>
+                                          {forum.forumId?.title ||
+                                            "No Title Available"}
+                                        </span>
+                                      )}
+                                    </Typography>
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* Quiz List */}
                         <div>
                           <ul>
                             {chapter.lessons.every(
                               (lesson) => lesson.status === "Done"
                             ) &&
                               chapter.status !== "Not Done" &&
-                              chapter.quizzes.map((quiz, quizIndex) => (
-                                <li key={quizIndex}>
-                                  <Typography variant="body1" gutterBottom>
-                                    {chapter.status === "Done" ? (
-                                      <Link
-                                        to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
-                                        style={{
-                                          color:
-                                            quiz.status === "Done"
-                                              ? "green"
-                                              : "black",
-                                        }}
-                                      >
-                                        {quiz.quizId.title}
-                                      </Link>
-                                    ) : (
-                                      <span style={{ color: "gray" }}>
-                                        {quiz.quizId.title}
-                                      </span>
-                                    )}
-                                  </Typography>
-                                </li>
-                              ))}
+                              chapter.quizzes.map((quiz, quizIndex) => {
+                                const isForumDone =
+                                  enrollmentModule.forum.every(
+                                    (forum) => forum.status === "Done"
+                                  );
+
+                                return (
+                                  <li key={quizIndex}>
+                                    <Typography variant="body1" gutterBottom>
+                                      {chapter.status === "Done" &&
+                                      isForumDone ? (
+                                        <Link
+                                          to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/quiz/${quiz._id}`}
+                                          style={{
+                                            color:
+                                              quiz.status === "Done"
+                                                ? "green"
+                                                : "black",
+                                          }}
+                                        >
+                                          {quiz.quizId.title}
+                                        </Link>
+                                      ) : (
+                                        <span style={{ color: "gray" }}>
+                                          {quiz.quizId.title}
+                                        </span>
+                                      )}
+                                    </Typography>
+                                  </li>
+                                );
+                              })}
                           </ul>
                         </div>
                       </AccordionDetails>

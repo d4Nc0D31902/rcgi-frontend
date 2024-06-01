@@ -19,6 +19,9 @@ import {
   ADD_CHAPTER_REQUEST,
   ADD_CHAPTER_SUCCESS,
   ADD_CHAPTER_FAIL,
+  NEW_FORUM_REQUEST,
+  NEW_FORUM_SUCCESS,
+  NEW_FORUM_FAIL,
   CLEAR_ERRORS,
 } from "../constants/moduleConstants";
 
@@ -140,7 +143,7 @@ export const addChapter = (moduleId, chapterData) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true, 
+      withCredentials: true,
     };
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/admin/module/${moduleId}/chapter/new`,
@@ -163,4 +166,32 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+export const addForum = (moduleId, forumData) => async (dispatch) => {
+  try {
+    console.log("Adding forum:", forumData); // Logging forumData before dispatching the action
+    dispatch({ type: NEW_FORUM_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/admin/module/${moduleId}/forum/new`,
+      forumData,
+      config
+    );
+    dispatch({
+      type: NEW_FORUM_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.error("Error adding forum:", error); // Logging error if there's an exception
+    dispatch({
+      type: NEW_FORUM_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

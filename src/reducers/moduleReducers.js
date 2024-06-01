@@ -20,10 +20,14 @@ import {
   UPDATE_MODULE_SUCCESS,
   UPDATE_MODULE_RESET,
   UPDATE_MODULE_FAIL,
-  ADD_CHAPTER_REQUEST, // Added new action type
-  ADD_CHAPTER_SUCCESS, // Added new action type
-  ADD_CHAPTER_RESET, // Added new action type
-  ADD_CHAPTER_FAIL, // Added new action type
+  ADD_CHAPTER_REQUEST,
+  ADD_CHAPTER_SUCCESS,
+  ADD_CHAPTER_RESET,
+  ADD_CHAPTER_FAIL,
+  NEW_FORUM_REQUEST,
+  NEW_FORUM_SUCCESS,
+  NEW_FORUM_RESET,
+  NEW_FORUM_FAIL,
   CLEAR_ERRORS,
 } from "../constants/moduleConstants";
 
@@ -185,6 +189,39 @@ export const moduleReducer = (state = {}, action) => {
       return {
         ...state,
         chapterAdded: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export const newForumReducer = (state = { forum: {} }, action) => {
+  switch (action.type) {
+    case NEW_FORUM_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case NEW_FORUM_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        forum: action.payload.forum,
+      };
+    case NEW_FORUM_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case NEW_FORUM_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

@@ -58,6 +58,9 @@ import {
   CHECK_PROGRESS_REQUEST,
   CHECK_PROGRESS_SUCCESS,
   CHECK_PROGRESS_FAIL,
+  CREATE_REPLY_REQUEST,
+  CREATE_REPLY_SUCCESS,
+  CREATE_REPLY_FAIL,
 } from "../constants/enrollmentConstants";
 
 export const newEnrollmentReducer = (state = {}, action) => {
@@ -537,6 +540,36 @@ export const checkProgressReducer = (state = {}, action) => {
         error: action.payload,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const createReplyReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CREATE_REPLY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_REPLY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        forum: action.payload,
+      };
+    case CREATE_REPLY_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }

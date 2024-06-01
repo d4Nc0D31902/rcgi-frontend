@@ -21,10 +21,12 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { deleteChapter } from "../../actions/chapterActions";
 import { deleteLesson } from "../../actions/lessonActions";
 import { deleteQuiz } from "../../actions/quizActions";
+import { deleteForum } from "../../actions/forumActions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import BookIcon from "@mui/icons-material/Book";
+import ForumIcon from "@mui/icons-material/Forum";
 
 const ModuleDetails = () => {
   const dispatch = useDispatch();
@@ -71,6 +73,15 @@ const ModuleDetails = () => {
     }
   };
 
+  const handleDeleteForum = (forumId) => {
+    if (window.confirm("Are you sure you want to delete this Forum?")) {
+      dispatch(deleteForum(forumId)).then(() => {
+        dispatch(getModuleDetails(id));
+        toast.success("Forum deleted successfully");
+      });
+    }
+  };
+
   if (loading) return <Loader />;
   if (error) return <Typography variant="h2">{error}</Typography>;
 
@@ -79,7 +90,7 @@ const ModuleDetails = () => {
       <MetaData title={module.title} />
       <Grid container justifyContent="center">
         <Grid item xs={12} lg={8}>
-          <Paper elevation={3} style={{ padding: "20px", marginTop: "50px" }} >
+          <Paper elevation={3} style={{ padding: "20px", marginTop: "50px" }}>
             <div style={{ marginBottom: "20px" }}>
               {module.images && (
                 <div
@@ -114,132 +125,193 @@ const ModuleDetails = () => {
               {module.description}
             </Typography>
             {isAdmin && (
-              <Button
-                variant="outlined"
-                color="success"
-                component={Link}
-                to={`/admin/module/${id}/chapter/new`}
-                mt={2}
-                style={{ marginTop: "20px" }}
-                startIcon={<BookIcon />}
-              >
-                Add Chapter
-              </Button>
+              <>
+                <Button
+                  variant="outlined"
+                  color="success"
+                  component={Link}
+                  to={`/admin/module/${id}/chapter/new`}
+                  mt={2}
+                  style={{ marginTop: "20px" }}
+                  startIcon={<BookIcon />}
+                >
+                  Add Chapter
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  component={Link}
+                  to={`/admin/module/${id}/forum/new`}
+                  mt={2}
+                  style={{ marginTop: "20px", marginLeft: "10px" }}
+                  startIcon={<ForumIcon />}
+                >
+                  Add Forum
+                </Button>
+              </>
             )}
             <Divider style={{ margin: "20px 0" }} />
 
             <div>
               {module.chapters &&
-                module.chapters.map((chapter, index) => (
-                  <Accordion key={index} defaultExpanded={true}>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls={`chapter-${index}-content`}
-                      id={`chapter-${index}-header`}
-                    >
-                      <div>
-                        <Typography
-                          variant="subtitle1"
-                          component={Link}
-                          to={`/admin/chapterDetails/${chapter._id}`}
+                module.chapters.map((chapter, index) => {
+                  const isLastChapter = index === module.chapters.length - 1;
+                  return (
+                    <Accordion key={index} defaultExpanded={true}>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls={`chapter-${index}-content`}
+                        id={`chapter-${index}-header`}
+                      >
+                        <div>
+                          <Typography
+                            variant="subtitle1"
+                            component={Link}
+                            to={`/admin/chapterDetails/${chapter._id}`}
+                            style={{ color: "black", textDecoration: "none" }}
+                          >
+                            {chapter.title}
+                          </Typography>
+                          {isAdmin && (
+                            <IconButton
+                              color="primary"
+                              size="small"
+                              component={Link}
+                              to={`/admin/chapter/${chapter._id}`}
+                            >
+                              <EditOutlinedIcon fontSize="inherit" />
+                            </IconButton>
+                          )}
+                          {isAdmin && (
+                            <IconButton
+                              color="error"
+                              size="small"
+                              onClick={() => handleDelete(chapter._id)}
+                            >
+                              <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                            </IconButton>
+                          )}
+                        </div>
+                      </AccordionSummary>
+                      <AccordionDetails
+                        style={{
+                          backgroundColor: "lightgray",
+                        }}
+                      >
+                        {chapter.lessons.map((lesson, lessonIndex) => (
+                          <div key={lessonIndex}>
+                            <Typography
+                              variant="body1"
+                              component={Link}
+                              to={`/admin/lessonDetails/${lesson._id}`}
+                              style={{ color: "black", textDecoration: "none" }}
+                            >
+                              {lesson.title}
+                            </Typography>
+                            {isAdmin && (
+                              <IconButton
+                                color="primary"
+                                size="small"
+                                component={Link}
+                                to={`/admin/lesson/${lesson._id}`}
+                              >
+                                <EditOutlinedIcon fontSize="inherit" />
+                              </IconButton>
+                            )}
+                            {isAdmin && (
+                              <IconButton
+                                color="error"
+                                size="small"
+                                onClick={() => handleDeleteLesson(lesson._id)}
+                              >
+                                <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                              </IconButton>
+                            )}
+                          </div>
+                        ))}
+                      </AccordionDetails>
+                      {isLastChapter && module.forum && (
+                        <AccordionDetails
+                          style={{
+                            backgroundColor: "lightgray",
+                          }}
                         >
-                          {chapter.title}
-                        </Typography>
-                        {isAdmin && (
-                          <IconButton
-                            color="primary"
-                            size="small"
-                            component={Link}
-                            to={`/admin/chapter/${chapter._id}`}
-                          >
-                            <EditOutlinedIcon fontSize="inherit" />
-                          </IconButton>
-                        )}
-                        {isAdmin && (
-                          <IconButton
-                            color="error"
-                            size="small"
-                            onClick={() => handleDelete(chapter._id)}
-                          >
-                            <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                          </IconButton>
-                        )}
-                      </div>
-                    </AccordionSummary>
-                    <AccordionDetails
-                      style={{
-                        backgroundColor: "lightgray",
-                      }}
-                    >
-                      {chapter.lessons.map((lesson, lessonIndex) => (
-                        <div key={lessonIndex}>
-                          <Typography
-                            variant="body1"
-                            component={Link}
-                            to={`/admin/lessonDetails/${lesson._id}`}
-                          >
-                            {lesson.title}
-                          </Typography>
-                          {isAdmin && (
-                            <IconButton
-                              color="primary"
-                              size="small"
+                          {module.forum.map((forum, forumIndex) => (
+                            <div key={forumIndex}>
+                              <Typography
+                                variant="body1"
+                                component={Link}
+                                to={`/forumDetails/${forum._id}`}
+                                style={{
+                                  color: "black",
+                                  textDecoration: "none",
+                                }}
+                              >
+                                {forum.title}
+                              </Typography>
+                              {isAdmin && (
+                                <IconButton
+                                  color="primary"
+                                  size="small"
+                                  component={Link}
+                                  to={`/admin/forum/${forum._id}`}
+                                >
+                                  <EditOutlinedIcon fontSize="inherit" />
+                                </IconButton>
+                              )}
+                              {isAdmin && (
+                                <IconButton
+                                  color="error"
+                                  size="small"
+                                  onClick={() => handleDeleteForum(forum._id)}
+                                >
+                                  <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                                </IconButton>
+                              )}
+                            </div>
+                          ))}
+                        </AccordionDetails>
+                      )}
+                      <AccordionDetails
+                        style={{
+                          backgroundColor: "lightgray",
+                        }}
+                      >
+                        {chapter.quizzes.map((quiz, quizIndex) => (
+                          <div key={quizIndex}>
+                            <Typography
+                              variant="body1"
                               component={Link}
-                              to={`/admin/lesson/${lesson._id}`}
+                              to={`/admin/quizDetails/${quiz._id}`}
+                              style={{ color: "black", textDecoration: "none" }}
                             >
-                              <EditOutlinedIcon fontSize="inherit" />
-                            </IconButton>
-                          )}
-                          {isAdmin && (
-                            <IconButton
-                              color="error"
-                              size="small"
-                              onClick={() => handleDeleteLesson(lesson._id)}
-                            >
-                              <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                            </IconButton>
-                          )}
-                        </div>
-                      ))}
-                    </AccordionDetails>
-                    <AccordionDetails
-                      style={{
-                        backgroundColor: "lightgray",
-                      }}
-                    >
-                      {chapter.quizzes.map((quiz, quizIndex) => (
-                        <div key={quizIndex}>
-                          <Typography
-                            variant="body1"
-                            component={Link}
-                            to={`/admin/quizDetails/${quiz._id}`}
-                          >
-                            {quiz.title}
-                          </Typography>
-                          {isAdmin && (
-                            <IconButton
-                              color="primary"
-                              size="small"
-                              component={Link}
-                              to={`/admin/quiz/${quiz._id}`}
-                            >
-                              <EditOutlinedIcon fontSize="inherit" />
-                            </IconButton>
-                          )}
-                          {isAdmin && (
-                            <IconButton
-                              color="error"
-                              size="small"
-                              onClick={() => handleDeleteQuiz(quiz._id)}
-                            >
-                              <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                            </IconButton>
-                          )}
-                        </div>
-                      ))}
-                    </AccordionDetails>
-                  </Accordion>
-                ))}
+                              {quiz.title}
+                            </Typography>
+                            {isAdmin && (
+                              <IconButton
+                                color="primary"
+                                size="small"
+                                component={Link}
+                                to={`/admin/quiz/${quiz._id}`}
+                              >
+                                <EditOutlinedIcon fontSize="inherit" />
+                              </IconButton>
+                            )}
+                            {isAdmin && (
+                              <IconButton
+                                color="error"
+                                size="small"
+                                onClick={() => handleDeleteQuiz(quiz._id)}
+                              >
+                                <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                              </IconButton>
+                            )}
+                          </div>
+                        ))}
+                      </AccordionDetails>
+                    </Accordion>
+                  );
+                })}
             </div>
           </Paper>
         </Grid>

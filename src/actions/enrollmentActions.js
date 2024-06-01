@@ -56,6 +56,9 @@ import {
   CHECK_PROGRESS_SUCCESS,
   CHECK_PROGRESS_FAIL,
   CLEAR_ERRORS,
+  CREATE_REPLY_REQUEST,
+  CREATE_REPLY_SUCCESS,
+  CREATE_REPLY_FAIL,
 } from "../constants/enrollmentConstants";
 
 export const createEnrollment = (enrollment) => async (dispatch, getState) => {
@@ -529,6 +532,38 @@ export const checkProgress = (enrollmentId) => async (dispatch) => {
     console.error("Error fetching enrollment progress:", error);
     dispatch({
       type: CHECK_PROGRESS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const createReply = (replyData, forumId) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_REPLY_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/forum/${forumId}/reply`,
+      replyData,
+      config
+    );
+
+    dispatch({
+      type: CREATE_REPLY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_REPLY_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

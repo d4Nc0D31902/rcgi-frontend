@@ -74,6 +74,10 @@ import NewFeedback from "./components/feedback/NewFeedback";
 
 import ImportUser from "./components/admin/ImportUser";
 
+import NewForum from "./components/admin/NewForum";
+import ForumDetails from "./components/forum/ForumDetails";
+import EnrollmentForum from "./components/enrollment/EnrollmentForum";
+
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -538,6 +542,33 @@ function App() {
             element={
               <ProtectedRoute isAdmin={true}>
                 <ImportUser />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/module/:moduleId/forum/new"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <NewForum />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/forumDetails/:id"
+            element={
+              <ProtectedRoute>
+                <ForumDetails />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/forum/:id"
+            element={
+              <ProtectedRoute>
+                <EnrollmentForum />
               </ProtectedRoute>
             }
           />
