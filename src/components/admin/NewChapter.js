@@ -12,12 +12,23 @@ import {
   addChapter,
   clearErrors,
 } from "../../actions/moduleActions";
-import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Grid,
+  Paper,
+  InputLabel,
+  Select,
+  FormControl,
+  MenuItem,
+} from "@mui/material";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const AddChapter = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [company, setCompany] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,6 +62,7 @@ const AddChapter = () => {
     const formData = new FormData();
     formData.set("title", title);
     formData.set("description", description);
+    formData.set("company", company);
     formData.set("moduleId", moduleId);
 
     try {
@@ -93,6 +105,26 @@ const AddChapter = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id="company-label">Company</InputLabel>
+                    <Select
+                      labelId="company-label"
+                      id="company_field"
+                      value={company}
+                      label="Company"
+                      onChange={(e) => setCompany(e.target.value)}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={"Barcino"}>Barcino</MenuItem>
+                      <MenuItem value={"Single Origin"}>Single Origin</MenuItem>
+                      <MenuItem value={"Bluesmith"}>Bluesmith</MenuItem>
+                      <MenuItem value={"Meat Depot"}>Meat Depot</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
                   <ReactQuill
                     id="description_field"
                     theme="snow"
@@ -104,16 +136,16 @@ const AddChapter = () => {
                         ["bold", "italic", "underline", "strike"],
                         [{ list: "ordered" }, { list: "bullet" }],
                         ["link", "image"],
-                        [{ align: [] }], // Text alignment options
-                        [{ script: "sub" }, { script: "super" }], // Subscript and superscript
-                        [{ indent: "-1" }, { indent: "+1" }], // Indentation
-                        [{ direction: "rtl" }], // Right to left direction
-                        [{ size: ["small", false, "large", "huge"] }], // Font size
-                        [{ color: [] }, { background: [] }], // Font and background color
+                        [{ align: [] }],
+                        [{ script: "sub" }, { script: "super" }],
+                        [{ indent: "-1" }, { indent: "+1" }],
+                        [{ direction: "rtl" }],
+                        [{ size: ["small", false, "large", "huge"] }],
+                        [{ color: [] }, { background: [] }],
                         ["clean"],
                       ],
                       clipboard: {
-                        matchVisual: false, // Disable HTML paste
+                        matchVisual: false,
                       },
                     }}
                     formats={[

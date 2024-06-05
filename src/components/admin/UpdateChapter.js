@@ -13,12 +13,23 @@ import {
   clearErrors,
 } from "../../actions/chapterActions";
 import { UPDATE_CHAPTER_RESET } from "../../constants/chapterConstants";
-import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Grid,
+  Paper,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 
 const UpdateChapter = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [company, setCompany] = useState("");
 
   const dispatch = useDispatch();
   const { error, chapter } = useSelector((state) => state.chapterDetails);
@@ -46,6 +57,7 @@ const UpdateChapter = () => {
     } else {
       setTitle(chapter.title);
       setDescription(chapter.description);
+      setCompany(chapter.company);
     }
     if (error) {
       errMsg(error);
@@ -67,6 +79,7 @@ const UpdateChapter = () => {
     const formData = new FormData();
     formData.set("title", title);
     formData.set("description", description);
+    formData.set("company", company);
     dispatch(updateChapter(chapter._id, formData));
   };
 
@@ -97,21 +110,31 @@ const UpdateChapter = () => {
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </Grid>
-                {/* <Grid item xs={12}>
-                  <TextField
-                    id="description_field"
-                    label="Description"
-                    fullWidth
-                    multiline
-                    rows={8}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </Grid> */}
+
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel id="company-label">Company</InputLabel>
+                    <Select
+                      labelId="company-label"
+                      id="company_field"
+                      value={company}
+                      label="Company"
+                      onChange={(e) => setCompany(e.target.value)}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={"Barcino"}>Barcino</MenuItem>
+                      <MenuItem value={"Single Origin"}>Single Origin</MenuItem>
+                      <MenuItem value={"Bluesmith"}>Bluesmith</MenuItem>
+                      <MenuItem value={"Meat Depot"}>Meat Depot</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
                 <Grid item xs={12}>
                   <ReactQuill
                     id="description_field"
-                    theme="snow" // You can choose a theme
+                    theme="snow"
                     value={description}
                     onChange={(value) => setDescription(value)}
                     modules={{
@@ -168,9 +191,9 @@ const UpdateChapter = () => {
                     type="submit"
                     variant="contained"
                     color="success"
-                    className="btn btn-block py-3"
-                    disabled={loading ? true : false}
+                    disabled={loading}
                     startIcon={<CachedOutlinedIcon />}
+                    fullWidth
                   >
                     UPDATE
                   </Button>
