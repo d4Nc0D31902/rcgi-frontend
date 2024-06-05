@@ -213,14 +213,22 @@ const EnrollmentModuleDetails = () => {
                                     >
                                       {chapter.status === "Not Done" ? (
                                         <span style={{ color: "gray" }}>
-                                          {forum.forumId?.title ||
-                                            "No Title Available"}
+                                          {forum.forumId?.title}
+                                        </span>
+                                      ) : forum.status === "Done" ? (
+                                        <span style={{ color: "green" }}>
+                                          {forum.forumId?.title}
                                         </span>
                                       ) : (
-                                        <span style={{ color: "green" }}>
-                                          {forum.forumId?.title ||
-                                            "No Title Available"}
-                                        </span>
+                                        <Link
+                                          to={`/forum/${forum.forumId?._id}`}
+                                          style={{
+                                            textDecoration: "none",
+                                            color: "black",
+                                          }}
+                                        >
+                                          {forum.forumId?.title}
+                                        </Link>
                                       )}
                                     </Typography>
                                   </li>
