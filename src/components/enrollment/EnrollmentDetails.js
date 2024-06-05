@@ -267,6 +267,10 @@ const EnrollmentDetails = () => {
                                 borderRadius: "20px",
                                 height: "fit-content",
                               }}
+                              disabled={
+                                index !== 0 &&
+                                module[index - 1].status !== "Done"
+                              }
                             >
                               View
                             </Button>
