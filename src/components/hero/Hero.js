@@ -21,12 +21,16 @@ const Hero = () => {
         }}
         whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
       >
-        <h3>Aute est ea fugiat fugiat sit sint ex.</h3>
+        <h3>RestaurantConcepts Group</h3>
         <p>
-          Magna culpa amet ut veniam enim ipsum adipisicing ullamco proident in
-          sint. Aliquip do quis aute aute velit nostrud elit esse excepteur.
-          Nisi anim quis sit eiusmod ipsum duis elit magna nostrud in cupidatat
-          ad. Proident consectetur culpa commodo ad irure nisi.
+          RestaurantConcepts Group, Inc. is a company holding investments in
+          food retail, food service and restaurants with the intent of building
+          and growing licensed brands to become significant and recognized
+          players in their category. It holds a portfolio of brands and
+          companies that are distinct, rare and valuable and provides its
+          investments focused strategy on all aspects of its organization,
+          products, processes and IT. It builds focus in its everyday operations
+          for growth and sustainability.
         </p>
       </motion.div>
       <div className="rcgi-container">
