@@ -144,6 +144,25 @@ const Register = () => {
                 }}
               />
               <TextField
+                id="email_field"
+                label="Email"
+                variant="outlined"
+                name="email"
+                value={email}
+                onChange={onChange}
+                fullWidth
+                margin="normal"
+                placeholder="Email"
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
                 id="password_field"
                 label="Password"
                 variant="outlined"

@@ -16,7 +16,11 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Divider } from "@mui/material";
 import TableChartIcon from "@mui/icons-material/TableChart";
-import FileUploadIcon from '@mui/icons-material/FileUpload';
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import CheckIcon from '@mui/icons-material/Check';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import QuizIcon from '@mui/icons-material/Quiz';
+import AddIcon from '@mui/icons-material/Add';
 const Sidebar = () => {
   const [openCourses, setOpenCourses] = useState(false);
   const [openUsers, setOpenUsers] = useState(false);
@@ -83,27 +87,11 @@ const Sidebar = () => {
             <ListItemText primary="Dashboard" />
           </ListItem>
 
-          {/* <ListItem
-            component={Link}
-            to="/admin/users"
-            button
-            selected={isActive("/admin/users")} 
-          >
+          <ListItem button onClick={handleUsersClick} component="div">
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary="Users" />
-          </ListItem> */}
-          <ListItem
-            button
-            onClick={handleUsersClick}
-            component="div"
-            // selected={isActive("/admin/users") || isActive("/admin/users")}
-          >
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Users" />
+            <ListItemText primary="Employees" />
             {openUsers ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
 
@@ -119,7 +107,7 @@ const Sidebar = () => {
                 <ListItemIcon>
                   <TableChartIcon />
                 </ListItemIcon>
-                <ListItemText primary="All Users" />
+                <ListItemText primary="All Employees" />
               </ListItem>
               <ListItem
                 sx={{ marginLeft: "20px" }}
@@ -171,7 +159,7 @@ const Sidebar = () => {
                 selected={isActive("/admin/courses")}
               >
                 <ListItemIcon>
-                  <LibraryBooksIcon />
+                  <TableChartIcon />
                 </ListItemIcon>
                 <ListItemText primary="All Courses" />
               </ListItem>
@@ -183,7 +171,7 @@ const Sidebar = () => {
                 selected={isActive("/admin/course")}
               >
                 <ListItemIcon>
-                  <AssignmentIcon />
+                  <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Create" />
               </ListItem>
@@ -197,7 +185,7 @@ const Sidebar = () => {
             // selected={isActive("/admin/quizzes") || isActive("/admin/retake")}
           >
             <ListItemIcon>
-              <LibraryBooksIcon />
+              <QuizIcon />
             </ListItemIcon>
             <ListItemText primary="Quizzes" />
             {openQuizzes ? <ExpandLess /> : <ExpandMore />}
@@ -212,7 +200,7 @@ const Sidebar = () => {
                 selected={isActive("/admin/quizzes")}
               >
                 <ListItemIcon>
-                  <LibraryBooksIcon />
+                  <CheckIcon />
                 </ListItemIcon>
                 <ListItemText primary="Results" />
               </ListItem>
@@ -224,7 +212,7 @@ const Sidebar = () => {
                 selected={isActive("/admin/retake")}
               >
                 <ListItemIcon>
-                  <LibraryBooksIcon />
+                  <RestartAltIcon />
                 </ListItemIcon>
                 <ListItemText primary="Retakes" />
               </ListItem>

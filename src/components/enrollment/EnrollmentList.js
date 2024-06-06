@@ -130,42 +130,44 @@ const ListEnrollments = () => {
   };
 
   return (
-    <Fragment>
-      <MetaData title={"My Enrollments"} />
-      <h1 className="my-5">My Enrollments</h1>
-      {loading ? (
-        <Loader />
-      ) : (
-        <MDBDataTable
-          data={{
-            ...setEnrollments(),
-            rows: setEnrollments().rows.map((row) => ({
-              ...row,
-              progress: renderProgress(row.progress),
-            })),
-          }}
-          className="px-3"
-          bordered
-          striped
-          hover
-        />
-      )}
-      <style jsx="true">{`
-        .dataTables_wrapper {
-          text-align: center;
-        }
-        .dataTables_wrapper .dataTables_scrollBody {
-          display: flex;
-          justify-content: center;
-        }
-        .dataTables_wrapper table {
-          width: 100% !important;
-        }
-        .dataTables_wrapper .dataTables_scrollBody table {
-          width: auto !important;
-        }
-      `}</style>
-    </Fragment>
+    <div style={{ padding: "20px" }}>
+      <Fragment>
+        <MetaData title={"My Enrollments"} />
+        <h1 className="my-5">My Enrollments</h1>
+        {loading ? (
+          <Loader />
+        ) : (
+          <MDBDataTable
+            data={{
+              ...setEnrollments(),
+              rows: setEnrollments().rows.map((row) => ({
+                ...row,
+                progress: renderProgress(row.progress),
+              })),
+            }}
+            className="px-3"
+            bordered
+            striped
+            hover
+          />
+        )}
+        <style jsx="true">{`
+          .dataTables_wrapper {
+            text-align: center;
+          }
+          .dataTables_wrapper .dataTables_scrollBody {
+            display: flex;
+            justify-content: center;
+          }
+          .dataTables_wrapper table {
+            width: 100% !important;
+          }
+          .dataTables_wrapper .dataTables_scrollBody table {
+            width: auto !important;
+          }
+        `}</style>
+      </Fragment>
+    </div>
   );
 };
 

@@ -21,6 +21,7 @@ import {
   ListItemText,
   Box,
   Container,
+  ListItemIcon,
 } from "@mui/material";
 import { Logout, School as SchoolIcon } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -30,6 +31,9 @@ import {
   markAllNotificationsAsRead,
 } from "../../actions/notificationActions";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -287,8 +291,12 @@ const Header = () => {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
                 }}
                 keepMounted
                 open={open}
@@ -296,7 +304,12 @@ const Header = () => {
                 style={{
                   marginTop: "60px",
                   textAlign: "center",
-                  marginRight: "60px",
+                  // marginRight: "60px",
+                }}
+                PaperProps={{
+                  style: {
+                    width: "200px",
+                  },
                 }}
               >
                 {user.role === "admin" && (
@@ -305,6 +318,9 @@ const Header = () => {
                     component={Link}
                     to="/dashboard"
                   >
+                    <ListItemIcon>
+                      <DashboardIcon />
+                    </ListItemIcon>
                     Dashboard
                   </MenuItem>
                 )}
@@ -321,15 +337,23 @@ const Header = () => {
                     component={Link}
                     to="/enrollment/me"
                   >
+                    <ListItemIcon>
+                      <LibraryBooksIcon />
+                    </ListItemIcon>
                     Enrollments
                   </MenuItem>
                 )}
                 <MenuItem onClick={handleClose} component={Link} to="/me">
+                  <ListItemIcon>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
                   Profile
                 </MenuItem>
                 <Divider style={{ margin: "5px 0" }} />
                 <MenuItem onClick={logoutHandler}>
-                  <Logout color="error" />
+                  <ListItemIcon>
+                    <Logout color="error" />
+                  </ListItemIcon>
                   Logout
                 </MenuItem>
               </Menu>

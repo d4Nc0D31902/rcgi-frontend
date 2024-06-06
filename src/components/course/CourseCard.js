@@ -60,35 +60,6 @@ const Course = ({ course }) => {
       }
     }
   };
-  // const startCourseHandler = () => {
-  //   if (isEnrolled) {
-  //     toast.info("You are already enrolled in this course.");
-  //     return;
-  //   }
-
-  //   if (!user) {
-  //     return;
-  //   }
-
-  //   if (!course) {
-  //     console.error("Course is empty.");
-  //     return;
-  //   }
-
-  //   const enrollment = {
-  //     userId: user._id,
-  //     courseId: course._id,
-  //   };
-
-  //   dispatch(joinEnrollment(enrollment))
-  //     .then(() => {
-  //       toast.success("Enrollment created successfully!");
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error creating enrollment:", error);
-  //       toast.error("Failed to create enrollment.");
-  //     });
-  // };
 
   const startCourseHandler = () => {
     if (isEnrolled) {
@@ -155,13 +126,14 @@ const Course = ({ course }) => {
           {!isAdmin && (
             <Link to="/enrollment/me" style={{ textDecoration: "none" }}>
               <Button
-                variant="outlined"
+                variant="contained"
                 color="success"
                 size="small"
                 fullWidth
                 startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
                 onClick={startCourseHandler}
                 disabled={isEnrolled || enrollmentsLoading}
+                style={{ borderRadius: "20px" }}
               >
                 {isEnrolled ? "Enrolled" : "Start"}
               </Button>
@@ -187,20 +159,9 @@ const Course = ({ course }) => {
                 color="primary"
                 style={{ marginTop: "10px" }}
                 startIcon={<EditOutlinedIcon />}
-                // sx={{ marginLeft: "auto", marginRight: "auto" }}
               >
                 Edit
               </Button>
-              {/* <Button
-                variant="outlined"
-                size="small"
-                color="error"
-                style={{ marginTop: "10px", marginLeft: "145px" }}
-                startIcon={<DeleteOutlineOutlinedIcon />}
-                onClick={() => deleteHandler(course._id)}
-              >
-                Delete
-              </Button> */}
             </>
           )}
         </CardContent>

@@ -77,6 +77,13 @@ const Profile = () => {
                 <Typography variant="body1" gutterBottom>
                   {user.company}
                 </Typography>
+                <Divider sx={{ marginBottom: 2 }} />
+                <Typography variant="h4" gutterBottom>
+                  Employee Number
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {user.employee_id}
+                </Typography>
                 <Divider sx={{ marginTop: 2 }} />
                 <Button
                   variant="contained"

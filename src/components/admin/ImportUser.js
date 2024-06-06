@@ -63,11 +63,8 @@ const ImportUser = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ height: "100vh" }}>
-      <Paper
-        elevation={3}
-        sx={{ padding: 2, border: "2px solid black", marginTop: "150px" }}
-      >
+    <Container maxWidth="md" sx={{ height: "100vh", padding: "50px" }}>
+      <Paper elevation={3} sx={{ padding: 2 }}>
         <Typography variant="h4" gutterBottom>
           Import Users
         </Typography>

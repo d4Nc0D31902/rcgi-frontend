@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import UserSalesChart from "./UserSalesChart";
 import MonthlySalesChart from "./MonthlySalesChart";
 import ProductSalesChart from "./ProductSalesChart";
-import UserCompanyChart from "./UserCompanyChart"; 
+import UserCompanyChart from "./UserCompanyChart";
 import UserEnrollmentChart from "./UserEnrollmentChart";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -48,6 +48,24 @@ const Dashboard = () => {
     dispatch(allEnrollments());
   }, [dispatch]);
 
+  const roleCounts = users
+    ? users.reduce((acc, user) => {
+        acc[user.role] = (acc[user.role] || 0) + 1;
+        return acc;
+      }, {})
+    : {};
+
+  const getRoleLabel = (role) => {
+    switch (role) {
+      case "user":
+        return "Employees";
+      case "admin":
+        return "HR";
+      default:
+        return role;
+    }
+  };
+
   return (
     <Fragment>
       <div className="row" style={{ marginRight: "120px" }}>
@@ -61,7 +79,7 @@ const Dashboard = () => {
           ) : (
             <Fragment>
               <MetaData title={"Admin Dashboard"} />
-              <div className="row pr-4">
+              {/* <div className="row pr-4">
                 <div className="col-xl-12 col-sm-12 mb-3">
                   <div className="card text-white bg-primary o-hidden h-100">
                     <div className="card-body">
@@ -70,16 +88,35 @@ const Dashboard = () => {
                         <br /> <b>{users && users.length}</b>
                       </div>
                     </div>
-                    <Link
-                      className="card-footer text-white clearfix small z-1"
-                      to="/admin/users"
-                    >
-                      <span className="float-left">View Details</span>
-
-                      <span className="float-right">
-                        <i className="fa fa-angle-right"></i>
-                      </span>
-                    </Link>
+                  </div>
+                </div>
+              </div> */}
+              <div className="row pr-4">
+                <div className="col-xl-12 col-sm-12 mb-3">
+                  <div className="card text-white bg-primary o-hidden h-100">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">
+                        {/* Number of Users */}
+                        {/* <br /> */}
+                        {Object.entries(roleCounts).map(([role, count]) => (
+                          <div key={role}>
+                            <b>{getRoleLabel(role)}:</b> {count}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row pr-4">
+                <div className="col-xl-12 col-sm-12 mb-3">
+                  <div className="card text-white bg-success o-hidden h-100">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">
+                        Number of Enrollments
+                        <br /> <b>{enrollments && enrollments.length}</b>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -91,14 +128,14 @@ const Dashboard = () => {
                   </div>
                 </div>
               </Fragment>
-              <Fragment>
+              {/* <Fragment>
                 <div className="chart-container">
                   <h2 className="chart-label">Employee Enrollments</h2>
                   <div className="chart-border">
                     <UserEnrollmentChart enrollmentData={enrollments} />
                   </div>
                 </div>
-              </Fragment>
+              </Fragment> */}
 
               {/* <Fragment>
                 <UserSalesChart data={customerSales} />
