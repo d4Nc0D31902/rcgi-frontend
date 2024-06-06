@@ -50,7 +50,9 @@ const Dashboard = () => {
 
   const roleCounts = users
     ? users.reduce((acc, user) => {
-        acc[user.role] = (acc[user.role] || 0) + 1;
+        if (user.status === "active") {
+          acc[user.role] = (acc[user.role] || 0) + 1;
+        }
         return acc;
       }, {})
     : {};
@@ -96,8 +98,6 @@ const Dashboard = () => {
                   <div className="card text-white bg-primary o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
-                        {/* Number of Users */}
-                        {/* <br /> */}
                         {Object.entries(roleCounts).map(([role, count]) => (
                           <div key={role}>
                             <b>{getRoleLabel(role)}:</b> {count}

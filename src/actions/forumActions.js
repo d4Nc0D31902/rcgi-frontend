@@ -132,7 +132,7 @@ export const updateForum = (id, forumData) => async (dispatch) => {
       withCredentials: true,
     };
     const { data } = await axios.put(
-      `${process.env.REACT_APP_API}/api/v1/admin/forum/${id}`,
+      `${process.env.REACT_APP_API}/api/v1/forum/${id}`,
       forumData,
       config
     );
