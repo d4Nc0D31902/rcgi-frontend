@@ -71,7 +71,7 @@ const NewCourse = () => {
   return (
     <Fragment>
       <MetaData title={"New Course"} />
-      <Grid container spacing={3} >
+      <Grid container spacing={3} p={"20px"}>
         <Grid item xs={12} md={2}>
           <Sidebar />
         </Grid>

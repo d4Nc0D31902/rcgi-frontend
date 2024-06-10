@@ -85,7 +85,7 @@ const SubmitQuizList = () => {
   return (
     <Fragment>
       <MetaData title={"Quiz Retakes"} />
-      <div className="row" style={{ marginRight: "120px" }}>
+      <div className="row" style={{ marginRight: "120px", padding: "20px" }}>
         <div className="col-12 col-md-2">
           <Sidebar />
         </div>

@@ -17,10 +17,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Divider } from "@mui/material";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import CheckIcon from '@mui/icons-material/Check';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import QuizIcon from '@mui/icons-material/Quiz';
-import AddIcon from '@mui/icons-material/Add';
+import CheckIcon from "@mui/icons-material/Check";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import QuizIcon from "@mui/icons-material/Quiz";
+import AddIcon from "@mui/icons-material/Add";
+import ForumIcon from '@mui/icons-material/Forum';
 const Sidebar = () => {
   const [openCourses, setOpenCourses] = useState(false);
   const [openUsers, setOpenUsers] = useState(false);
@@ -218,6 +219,18 @@ const Sidebar = () => {
               </ListItem>
             </List>
           </Collapse>
+
+          <ListItem
+            component={Link}
+            to="/admin/forums"
+            button
+            selected={isActive("/admin/forums")}
+          >
+            <ListItemIcon>
+              <ForumIcon />
+            </ListItemIcon>
+            <ListItemText primary="Forums" />
+          </ListItem>
         </List>
       </SwipeableDrawer>
     </>

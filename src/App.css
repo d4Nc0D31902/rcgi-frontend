@@ -6,8 +6,8 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  /* scroll-snap-type: y mandatory;
+  scroll-behavior: smooth; */
 }
 
 section {

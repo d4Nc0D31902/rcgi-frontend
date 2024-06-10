@@ -117,12 +117,6 @@ const CoursesList = () => {
             >
               <i className="fa fa-eye"></i>
             </Link>
-            {/* <button
-              className="btn btn-danger py-1 px-2 ml-2"
-              onClick={() => deleteCourseHandler(course._id)}
-            >
-              <i className="fa fa-trash"></i>
-            </button> */}
             <button
               className={`btn ${
                 course.status === "inactive" ? "btn-success" : "btn-danger"
@@ -154,7 +148,7 @@ const CoursesList = () => {
   return (
     <Fragment>
       <MetaData title={"All Courses"} />
-      <div className="row" style={{ marginRight: "120px" }}>
+      <div className="row" style={{ marginRight: "120px", padding: "20px" }}>
         <div className="col-12 col-md-2">
           <Sidebar />
         </div>

@@ -54,7 +54,7 @@ export const getForums = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_FORUMS_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/admin/forums`,
+      `${process.env.REACT_APP_API}/api/v1/forums`,
       {
         withCredentials: true,
       }
