@@ -157,78 +157,7 @@ const EnrollmentDetails = () => {
                           image={mod.moduleId.images[0].url}
                           alt={mod.moduleId.title}
                         />
-                        {/* <CardContent>
-                          <Typography variant="h6" gutterBottom>
-                            {mod.moduleId.title}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            sx={{ mb: 2 }}
-                          >
-                            {showFullDescription[mod._id]
-                              ? mod.moduleId.description
-                              : `${mod.moduleId.description.substring(
-                                  0,
-                                  100
-                                )}...`}
-                            <Button
-                              onClick={() => toggleDescription(mod._id)}
-                              color="primary"
-                              size="small"
-                            >
-                              {showFullDescription[mod._id]
-                                ? "See Less"
-                                : "See More"}
-                            </Button>
-                          </Typography>
-                          <Link
-                            to={`/enrollment/${id}/module/${mod._id}`}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <Button
-                              variant="outlined"
-                              color="primary"
-                              fullWidth
-                              style={{ borderRadius: "20px" }}
-                            >
-                              View
-                            </Button>
-                          </Link>
-                          <Button
-                            variant="contained"
-                            color="success"
-                            fullWidth
-                            style={{
-                              marginTop: "10px",
-                              borderRadius: "20px",
-                            }}
-                            disabled={
-                              !(
-                                mod.chapter.length > 0 &&
-                                mod.chapter.every(
-                                  (chapter) => chapter.status === "Done"
-                                ) &&
-                                mod.chapter.every(
-                                  (chapter) =>
-                                    chapter.lessons.every(
-                                      (lesson) => lesson.status === "Done"
-                                    ) &&
-                                    chapter.quizzes.every(
-                                      (quiz) => quiz.status === "Done"
-                                    )
-                                )
-                              )
-                            }
-                            onClick={() => handleMarkModuleAsDone(id, mod._id)}
-                          >
-                            {mod.status === "Done" ? (
-                              <CheckIcon />
-                            ) : (
-                              "Mark As Done"
-                            )}
-                          </Button>
-                        </CardContent> */}
+
                         <CardContent style={{ height: "100%" }}>
                           <Typography variant="h6" gutterBottom>
                             {mod.moduleId.title}
@@ -255,10 +184,24 @@ const EnrollmentDetails = () => {
                                 : "See More"}
                             </Button>
                           </Typography>
-                          <Link
-                            to={`/enrollment/${id}/module/${mod._id}`}
-                            style={{ textDecoration: "none" }}
-                          >
+                          {index === 0 ? (
+                            <Link
+                              to={`/enrollment/${id}/module/${mod._id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <Button
+                                variant="outlined"
+                                color="primary"
+                                fullWidth
+                                style={{
+                                  borderRadius: "20px",
+                                  height: "fit-content",
+                                }}
+                              >
+                                View
+                              </Button>
+                            </Link>
+                          ) : (
                             <Button
                               variant="outlined"
                               color="primary"
@@ -267,14 +210,17 @@ const EnrollmentDetails = () => {
                                 borderRadius: "20px",
                                 height: "fit-content",
                               }}
-                              disabled={
-                                index !== 0 &&
-                                module[index - 1].status !== "Done"
+                              disabled={module[index - 1].status !== "Done"}
+                              component={Link}
+                              to={
+                                module[index - 1].status === "Done"
+                                  ? `/enrollment/${id}/module/${mod._id}`
+                                  : undefined
                               }
                             >
                               View
                             </Button>
-                          </Link>
+                          )}
                           <Button
                             variant="contained"
                             color="success"
