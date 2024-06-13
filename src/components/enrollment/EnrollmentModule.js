@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import MetaData from "../layout/MetaData";
+import Loader from "../layout/Loader";
 
 const EnrollmentModuleDetails = () => {
   const dispatch = useDispatch();
@@ -27,11 +28,7 @@ const EnrollmentModuleDetails = () => {
   }, [dispatch, id, moduleId]);
 
   if (loading) {
-    return (
-      <Grid container justifyContent="center">
-        <CircularProgress />
-      </Grid>
-    );
+    return <Loader />;
   }
 
   return (

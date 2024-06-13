@@ -25,6 +25,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ModuleModal from "./ModuleModal";
+import Loader from "../layout/Loader";
 
 const EnrollmentDetails = () => {
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ const EnrollmentDetails = () => {
     <Fragment>
       <MetaData title={"Enrollment Details"} />
       {loading ? (
-        <CircularProgress style={{ margin: "auto" }} />
+        <Loader />
       ) : error ? (
         <Typography variant="h6" color="error" align="center">
           {error}

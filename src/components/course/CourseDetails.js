@@ -14,6 +14,7 @@ import MetaData from "../layout/MetaData";
 import CourseModuleCard from "./CourseModuleCard";
 import AddIcon from "@mui/icons-material/Add";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import Loader from "../layout/Loader";
 
 const CourseDetails = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const CourseDetails = () => {
     };
   }, [dispatch, id]);
 
-  if (loading) return <CircularProgress style={{ margin: "auto" }} />;
+  if (loading) return <Loader />;
   if (error)
     return (
       <Typography variant="h2" style={{ textAlign: "center" }}>
