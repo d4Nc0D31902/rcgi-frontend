@@ -645,3 +645,12 @@ ul.CTAs a {
   border-radius: 5px;
   padding: 20px;
 }
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* .MDBDataTable {
+  min-width: 1000px;
+} */

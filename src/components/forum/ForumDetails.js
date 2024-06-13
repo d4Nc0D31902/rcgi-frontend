@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getForumDetails } from "../../actions/forumActions";
+import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getForumDetails, deleteReply } from "../../actions/forumActions";
 import {
   Container,
   Box,
@@ -11,20 +13,28 @@ import {
   CardHeader,
   Avatar,
   IconButton,
-  Checkbox, // Import Checkbox component
+  Checkbox,
   CardMedia,
   CardContent,
   Typography,
   CardActions,
   Collapse,
+  Popover,
+  MenuItem,
+  ListItemIcon,
+  Divider,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ForumDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user && user.role === "admin";
 
   useEffect(() => {
     dispatch(getForumDetails(id));
@@ -32,16 +42,50 @@ const ForumDetails = () => {
 
   const { forum } = useSelector((state) => state.forumDetails);
 
-  const [isChecked, setIsChecked] = useState(false); // State to manage checkbox
+  const [isChecked, setIsChecked] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [deleteReplyId, setDeleteReplyId] = useState(null);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked); // Toggle checkbox state
+    setIsChecked(!isChecked);
   };
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const errMsg = (message = "") =>
+    toast.error(message, {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+
+  const successMsg = (message = "") =>
+    toast.success(message, {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+
+  const handleDelete = async (replyId) => {
+    try {
+      setDeleteReplyId(replyId);
+      await dispatch(deleteReply(id, replyId));
+      dispatch(getForumDetails(id));
+      successMsg("Reply Deleted successfully");
+    } catch (error) {
+      errMsg("There is an Error");
+    } finally {
+      handlePopoverClose();
+    }
+  };
+
+  const open = Boolean(anchorEl);
 
   return (
     <Box
       sx={{
-        // border: "2px solid black",
         height: "100vh",
         marginLeft: "20px",
         marginRight: "20px",
@@ -95,13 +139,49 @@ const ForumDetails = () => {
                       </Avatar>
                     }
                     action={
-                      <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                      </IconButton>
+                      (isAdmin || (user && reply.user._id === user._id)) && (
+                        <IconButton
+                          aria-label="settings"
+                          onClick={handlePopoverOpen}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                      )
                     }
                     title={reply.user.name}
                     subheader={new Date(reply.createdAt).toLocaleString()}
                   />
+                  <Popover
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handlePopoverClose}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                  >
+                    <MenuItem
+                      to={`/forum/${id}/reply/${reply._id}`}
+                      component={Link}
+                      onClick={handlePopoverClose}
+                    >
+                      <ListItemIcon>
+                        <EditIcon fontSize="small" color="primary" />
+                      </ListItemIcon>
+                      Edit
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem onClick={() => handleDelete(reply._id)}>
+                      <ListItemIcon>
+                        <DeleteIcon fontSize="small" color="error" />
+                      </ListItemIcon>
+                      Delete
+                    </MenuItem>
+                  </Popover>
                   <CardContent>
                     <Typography
                       variant="body2"
@@ -110,7 +190,6 @@ const ForumDetails = () => {
                     ></Typography>
                   </CardContent>
                   <CardActions disableSpacing>
-                    {/* Use Checkbox component */}
                     <Checkbox
                       checked={isChecked}
                       onChange={handleCheckboxChange}

@@ -90,7 +90,9 @@ const Header = () => {
   };
 
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
+  const isS = useMediaQuery(theme.breakpoints.only("s"));
   const isMd = useMediaQuery(theme.breakpoints.only("md"));
+  const isL = useMediaQuery(theme.breakpoints.only("l"));
   const isXl = useMediaQuery(theme.breakpoints.only("xl"));
 
   // const socket = io.connect("http://localhost:4000", {
@@ -167,6 +169,9 @@ const Header = () => {
           position: "static",
         },
         [theme.breakpoints.only("md")]: {
+          position: "static",
+        },
+        [theme.breakpoints.only("lg")]: {
           position: "fixed",
           height: 80,
           borderRadius: "20px",
@@ -194,33 +199,7 @@ const Header = () => {
             />
           </Link>
         </Typography>
-        {/* <Link
-          to="/courses"
-          // style={{
-          //   textDecoration: "none",
-          //   marginLeft: "10px",
-          //   marginTop: "10px",
-          // }}
-          style={linkStyles}
-        >
-          <Button
-            color="inherit"
-            startIcon={<SchoolIcon />}
-            // sx={{ color: "black" }}
-            sx={buttonStyles}
-          >
-            Courses
-          </Button>
-        </Link>
-        <Link to="/feedback" style={linkStyles}>
-          <Button
-            color="inherit"
-            startIcon={<InsertCommentIcon />}
-            sx={buttonStyles}
-          >
-            Feedback
-          </Button>
-        </Link> */}
+
         <Link to="/courses" style={linkStyles}>
           {isXs ? (
             <IconButton sx={{ color: "black" }}>

@@ -85,30 +85,36 @@ const UsersList = () => {
           label: "Name",
           field: "name",
           sort: "asc",
+          width: 150, // Set specific width to make it overflow
         },
         {
           label: "Email",
           field: "email",
           sort: "asc",
+          width: 200,
         },
         {
           label: "Role",
           field: "role",
           sort: "asc",
+          width: 100,
         },
         {
           label: "Company",
           field: "company",
           sort: "asc",
+          width: 150,
         },
         {
           label: "Employee ID",
           field: "employee_id",
           sort: "asc",
+          width: 150,
         },
         {
           label: "Actions",
           field: "actions",
+          width: 200,
         },
       ],
       rows: [],
@@ -164,17 +170,20 @@ const UsersList = () => {
             <div className="d-flex justify-content-between align-items-center">
               <h1 className="my-5">All Users</h1>
             </div>
-            {loading ? (
-              <Loader />
-            ) : (
-              <MDBDataTable
-                data={setUsers()}
-                className="px-3"
-                bordered
-                striped
-                hover
-              />
-            )}
+            <div className="table-responsive">
+              {loading ? (
+                <Loader />
+              ) : (
+                <MDBDataTable
+                  data={setUsers()}
+                  className="px-3"
+                  bordered
+                  striped
+                  hover
+                  responsive
+                />
+              )}
+            </div>
           </Fragment>
         </div>
       </div>

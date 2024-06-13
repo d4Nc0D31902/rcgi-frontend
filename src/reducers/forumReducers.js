@@ -21,6 +21,14 @@ import {
   CREATE_REPLY_SUCCESS,
   CREATE_REPLY_FAIL,
   CREATE_REPLY_RESET,
+  UPDATE_REPLY_REQUEST,
+  UPDATE_REPLY_SUCCESS,
+  UPDATE_REPLY_FAIL,
+  UPDATE_REPLY_RESET,
+  DELETE_REPLY_FAIL,
+  DELETE_REPLY_REQUEST,
+  DELETE_REPLY_RESET,
+  DELETE_REPLY_SUCCESS,
   CLEAR_ERRORS,
 } from "../constants/forumConstants";
 
@@ -151,6 +159,36 @@ export const forumReducer = (state = {}, action) => {
       return {
         ...state,
         isUpdated: false,
+      };
+    case DELETE_REPLY_REQUEST:
+    case UPDATE_REPLY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_REPLY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        forum: action.payload.forum,
+      };
+    case UPDATE_REPLY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        forum: action.payload.forum,
+      };
+    case DELETE_REPLY_FAIL:
+    case UPDATE_REPLY_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case DELETE_REPLY_RESET:
+    case UPDATE_REPLY_RESET:
+      return {
+        ...state,
+        loading: false,
       };
     case CLEAR_ERRORS:
       return {

@@ -79,6 +79,7 @@ import ForumDetails from "./components/forum/ForumDetails";
 import EnrollmentForum from "./components/enrollment/EnrollmentForum";
 import UpdateForum from "./components/admin/UpdateForum";
 import ForumsList from "./components/admin/ForumList";
+import UpdateReply from "./components/forum/UpdateReply";
 
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
@@ -580,6 +581,15 @@ function App() {
             element={
               <ProtectedRoute isAdmin={true}>
                 <ForumsList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/forum/:forumId/reply/:replyId"
+            element={
+              <ProtectedRoute>
+                <UpdateReply />
               </ProtectedRoute>
             }
           />

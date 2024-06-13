@@ -8,6 +8,8 @@ import MonthlySalesChart from "./MonthlySalesChart";
 import ProductSalesChart from "./ProductSalesChart";
 import UserCompanyChart from "./UserCompanyChart";
 import UserEnrollmentChart from "./UserEnrollmentChart";
+import { useTheme } from "@mui/material/styles";
+import { Grid, Box, Stack, Typography, Card, CardContent } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getAdminProducts } from "../../actions/productActions";
@@ -31,6 +33,9 @@ const Dashboard = () => {
   const { salesPerMonth } = useSelector((state) => state.salesPerMonth);
   const { productSales } = useSelector((state) => state.productSales);
   const { enrollments } = useSelector((state) => state.allEnrollments);
+
+  const theme = useTheme();
+
   let outOfStock = 0;
   products.forEach((product) => {
     if (product.stock === 0) {
@@ -67,89 +72,120 @@ const Dashboard = () => {
         return role;
     }
   };
-
   return (
     <Fragment>
-      <div className="row" style={{ marginRight: "120px", padding: "20px" }}>
-        <div className="col-12 col-md-2">
-          <Sidebar />
-        </div>
-        <div className="col-12 col-md-10">
-          <h1 className="my-4">Dashboard</h1>
-          {loading ? (
-            <Loader />
-          ) : (
-            <Fragment>
-              <MetaData title={"Admin Dashboard"} />
-              {/* <div className="row pr-4">
-                <div className="col-xl-12 col-sm-12 mb-3">
-                  <div className="card text-white bg-primary o-hidden h-100">
-                    <div className="card-body">
-                      <div className="text-center card-font-size">
-                        Number of Employees
-                        <br /> <b>{users && users.length}</b>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-              <div className="row pr-4">
-                <div className="col-xl-12 col-sm-12 mb-3">
-                  <div className="card text-white bg-primary o-hidden h-100">
-                    <div className="card-body">
-                      <div className="text-center card-font-size">
-                        {Object.entries(roleCounts).map(([role, count]) => (
-                          <div key={role}>
-                            <b>{getRoleLabel(role)}:</b> {count}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="row pr-4">
-                <div className="col-xl-12 col-sm-12 mb-3">
-                  <div className="card text-white bg-success o-hidden h-100">
-                    <div className="card-body">
-                      <div className="text-center card-font-size">
-                        Number of Enrollments
-                        <br /> <b>{enrollments && enrollments.length}</b>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <Box
+        sx={{
+          [theme.breakpoints.only("xs")]: {
+            p: "20px",
+          },
+          [theme.breakpoints.only("sm")]: {
+            p: "20px",
+          },
+          [theme.breakpoints.only("md")]: {
+            p: "20px",
+            marginRight: "120px",
+          },
+          [theme.breakpoints.only("lg")]: {
+            p: "20px",
+            marginRight: "120px",
+          },
+          [theme.breakpoints.only("xl")]: {
+            p: "20px",
+            marginRight: "120px",
+          },
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={2}>
+            <Sidebar />
+          </Grid>
+          <Grid item xs={12} md={10}>
+            <Typography variant="h4" component="h1" gutterBottom>
+              Dashboard
+            </Typography>
+            {loading ? (
+              <Loader />
+            ) : (
               <Fragment>
-                <div className="chart-container">
-                  <h2 className="chart-label">Employee Companies</h2>
-                  <div className="chart-border">
-                    <UserCompanyChart userData={users} />
-                  </div>
-                </div>
-              </Fragment>
-              {/* <Fragment>
-                <div className="chart-container">
-                  <h2 className="chart-label">Employee Enrollments</h2>
-                  <div className="chart-border">
-                    <UserEnrollmentChart enrollmentData={enrollments} />
-                  </div>
-                </div>
-              </Fragment> */}
+                <MetaData title={"Admin Dashboard"} />
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{
+                    [theme.breakpoints.only("xs")]: {
+                      marginBottom: "20px",
+                    },
+                    [theme.breakpoints.only("sm")]: {
+                      marginBottom: "20px",
+                    },
+                    [theme.breakpoints.only("md")]: {
+                      marginBottom: "20px",
+                    },
+                    [theme.breakpoints.only("lg")]: {
+                      marginBottom: "20px",
+                    },
+                    [theme.breakpoints.only("xl")]: {
+                      marginBottom: "20px",
+                    },
+                  }}
+                >
+                  <Grid item xs={12} sm={12} md={12}>
+                    <Card
+                      sx={{
+                        backgroundColor: "primary.main",
+                        color: "white",
+                      }}
+                    >
+                      <CardContent>
+                        <Stack spacing={2} alignItems="center">
+                          {Object.entries(roleCounts).map(([role, count]) => (
+                            <Box key={role}>
+                              <Typography variant="h6" component="div">
+                                <b>{getRoleLabel(role)}:</b> {count}
+                              </Typography>
+                            </Box>
+                          ))}
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                </Grid>
 
-              {/* <Fragment>
-                <UserSalesChart data={customerSales} />
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <Card
+                      sx={{ backgroundColor: "success.main", color: "white" }}
+                    >
+                      <CardContent>
+                        <Stack
+                          spacing={2}
+                          alignItems="center"
+                          textAlign="center"
+                        >
+                          <Typography variant="h6" component="div">
+                            Number of Enrollments
+                            <br />
+                            <b>{enrollments && enrollments.length}</b>
+                          </Typography>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                </Grid>
+                <Box mt={4}>
+                  <Typography variant="h5" component="h2" align="center">
+                    Employee Companies
+                  </Typography>
+                  <Box sx={{ border: 1, borderColor: "grey.400", p: 2, mt: 2 }}>
+                    <UserCompanyChart userData={users} />
+                  </Box>
+                </Box>
               </Fragment>
-              <Fragment>
-                <MonthlySalesChart data={salesPerMonth} />
-              </Fragment>
-              <Fragment>
-                <ProductSalesChart data={productSales} />
-              </Fragment> */}
-            </Fragment>
-          )}
-        </div>
-      </div>
+            )}
+          </Grid>
+        </Grid>
+      </Box>
     </Fragment>
   );
 };

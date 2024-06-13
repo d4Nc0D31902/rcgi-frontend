@@ -64,6 +64,10 @@ const NewFeedback = () => {
             height: "100vh",
             padding: "50px",
           },
+          [theme.breakpoints.only("lg")]: {
+            height: "100vh",
+            padding: "50px",
+          },
           [theme.breakpoints.only("xl")]: {
             height: "100vh",
             padding: "50px",

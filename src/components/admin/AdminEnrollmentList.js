@@ -170,23 +170,25 @@ const EnrollmentList = () => {
         <div className="col-12 col-md-10">
           <Fragment>
             <h1 className="my-5">All Enrollments</h1>
-            {loading ? (
-              <Loader />
-            ) : (
-              <MDBDataTable
-                data={{
-                  ...setEnrollments(),
-                  rows: setEnrollments().rows.map((row) => ({
-                    ...row,
-                    progress: renderProgress(row.progress),
-                  })),
-                }}
-                className="px-3"
-                bordered
-                striped
-                hover
-              />
-            )}
+            <div className="table-responsive">
+              {loading ? (
+                <Loader />
+              ) : (
+                <MDBDataTable
+                  data={{
+                    ...setEnrollments(),
+                    rows: setEnrollments().rows.map((row) => ({
+                      ...row,
+                      progress: renderProgress(row.progress),
+                    })),
+                  }}
+                  className="px-3"
+                  bordered
+                  striped
+                  hover
+                />
+              )}
+            </div>
           </Fragment>
         </div>
       </div>

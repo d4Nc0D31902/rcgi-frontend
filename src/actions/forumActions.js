@@ -19,6 +19,14 @@ import {
   CREATE_REPLY_REQUEST,
   CREATE_REPLY_SUCCESS,
   CREATE_REPLY_FAIL,
+  UPDATE_REPLY_SUCCESS,
+  UPDATE_REPLY_FAIL,
+  UPDATE_REPLY_REQUEST,
+  UPDATE_REPLY_RESET,
+  DELETE_REPLY_FAIL,
+  DELETE_REPLY_REQUEST,
+  DELETE_REPLY_RESET,
+  DELETE_REPLY_SUCCESS,
   CLEAR_ERRORS,
 } from "../constants/forumConstants";
 
@@ -101,7 +109,7 @@ export const newForum = (forumData) => async (dispatch) => {
 
 export const deleteForum = (id) => async (dispatch) => {
   try {
-    console.log("Deleting forum with ID:", id); // Logging the ID before dispatching the action
+    console.log("Deleting forum with ID:", id);
     dispatch({ type: DELETE_FORUM_REQUEST });
     const { data } = await axios.delete(
       `${process.env.REACT_APP_API}/api/v1/admin/forum/${id}`,
@@ -114,7 +122,7 @@ export const deleteForum = (id) => async (dispatch) => {
       payload: data.success,
     });
   } catch (error) {
-    console.error("Error deleting forum:", error); // Logging error if there's an exception
+    console.error("Error deleting forum:", error);
     dispatch({
       type: DELETE_FORUM_FAIL,
       payload: error.response.data.message,
@@ -175,6 +183,59 @@ export const createReply = (forumId, replyData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_REPLY_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateReply =
+  (forumId, replyId, updatedReply) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_REPLY_REQUEST });
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_API}/api/v1/forum/${forumId}/reply/${replyId}`,
+        { reply: updatedReply },
+        config
+      );
+
+      dispatch({
+        type: UPDATE_REPLY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_REPLY_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const deleteReply = (forumId, replyId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_REPLY_REQUEST });
+
+    const { data } = await axios.delete(
+      `${process.env.REACT_APP_API}/api/v1/forum/${forumId}/reply/${replyId}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch({
+      type: DELETE_REPLY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_REPLY_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -155,17 +155,19 @@ const CoursesList = () => {
         <div className="col-12 col-md-10">
           <Fragment>
             <h1 className="my-5">All Courses</h1>
-            {loading ? (
-              <Loader />
-            ) : (
-              <MDBDataTable
-                data={setCourses()}
-                className="px-3"
-                bordered
-                striped
-                hover
-              />
-            )}
+            <div className="table-responsive">
+              {loading ? (
+                <Loader />
+              ) : (
+                <MDBDataTable
+                  data={setCourses()}
+                  className="px-3"
+                  bordered
+                  striped
+                  hover
+                />
+              )}
+            </div>
           </Fragment>
         </div>
       </div>

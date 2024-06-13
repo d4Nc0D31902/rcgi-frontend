@@ -119,17 +119,19 @@ const ForumsList = () => {
         <div className="col-12 col-md-10">
           <Fragment>
             <h1 className="my-5">All Forums</h1>
-            {loading ? (
-              <Loader />
-            ) : (
-              <MDBDataTable
-                data={setForums()}
-                className="px-3"
-                bordered
-                striped
-                hover
-              />
-            )}
+            <div className="table-responsive">
+              {loading ? (
+                <Loader />
+              ) : (
+                <MDBDataTable
+                  data={setForums()}
+                  className="px-3"
+                  bordered
+                  striped
+                  hover
+                />
+              )}
+            </div>
           </Fragment>
         </div>
       </div>

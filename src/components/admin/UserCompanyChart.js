@@ -7,9 +7,16 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 const UserCompanyChart = ({ userData }) => {
-  const companies = ["Barcino", "Meat Depot", "Single Origin", "Bluesmith", "None"];
+  const companies = [
+    "Barcino",
+    "Meat Depot",
+    "Single Origin",
+    "Bluesmith",
+    "None",
+  ];
 
   const filteredUsers = userData.filter((user) =>
     companies.includes(user.company)
@@ -57,9 +64,31 @@ const UserCompanyChart = ({ userData }) => {
     );
   };
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("l"));
+
+  let chartWidth = 500;
+  let chartHeight = 500;
+  let outerRadius = 200;
+
+  if (isSmallScreen) {
+    chartWidth = 300;
+    chartHeight = 300;
+    outerRadius = 100;
+  } else if (isMediumScreen) {
+    chartWidth = 400;
+    chartHeight = 400;
+    outerRadius = 150;
+  }
+
   return (
-    <ResponsiveContainer width="90%" height={500}>
-      <PieChart width={500} height={500}>
+    <ResponsiveContainer
+      width="90%"
+      height={isSmallScreen ? 300 : isMediumScreen ? 400 : 500}
+    >
+      <PieChart width={chartWidth} height={chartHeight}>
         <Pie
           dataKey="count"
           nameKey="name"
@@ -67,7 +96,7 @@ const UserCompanyChart = ({ userData }) => {
           data={pieChartData}
           cx="50%"
           cy="50%"
-          outerRadius={200}
+          outerRadius={outerRadius}
           fill="#8884d8"
           label={renderCustomizedLabel}
         >

@@ -55,7 +55,7 @@ const EnrollmentCourseChart = ({ enrollmentData }) => {
   };
 
   return (
-    <ResponsiveContainer width="90%" height={500}>
+    <ResponsiveContainer width="100%" height={500}>
       <PieChart width={500} height={500}>
         <Pie
           dataKey="count"
