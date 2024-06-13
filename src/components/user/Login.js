@@ -45,7 +45,18 @@ const Login = () => {
       } else if (redirect === "shipping") {
         navigate(`/${redirect}`, { replace: true });
       } else {
-        navigate("/enrollment/me");
+        // Check if user's company is Barcino
+        if (user.company === "Barcino") {
+          navigate("/barcino", { replace: true });
+        } else if (user.company === "Meat Depot") {
+          navigate("/meat-depot", { replace: true });
+        } else if (user.company === "Single Origin") {
+          navigate("/single-origin", { replace: true });
+        } else if (user.company === "Bluesmith") {
+          navigate("/bluesmith", { replace: true });
+        } else {
+          navigate("/enrollment/me", { replace: true });
+        }
       }
     }
 
@@ -53,7 +64,15 @@ const Login = () => {
       notify(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, isAuthenticated, isAdmin, error, navigate, redirect]);
+  }, [
+    dispatch,
+    isAuthenticated,
+    isAdmin,
+    error,
+    navigate,
+    redirect,
+    user,
+  ]);
 
   const submitHandler = (e) => {
     e.preventDefault();

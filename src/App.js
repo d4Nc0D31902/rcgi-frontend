@@ -81,6 +81,11 @@ import UpdateForum from "./components/admin/UpdateForum";
 import ForumsList from "./components/admin/ForumList";
 import UpdateReply from "./components/forum/UpdateReply";
 
+import Barcino from "./components/home/Barcino";
+import Bluesmith from "./components/home/Bluesmith";
+import MeatDepot from "./components/home/MeatDepot";
+import SingleOrigin from "./components/home/SingleOrigin";
+
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -98,7 +103,6 @@ function App() {
       <Header />
       <div style={mainDivStyle}>
         <Routes>
-          <Route path="/" element={<HomePage />} exact="true" />
           <Route path="/courses" element={<Courses />} exact="true" />
           <Route
             path="/product/:id"
@@ -593,6 +597,63 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/" element={<HomePage />} exact="true" />
+          {/* <Route
+            path="/"
+            element={user.company === "None" ? <HomePage /> : null}
+            exact={true}
+          /> */}
+
+          {user && user.company && (
+            <>
+              {/* Route for Barcino */}
+              {user.company === "Barcino" && (
+                <Route
+                  path="/barcino"
+                  element={
+                    <ProtectedRoute>
+                      <Barcino />
+                    </ProtectedRoute>
+                  }
+                />
+              )}
+
+              {/* Route for Meat Depot */}
+              {user.company === "Meat Depot" && (
+                <Route
+                  path="/meat-depot"
+                  element={
+                    <ProtectedRoute>
+                      <MeatDepot />
+                    </ProtectedRoute>
+                  }
+                />
+              )}
+
+              {/* Routes for Single Origin */}
+              {user.company === "Single Origin" && (
+                <>
+                  <Route
+                    path="/single-origin"
+                    element={
+                      <ProtectedRoute>
+                        <SingleOrigin />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/bluesmith"
+                    element={
+                      <ProtectedRoute>
+                        <Bluesmith />
+                      </ProtectedRoute>
+                    }
+                  />
+                </>
+              )}
+            </>
+          )}
         </Routes>
       </div>
 

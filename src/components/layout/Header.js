@@ -191,13 +191,51 @@ const Header = () => {
     >
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Link to="/">
-            <img
-              src="/images/rcgi_logo.png"
-              alt="RCGI Logo"
-              style={{ width: "90px", height: "auto", marginTop: "10px" }}
-            />
-          </Link>
+          {user && user.company === "None" && (
+            <Link to="/">
+              <img
+                src="/images/rcgi_logo.png"
+                alt="RCGI Logo"
+                style={{ width: "90px", height: "auto", marginTop: "10px" }}
+              />
+            </Link>
+          )}
+          {user && user.company === "Barcino" && (
+            <Link to="/barcino">
+              <img
+                src="/images/rcgi_logo.png"
+                alt="RCGI Logo"
+                style={{ width: "90px", height: "auto", marginTop: "10px" }}
+              />
+            </Link>
+          )}
+          {user && user.company === "Bluesmith" && (
+            <Link to="/bluesmith">
+              <img
+                src="/images/rcgi_logo.png"
+                alt="RCGI Logo"
+                style={{ width: "90px", height: "auto", marginTop: "10px" }}
+              />
+            </Link>
+          )}{" "}
+          {user && user.company === "Single Origin" && (
+            <Link to="/single-origin">
+              <img
+                src="/images/rcgi_logo.png"
+                alt="RCGI Logo"
+                style={{ width: "90px", height: "auto", marginTop: "10px" }}
+              />
+            </Link>
+          )}
+          {user && user.company === "Meat Depot" && (
+            <Link to="/meat-depot">
+              <img
+                src="/images/rcgi_logo.png"
+                alt="RCGI Logo"
+                style={{ width: "90px", height: "auto", marginTop: "10px" }}
+              />
+            </Link>
+          )}
         </Typography>
 
         <Link to="/courses" style={linkStyles}>
