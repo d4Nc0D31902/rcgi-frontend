@@ -191,6 +191,16 @@ const Header = () => {
     >
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          {!user && (
+            <Link to="/">
+              <img
+                src="/images/rcgi_logo.png"
+                alt="RCGI Logo"
+                style={{ width: "90px", height: "auto", marginTop: "10px" }}
+              />
+            </Link>
+          )}
+
           {user && user.company === "None" && (
             <Link to="/">
               <img
@@ -217,7 +227,7 @@ const Header = () => {
                 style={{ width: "90px", height: "auto", marginTop: "10px" }}
               />
             </Link>
-          )}{" "}
+          )}
           {user && user.company === "Single Origin" && (
             <Link to="/single-origin">
               <img
@@ -269,6 +279,7 @@ const Header = () => {
             </Button>
           )}
         </Link>
+
         <div style={{ flexGrow: 1 }}></div>
         {user ? (
           <div>
