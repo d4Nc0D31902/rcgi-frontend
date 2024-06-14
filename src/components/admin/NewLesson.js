@@ -60,6 +60,7 @@ const AddLesson = () => {
     if (!error && success) {
       message("Lesson created successfully");
       navigate(-1);
+      dispatch(getChapterDetails(chapterId));
     }
   };
 
