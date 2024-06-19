@@ -115,9 +115,7 @@ const AddChapter = () => {
                       required
                       onChange={(e) => setCompany(e.target.value)}
                     >
-                      <MenuItem value={"None"}>
-                        <em>None</em>
-                      </MenuItem>
+                      <MenuItem value={"None"}>None</MenuItem>
                       <MenuItem value={"Barcino"}>Barcino</MenuItem>
                       <MenuItem value={"Single Origin"}>Single Origin</MenuItem>
                       <MenuItem value={"Bluesmith"}>Bluesmith</MenuItem>
