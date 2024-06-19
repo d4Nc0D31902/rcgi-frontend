@@ -266,7 +266,7 @@ const ModuleDetails = () => {
                                             textDecoration: "none",
                                           }}
                                         >
-                                          {lesson._id} + {lesson.title}
+                                          {lesson.title}
                                         </Typography>
                                         {isAdmin && (
                                           <IconButton
