@@ -54,7 +54,7 @@ const Header = () => {
 
   const isAdmin = user && user.role === "admin";
 
-  // const REACT_APP_API = process.env.REACT_APP_API;
+  const REACT_APP_API = process.env.REACT_APP_API;
 
   const theme = useTheme();
 
