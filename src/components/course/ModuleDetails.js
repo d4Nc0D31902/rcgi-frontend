@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getModuleDetails, clearErrors } from "../../actions/moduleActions";
@@ -18,7 +18,10 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { deleteChapter } from "../../actions/chapterActions";
+import {
+  deleteChapter,
+  reorderChapterItems,
+} from "../../actions/chapterActions";
 import { deleteLesson } from "../../actions/lessonActions";
 import { deleteQuiz } from "../../actions/quizActions";
 import { deleteForum } from "../../actions/forumActions";
@@ -27,6 +30,8 @@ import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import BookIcon from "@mui/icons-material/Book";
 import ForumIcon from "@mui/icons-material/Forum";
+
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const ModuleDetails = () => {
   const dispatch = useDispatch();
@@ -38,6 +43,14 @@ const ModuleDetails = () => {
 
   const { user } = useSelector((state) => state.auth);
   const isAdmin = user && user.role === "admin";
+
+  const [chapters, setChapters] = useState([]);
+
+  useEffect(() => {
+    if (module) {
+      setChapters(module.chapters);
+    }
+  }, [module]);
 
   useEffect(() => {
     dispatch(getModuleDetails(id));
@@ -79,6 +92,32 @@ const ModuleDetails = () => {
         dispatch(getModuleDetails(id));
         toast.success("Forum deleted successfully");
       });
+    }
+  };
+
+  const onDragEnd = (result, chapterId) => {
+    try {
+      if (!result.destination) {
+        return;
+      }
+
+      const sourceIndex = result.source.index;
+      const destinationIndex = result.destination.index;
+
+      const chapterIndex = chapters.findIndex((ch) => ch._id === chapterId);
+      const items = Array.from(chapters[chapterIndex].lessons);
+      const [reorderedItem] = items.splice(sourceIndex, 1);
+      items.splice(destinationIndex, 0, reorderedItem);
+
+      const newChapters = Array.from(chapters);
+      newChapters[chapterIndex].lessons = items;
+      setChapters(newChapters);
+
+      dispatch(reorderChapterItems(chapterId, items));
+      // dispatch(getModuleDetails(id));
+    } catch (error) {
+      console.error("Error reordering items:", error);
+      // Handle error state or display a message to the user
     }
   };
 
@@ -151,7 +190,6 @@ const ModuleDetails = () => {
               </>
             )}
             <Divider style={{ margin: "20px 0" }} />
-
             <div>
               {module.chapters &&
                 module.chapters.map((chapter, index) => {
@@ -194,47 +232,76 @@ const ModuleDetails = () => {
                         </div>
                       </AccordionSummary>
                       <AccordionDetails
-                        style={{
-                          backgroundColor: "lightgray",
-                        }}
+                        style={{ backgroundColor: "lightgray" }}
                       >
-                        {chapter.lessons.map((lesson, lessonIndex) => (
-                          <div key={lessonIndex}>
-                            <Typography
-                              variant="body1"
-                              component={Link}
-                              to={`/admin/lessonDetails/${lesson._id}`}
-                              style={{ color: "black", textDecoration: "none" }}
-                            >
-                              {lesson.title}
-                            </Typography>
-                            {isAdmin && (
-                              <IconButton
-                                color="primary"
-                                size="small"
-                                component={Link}
-                                to={`/admin/lesson/${lesson._id}`}
+                        <DragDropContext
+                          onDragEnd={(result) => onDragEnd(result, chapter._id)}
+                        >
+                          <Droppable
+                            droppableId={`chapter-${chapter._id}-lessons`}
+                          >
+                            {(provided) => (
+                              <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
                               >
-                                <EditOutlinedIcon fontSize="inherit" />
-                              </IconButton>
+                                {chapter.lessons.map((lesson, lessonIndex) => (
+                                  <Draggable
+                                    key={lesson._id}
+                                    draggableId={lesson._id}
+                                    index={lessonIndex}
+                                  >
+                                    {(provided) => (
+                                      <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                      >
+                                        <Typography
+                                          variant="body1"
+                                          component={Link}
+                                          to={`/admin/lessonDetails/${lesson._id}`}
+                                          style={{
+                                            color: "black",
+                                            textDecoration: "none",
+                                          }}
+                                        >
+                                          {lesson._id} + {lesson.title}
+                                        </Typography>
+                                        {isAdmin && (
+                                          <IconButton
+                                            color="primary"
+                                            size="small"
+                                            component={Link}
+                                            to={`/admin/lesson/${lesson._id}`}
+                                          >
+                                            <EditOutlinedIcon fontSize="inherit" />
+                                          </IconButton>
+                                        )}
+                                        {isAdmin && (
+                                          <IconButton
+                                            color="error"
+                                            size="small"
+                                            onClick={() =>
+                                              handleDeleteLesson(lesson._id)
+                                            }
+                                          >
+                                            <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                                          </IconButton>
+                                        )}
+                                      </div>
+                                    )}
+                                  </Draggable>
+                                ))}
+                                {provided.placeholder}
+                              </div>
                             )}
-                            {isAdmin && (
-                              <IconButton
-                                color="error"
-                                size="small"
-                                onClick={() => handleDeleteLesson(lesson._id)}
-                              >
-                                <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                              </IconButton>
-                            )}
-                          </div>
-                        ))}
+                          </Droppable>
+                        </DragDropContext>
                       </AccordionDetails>
                       {isLastChapter && module.forum && (
                         <AccordionDetails
-                          style={{
-                            backgroundColor: "lightgray",
-                          }}
+                          style={{ backgroundColor: "lightgray" }}
                         >
                           {module.forum.map((forum, forumIndex) => (
                             <div key={forumIndex}>
@@ -273,41 +340,72 @@ const ModuleDetails = () => {
                         </AccordionDetails>
                       )}
                       <AccordionDetails
-                        style={{
-                          backgroundColor: "lightgray",
-                        }}
+                        style={{ backgroundColor: "lightgray" }}
                       >
-                        {chapter.quizzes.map((quiz, quizIndex) => (
-                          <div key={quizIndex}>
-                            <Typography
-                              variant="body1"
-                              component={Link}
-                              to={`/admin/quizDetails/${quiz._id}`}
-                              style={{ color: "black", textDecoration: "none" }}
-                            >
-                              {quiz.title}
-                            </Typography>
-                            {isAdmin && (
-                              <IconButton
-                                color="primary"
-                                size="small"
-                                component={Link}
-                                to={`/admin/quiz/${quiz._id}`}
+                        <DragDropContext
+                          onDragEnd={(result) => onDragEnd(result, chapter._id)}
+                        >
+                          <Droppable
+                            droppableId={`chapter-${chapter._id}-quizzes`}
+                          >
+                            {(provided) => (
+                              <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
                               >
-                                <EditOutlinedIcon fontSize="inherit" />
-                              </IconButton>
+                                {chapter.quizzes.map((quiz, quizIndex) => (
+                                  <Draggable
+                                    key={quiz._id}
+                                    draggableId={quiz._id}
+                                    index={quizIndex}
+                                  >
+                                    {(provided) => (
+                                      <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                      >
+                                        <Typography
+                                          variant="body1"
+                                          component={Link}
+                                          to={`/admin/quizDetails/${quiz._id}`}
+                                          style={{
+                                            color: "black",
+                                            textDecoration: "none",
+                                          }}
+                                        >
+                                          {quiz.title}
+                                        </Typography>
+                                        {isAdmin && (
+                                          <IconButton
+                                            color="primary"
+                                            size="small"
+                                            component={Link}
+                                            to={`/admin/quiz/${quiz._id}`}
+                                          >
+                                            <EditOutlinedIcon fontSize="inherit" />
+                                          </IconButton>
+                                        )}
+                                        {isAdmin && (
+                                          <IconButton
+                                            color="error"
+                                            size="small"
+                                            onClick={() =>
+                                              handleDeleteQuiz(quiz._id)
+                                            }
+                                          >
+                                            <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                                          </IconButton>
+                                        )}
+                                      </div>
+                                    )}
+                                  </Draggable>
+                                ))}
+                                {provided.placeholder}
+                              </div>
                             )}
-                            {isAdmin && (
-                              <IconButton
-                                color="error"
-                                size="small"
-                                onClick={() => handleDeleteQuiz(quiz._id)}
-                              >
-                                <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                              </IconButton>
-                            )}
-                          </div>
-                        ))}
+                          </Droppable>
+                        </DragDropContext>
                       </AccordionDetails>
                     </Accordion>
                   );

@@ -39,6 +39,7 @@ import {
   chapterReducer,
   addLessonReducer,
   addQuizReducer,
+  reorderChapterItemsReducer,
 } from "./reducers/chapterReducers";
 
 import {
@@ -198,6 +199,7 @@ const reducer = combineReducers({
   newForum: newForumReducer,
   createForum: createForumReducer,
   createReply: createReplyReducer,
+  reorderChapterItems: reorderChapterItemsReducer,
 });
 
 let initialState = {

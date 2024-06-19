@@ -22,9 +22,13 @@ import {
   ADD_QUIZ_REQUEST,
   ADD_QUIZ_SUCCESS,
   ADD_QUIZ_FAIL,
-  MARK_CHAPTER_AS_DONE_REQUEST, // Added new action constant
-  MARK_CHAPTER_AS_DONE_SUCCESS, // Added new action constant
-  MARK_CHAPTER_AS_DONE_FAIL, // Added new action constant
+  MARK_CHAPTER_AS_DONE_REQUEST,
+  MARK_CHAPTER_AS_DONE_SUCCESS,
+  MARK_CHAPTER_AS_DONE_FAIL,
+  UPDATE_CHAPTERS_ORDER_REQUEST,
+  UPDATE_CHAPTERS_ORDER_SUCCESS,
+  UPDATE_CHAPTERS_ORDER_FAIL,
+  UPDATE_CHAPTERS_ORDER_RESET,
   CLEAR_ERRORS,
 } from "../constants/chapterConstants";
 
@@ -219,4 +223,37 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+export const reorderChapterItems = (id, orderData) => async (dispatch) => {
+  try {
+    console.log("Reordering chapter items:", id, orderData);
+    dispatch({ type: UPDATE_CHAPTERS_ORDER_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v1/admin/chapter/${id}/reorder`,
+      orderData,
+      config
+    );
+
+    console.log("Reordering successful:", data);
+
+    dispatch({
+      type: UPDATE_CHAPTERS_ORDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("Error reordering chapter items:", error.response.data.message);
+    dispatch({
+      type: UPDATE_CHAPTERS_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

@@ -26,10 +26,14 @@ import {
   ADD_QUIZ_REQUEST,
   ADD_QUIZ_SUCCESS,
   ADD_QUIZ_FAIL,
-  MARK_CHAPTER_AS_DONE_REQUEST, 
-  MARK_CHAPTER_AS_DONE_SUCCESS, 
+  MARK_CHAPTER_AS_DONE_REQUEST,
+  MARK_CHAPTER_AS_DONE_SUCCESS,
   MARK_CHAPTER_AS_DONE_FAIL,
   MARK_CHAPTER_AS_DONE_RESET,
+  UPDATE_CHAPTERS_ORDER_REQUEST,
+  UPDATE_CHAPTERS_ORDER_SUCCESS,
+  UPDATE_CHAPTERS_ORDER_FAIL,
+  UPDATE_CHAPTERS_ORDER_RESET,
   CLEAR_ERRORS,
 } from "../constants/chapterConstants";
 
@@ -249,6 +253,41 @@ export const markChapterAsDoneReducer = (state = {}, action) => {
         error: action.payload,
       };
     case MARK_CHAPTER_AS_DONE_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const reorderChapterItemsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_CHAPTERS_ORDER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_CHAPTERS_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.success,
+        chapter: action.payload.chapter,
+      };
+    case UPDATE_CHAPTERS_ORDER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case UPDATE_CHAPTERS_ORDER_RESET:
       return {
         ...state,
         success: false,

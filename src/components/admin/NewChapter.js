@@ -112,9 +112,10 @@ const AddChapter = () => {
                       id="company_field"
                       value={company}
                       label="Company"
+                      required
                       onChange={(e) => setCompany(e.target.value)}
                     >
-                      <MenuItem value="">
+                      <MenuItem value={"None"}>
                         <em>None</em>
                       </MenuItem>
                       <MenuItem value={"Barcino"}>Barcino</MenuItem>
