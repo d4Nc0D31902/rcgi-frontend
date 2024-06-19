@@ -22,6 +22,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import QuizIcon from "@mui/icons-material/Quiz";
 import AddIcon from "@mui/icons-material/Add";
 import ForumIcon from '@mui/icons-material/Forum';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 const Sidebar = () => {
   const [openCourses, setOpenCourses] = useState(false);
   const [openUsers, setOpenUsers] = useState(false);
@@ -121,6 +122,18 @@ const Sidebar = () => {
                   <FileUploadIcon />
                 </ListItemIcon>
                 <ListItemText primary="Import" />
+              </ListItem>
+              <ListItem
+                sx={{ marginLeft: "20px" }}
+                component={Link}
+                to="/admin/newUser"
+                button
+                selected={isActive("/admin/newUser")}
+              >
+                <ListItemIcon>
+                  <HowToRegIcon />
+                </ListItemIcon>
+                <ListItemText primary="Register" />
               </ListItem>
             </List>
           </Collapse>

@@ -49,6 +49,10 @@ import {
   IMPORT_USER_SUCCESS,
   IMPORT_USER_RESET,
   IMPORT_USER_FAIL,
+  ADD_USER_FAIL,
+  ADD_USER_REQUEST,
+  ADD_USER_RESET,
+  ADD_USER_SUCCESS,
 } from "../constants/userConstants";
 
 import { toast } from "react-toastify";
@@ -107,6 +111,32 @@ export const register = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const addUser = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: ADD_USER_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/addUser`,
+      userData,
+      config
+    );
+    dispatch({
+      type: ADD_USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_USER_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../actions/userActions";
+import { addUser, clearErrors } from "../../actions/userActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -26,7 +26,7 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import BadgeIcon from "@mui/icons-material/Badge";
 import "../../App.css";
 
-const Register = () => {
+const AddUser = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -36,14 +36,15 @@ const Register = () => {
   });
   const { name, email, password, company, employee_id } = user;
   const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(
-    "/images/default_avatar.jpg"
-  );
+  const [avatarPreview, setAvatarPreview] = useState({
+    avatar: "/images/default_avatar.jpg",
+  });
+  const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading } = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.addUser);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -56,10 +57,15 @@ const Register = () => {
     formData.set("company", company);
     formData.set("employee_id", employee_id);
 
-    dispatch(register(formData)).then(() => {
-      toast.success("Registration successful!");
-      navigate("/admin/users");
-    });
+    try {
+      dispatch(addUser(formData)).then(() => {
+        toast.success("Add User Success!");
+        navigate("/admin/users");
+      });
+    } catch (error) {
+      toast.error("Failed to add user. Please try again.");
+      console.error("Error adding user:", error);
+    }
   };
 
   const onChange = (e) => {
@@ -85,26 +91,30 @@ const Register = () => {
 
   return (
     <Fragment>
-      <MetaData title={"Register User"} />
+      <MetaData title={"Add User"} />
 
       <Grid
         container
         spacing={2}
         justifyContent="center"
         alignItems="center"
-        style={{ minHeight: "100vh" }}
+        style={{
+          height: "100vh",
+        }}
       >
         <Grid item xs={12} sm={8} md={6} lg={4}>
           <Box
             sx={{
               backgroundColor: "white",
-              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+              boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.1)",
               borderRadius: "8px",
               padding: "20px",
             }}
           >
             <form onSubmit={submitHandler} encType="multipart/form-data">
-              <h1 className="mb-3">Register</h1>
+              <Typography variant="h4" align="center" gutterBottom>
+                Add User
+              </Typography>
 
               <TextField
                 id="name_field"
@@ -125,7 +135,6 @@ const Register = () => {
                   ),
                 }}
               />
-
               <TextField
                 id="email_field"
                 label="Email"
@@ -145,7 +154,6 @@ const Register = () => {
                   ),
                 }}
               />
-
               <TextField
                 id="password_field"
                 label="Password"
@@ -254,17 +262,29 @@ const Register = () => {
                 </div>
               </div>
 
-              <Button
-                id="register_button"
-                type="submit"
-                variant="contained"
-                className="btn btn-block py-3"
-                color="primary"
-                disabled={loading ? true : false}
-                endIcon={<HowToRegOutlinedIcon />}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  height: "50px",
+                }}
               >
-                REGISTER
-              </Button>
+                <Button
+                  id="add_button"
+                  type="submit"
+                  variant="contained"
+                  className="btn btn-block py-3"
+                  color="success"
+                  disabled={loading ? true : false}
+                  endIcon={<HowToRegOutlinedIcon />}
+                  style={{
+                    borderRadius: "50px",
+                    width: "40%",
+                  }}
+                >
+                  Add
+                </Button>
+              </div>
             </form>
           </Box>
         </Grid>
@@ -273,4 +293,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default AddUser;

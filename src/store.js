@@ -99,6 +99,7 @@ import {
   allUsersReducer,
   userDetailsReducer,
   customerSalesReducer,
+  addUserReducer,
 } from "./reducers/userReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -200,6 +201,7 @@ const reducer = combineReducers({
   createForum: createForumReducer,
   createReply: createReplyReducer,
   reorderChapterItems: reorderChapterItemsReducer,
+  addUser: addUserReducer,
 });
 
 let initialState = {

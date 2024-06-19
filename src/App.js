@@ -36,8 +36,6 @@ import AdminEnrollmentList from "./components/admin/AdminEnrollmentList";
 import SubmitQuizList from "./components/admin/SubmitQuizList";
 import RetakeQuizList from "./components/admin/RetakeQuizList";
 
-import NewUser from "./components/admin/NewUser";
-
 import CourseList from "./components/admin/CourseList";
 import NewCourse from "./components/admin/NewCourse";
 import UpdateCourse from "./components/admin/UpdateCourse";
@@ -85,6 +83,8 @@ import Barcino from "./components/home/Barcino";
 import Bluesmith from "./components/home/Bluesmith";
 import MeatDepot from "./components/home/MeatDepot";
 import SingleOrigin from "./components/home/SingleOrigin";
+
+import NewUser from "./components/admin/NewUser";
 
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
