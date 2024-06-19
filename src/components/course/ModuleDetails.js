@@ -27,7 +27,7 @@ import { deleteQuiz } from "../../actions/quizActions";
 import { deleteForum } from "../../actions/forumActions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
+
 import BookIcon from "@mui/icons-material/Book";
 import ForumIcon from "@mui/icons-material/Forum";
 
@@ -94,31 +94,6 @@ const ModuleDetails = () => {
       });
     }
   };
-
-  // const onDragEnd = (result, chapterId) => {
-  //   try {
-  //     if (!result.destination) {
-  //       return;
-  //     }
-
-  //     const sourceIndex = result.source.index;
-  //     const destinationIndex = result.destination.index;
-
-  //     const chapterIndex = chapters.findIndex((ch) => ch._id === chapterId);
-  //     const items = Array.from(chapters[chapterIndex].lessons);
-  //     const [reorderedItem] = items.splice(sourceIndex, 1);
-  //     items.splice(destinationIndex, 0, reorderedItem);
-
-  //     const newChapters = Array.from(chapters);
-  //     newChapters[chapterIndex].lessons = items;
-  //     setChapters(newChapters);
-
-  //     dispatch(reorderChapterItems(chapterId, items));
-  //     // dispatch(getModuleDetails(id));
-  //   } catch (error) {
-  //     console.error("Error reordering items:", error);
-  //   }
-  // };
 
   const onDragEnd = (result, chapterId) => {
     try {
