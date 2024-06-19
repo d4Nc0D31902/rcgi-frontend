@@ -200,7 +200,7 @@ export const markChapterAsDone = (id) => async (dispatch) => {
   try {
     dispatch({ type: MARK_CHAPTER_AS_DONE_REQUEST });
     const config = {
-      withCredentials: true, // Add withCredentials to the request config
+      withCredentials: true, 
     };
     const { data } = await axios.put(
       `${process.env.REACT_APP_API}/api/v1/chapter/${id}/markAsDone`,

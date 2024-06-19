@@ -95,6 +95,31 @@ const ModuleDetails = () => {
     }
   };
 
+  // const onDragEnd = (result, chapterId) => {
+  //   try {
+  //     if (!result.destination) {
+  //       return;
+  //     }
+
+  //     const sourceIndex = result.source.index;
+  //     const destinationIndex = result.destination.index;
+
+  //     const chapterIndex = chapters.findIndex((ch) => ch._id === chapterId);
+  //     const items = Array.from(chapters[chapterIndex].lessons);
+  //     const [reorderedItem] = items.splice(sourceIndex, 1);
+  //     items.splice(destinationIndex, 0, reorderedItem);
+
+  //     const newChapters = Array.from(chapters);
+  //     newChapters[chapterIndex].lessons = items;
+  //     setChapters(newChapters);
+
+  //     dispatch(reorderChapterItems(chapterId, items));
+  //     // dispatch(getModuleDetails(id));
+  //   } catch (error) {
+  //     console.error("Error reordering items:", error);
+  //   }
+  // };
+
   const onDragEnd = (result, chapterId) => {
     try {
       if (!result.destination) {
@@ -105,19 +130,21 @@ const ModuleDetails = () => {
       const destinationIndex = result.destination.index;
 
       const chapterIndex = chapters.findIndex((ch) => ch._id === chapterId);
-      const items = Array.from(chapters[chapterIndex].lessons);
-      const [reorderedItem] = items.splice(sourceIndex, 1);
-      items.splice(destinationIndex, 0, reorderedItem);
 
-      const newChapters = Array.from(chapters);
-      newChapters[chapterIndex].lessons = items;
-      setChapters(newChapters);
+      const reorderedItems = Array.from(chapters[chapterIndex].lessons);
 
-      dispatch(reorderChapterItems(chapterId, items));
-      // dispatch(getModuleDetails(id));
+      const [removed] = reorderedItems.splice(sourceIndex, 1);
+      reorderedItems.splice(destinationIndex, 0, removed);
+
+      const updatedChapters = [...chapters];
+      updatedChapters[chapterIndex].lessons = reorderedItems;
+      setChapters(updatedChapters);
+
+      dispatch(
+        reorderChapterItems(chapterId, { lessonsOrder: reorderedItems })
+      );
     } catch (error) {
       console.error("Error reordering items:", error);
-      // Handle error state or display a message to the user
     }
   };
 
