@@ -92,7 +92,7 @@ const NewForum = () => {
       <MetaData title={"New Forum Post"} />
       <Grid container spacing={3} sx={{ height: "100vh", padding: "50px" }}>
         <Grid item xs={12} display="flex" justifyContent="center">
-          <Paper elevation={3} sx={{ p: 3, width: "40%", height: "55%" }}>
+          <Paper elevation={3} sx={{ p: 3, width: "100%", height: "100%" }}>
             <Typography
               variant="h4"
               component="h1"
@@ -113,15 +113,17 @@ const NewForum = () => {
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <ReactQuill
-                    value={body}
-                    onChange={setBody}
-                    theme="snow"
-                    modules={modules}
-                    formats={formats}
-                    required
-                  />
+                <Grid item xs={12} sx={{ height: "300px", overflow: "auto" }}>
+                  <div className="quill-editor-container">
+                    <ReactQuill
+                      value={body}
+                      onChange={setBody}
+                      theme="snow"
+                      modules={modules}
+                      formats={formats}
+                      required
+                    />
+                  </div>
                 </Grid>
                 <Grid item xs={12}>
                   <Button
