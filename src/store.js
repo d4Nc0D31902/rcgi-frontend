@@ -30,6 +30,7 @@ import {
   newModuleReducer,
   moduleReducer,
   newForumReducer,
+  reorderModuleReducer,
 } from "./reducers/moduleReducers";
 
 import {
@@ -202,6 +203,7 @@ const reducer = combineReducers({
   createReply: createReplyReducer,
   reorderChapterItems: reorderChapterItemsReducer,
   addUser: addUserReducer,
+  reorderModule: reorderModuleReducer,
 });
 
 let initialState = {

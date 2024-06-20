@@ -28,6 +28,10 @@ import {
   NEW_FORUM_SUCCESS,
   NEW_FORUM_RESET,
   NEW_FORUM_FAIL,
+  UPDATE_MODULE_ORDER_FAIL,
+  UPDATE_MODULE_ORDER_REQUEST,
+  UPDATE_MODULE_ORDER_RESET,
+  UPDATE_MODULE_ORDER_SUCCESS,
   CLEAR_ERRORS,
 } from "../constants/moduleConstants";
 
@@ -214,6 +218,41 @@ export const newForumReducer = (state = { forum: {} }, action) => {
         error: action.payload,
       };
     case NEW_FORUM_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const reorderModuleReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_MODULE_ORDER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_MODULE_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.success,
+        module: action.payload.module,
+      };
+    case UPDATE_MODULE_ORDER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case UPDATE_MODULE_ORDER_RESET:
       return {
         ...state,
         success: false,

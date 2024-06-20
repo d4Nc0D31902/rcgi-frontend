@@ -22,6 +22,10 @@ import {
   NEW_FORUM_REQUEST,
   NEW_FORUM_SUCCESS,
   NEW_FORUM_FAIL,
+  UPDATE_MODULE_ORDER_FAIL,
+  UPDATE_MODULE_ORDER_REQUEST,
+  UPDATE_MODULE_ORDER_RESET,
+  UPDATE_MODULE_ORDER_SUCCESS,
   CLEAR_ERRORS,
 } from "../constants/moduleConstants";
 
@@ -188,9 +192,42 @@ export const addForum = (moduleId, forumData) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.error("Error adding forum:", error); // Logging error if there's an exception
+    console.error("Error adding forum:", error);
     dispatch({
       type: NEW_FORUM_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const reorderModule = (id, orderData) => async (dispatch) => {
+  try {
+    console.log("Reordering module items:", id, orderData);
+    dispatch({ type: UPDATE_MODULE_ORDER_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API}/api/v1/admin/module/${id}/reorder`,
+      orderData,
+      config
+    );
+
+    console.log("Reordering successful:", data);
+
+    dispatch({
+      type: UPDATE_MODULE_ORDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("Error reordering module items:", error.response.data.message);
+    dispatch({
+      type: UPDATE_MODULE_ORDER_FAIL,
       payload: error.response.data.message,
     });
   }
