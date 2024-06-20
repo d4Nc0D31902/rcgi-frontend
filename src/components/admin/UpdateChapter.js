@@ -121,9 +121,7 @@ const UpdateChapter = () => {
                       label="Company"
                       onChange={(e) => setCompany(e.target.value)}
                     >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
+                      <MenuItem value={"None"}>All Companies</MenuItem>
                       <MenuItem value={"Barcino"}>Barcino</MenuItem>
                       <MenuItem value={"Single Origin"}>Single Origin</MenuItem>
                       <MenuItem value={"Bluesmith"}>Bluesmith</MenuItem>

@@ -195,7 +195,7 @@ const ModuleDetails = () => {
             <div>
               {module.chapters &&
                 module.chapters.map((chapter, index) => {
-                  const isLastChapter = index === module.chapters.length - 1;
+                  const isLastChapter = index === 0;
                   return (
                     <Accordion key={index} defaultExpanded={true}>
                       <AccordionSummary
