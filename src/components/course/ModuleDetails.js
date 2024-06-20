@@ -224,8 +224,9 @@ const ModuleDetails = () => {
                   <div {...provided.droppableProps} ref={provided.innerRef}>
                     {module.chapters &&
                       module.chapters.map((chapter, index) => {
-                        const isLastChapter =
-                          index === module.chapters.length - 1;
+                        // const isLastChapter =
+                        //   index === module.chapters.length - 1;
+                        const isLastChapter = index === 0;
                         return (
                           <Draggable
                             key={chapter._id}

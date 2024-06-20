@@ -13,7 +13,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Fab, // Import Fab for Floating Action Button
+  Fab,
 } from "@mui/material";
 import MetaData from "../layout/MetaData";
 import {
@@ -23,7 +23,7 @@ import {
 } from "../../actions/enrollmentActions";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"; // Import ArrowUp Icon
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const EnrollmentChapterDetails = () => {
   const dispatch = useDispatch();
@@ -54,24 +54,16 @@ const EnrollmentChapterDetails = () => {
           const currentChapter = enrollmentModule.chapter.find(
             (chap) => chap._id === chapterId
           );
+
+          // Check if the current chapter has lessons or quizzes
           const hasLessons =
             currentChapter && currentChapter.lessons.length > 0;
+          const hasQuizzes =
+            currentChapter && currentChapter.quizzes.length > 0;
 
-          if (!hasLessons) {
-            const nextChapter = enrollmentModule.chapter.find(
-              (chap) =>
-                chap.status === "Not Done" &&
-                chap.lessons.length > 0 &&
-                chap._id !== chapterId
-            );
-
-            if (nextChapter) {
-              navigate(
-                `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapter._id}/lesson/${nextChapter.lessons[0].lessonId}`
-              );
-            } else {
-              navigate(`/enrollment/${enrollmentId}/module/${moduleId}`);
-            }
+          if (!hasLessons && !hasQuizzes) {
+            // Navigate to module level if there are no lessons or quizzes
+            navigate(`/enrollment/${enrollmentId}/module/${moduleId}`);
           } else {
             const currentChapterIndex = enrollmentModule.chapter.findIndex(
               (chap) => chap._id === chapterId
@@ -82,6 +74,7 @@ const EnrollmentChapterDetails = () => {
             );
 
             if (currentLessonIndex !== -1) {
+              // Navigate to the next lesson if there are lessons not done
               const nextLessonId =
                 currentChapter.lessons[currentLessonIndex]._id;
               navigate(
@@ -93,6 +86,7 @@ const EnrollmentChapterDetails = () => {
               );
 
               if (currentQuizIndex !== -1) {
+                // Navigate to the next quiz if there are quizzes not done
                 const nextQuizId = currentChapter.quizzes[currentQuizIndex]._id;
                 navigate(
                   `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapterId}/quiz/${nextQuizId}`
@@ -104,10 +98,12 @@ const EnrollmentChapterDetails = () => {
                     : null;
 
                 if (nextChapterId) {
+                  // Navigate to the next chapter
                   navigate(
                     `/enrollment/${enrollmentId}/module/${moduleId}/chapter/${nextChapterId}`
                   );
                 } else {
+                  // Navigate to module level if there are no more chapters
                   navigate(`/enrollment/${enrollmentId}/module/${moduleId}`);
                 }
               }
@@ -245,7 +241,43 @@ const EnrollmentChapterDetails = () => {
                       </div>
 
                       {/* Forum Section for the last chapter */}
-                      {index === enrollmentModule.chapter.length - 1 && (
+
+                      {/* <div style={{ color: "black", textDecoration: "none" }}>
+                        <ul>
+                          {enrollmentModule.forum?.map((forum, forumIndex) => {
+                            return (
+                              <li key={forumIndex}>
+                                <Typography variant="subtitle1" gutterBottom>
+                                  {chapter.status === "Not Done" ? (
+                                    <span style={{ color: "gray" }}>
+                                      {forum.forumId?.title}
+                                    </span>
+                                  ) : forum.status === "Done" ? (
+                                    <span style={{ color: "green" }}>
+                                      {forum.forumId?.title}
+                                    </span>
+                                  ) : isFirstChapter ? (
+                                    <Link
+                                      to={`/forum/${forum.forumId?._id}`}
+                                      style={{
+                                        textDecoration: "none",
+                                        color: "black",
+                                      }}
+                                    >
+                                      {forum.forumId?.title}
+                                    </Link>
+                                  ) : (
+                                    <span style={{ color: "black" }}>
+                                      {forum.forumId?.title}
+                                    </span>
+                                  )}
+                                </Typography>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div> */}
+                      {index === 0 && (
                         <div style={{ color: "black", textDecoration: "none" }}>
                           <ul>
                             {enrollmentModule.forum?.map(
@@ -254,14 +286,22 @@ const EnrollmentChapterDetails = () => {
                                   <Typography variant="subtitle1" gutterBottom>
                                     {chapter.status === "Not Done" ? (
                                       <span style={{ color: "gray" }}>
-                                        {forum.forumId?.title ||
-                                          "No Title Available"}
+                                        {forum.forumId?.title}
+                                      </span>
+                                    ) : forum.status === "Done" ? (
+                                      <span style={{ color: "green" }}>
+                                        {forum.forumId?.title}
                                       </span>
                                     ) : (
-                                      <span style={{ color: "green" }}>
-                                        {forum.forumId?.title ||
-                                          "No Title Available"}
-                                      </span>
+                                      <Link
+                                        to={`/forum/${forum.forumId?._id}`}
+                                        style={{
+                                          textDecoration: "none",
+                                          color: "black",
+                                        }}
+                                      >
+                                        {forum.forumId?.title}
+                                      </Link>
                                     )}
                                   </Typography>
                                 </li>

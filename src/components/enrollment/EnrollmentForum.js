@@ -8,6 +8,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { getForumDetails } from "../../actions/forumActions";
 import { createReply } from "../../actions/enrollmentActions";
 import { ToastContainer, toast } from "react-toastify";
+import Loader from "../layout/Loader";
 import "react-toastify/dist/ReactToastify.css";
 
 const EnrollmentForum = () => {
@@ -31,7 +32,7 @@ const EnrollmentForum = () => {
     dispatch(createReply(replyData, forum._id));
     setText("");
     navigate(`/forumDetails/${forum._id}`);
-    toast.success("Reply sent successfully!"); 
+    toast.success("Reply sent successfully!");
   };
 
   return (
@@ -41,18 +42,22 @@ const EnrollmentForum = () => {
         sx={{
           height: "100vh",
           padding: "20px",
-          border: "2px solid black",
           display: "flex",
           justifyContent: "center",
         }}
       >
         <Paper
           elevation={6}
-          sx={{ height: "100%", width: "50%", padding: "20px" }}
+          sx={{
+            height: "100%",
+            width: "50%",
+            padding: "20px",
+            overflowY: "auto",
+          }} // Added overflowY: "auto" to enable scrollbar
         >
           {loading ? (
             <Typography variant="h4" textAlign={"center"}>
-              Loading...
+              <Loader />
             </Typography>
           ) : error ? (
             <Typography variant="h4" textAlign={"center"} color="error">
@@ -66,16 +71,19 @@ const EnrollmentForum = () => {
               <Divider sx={{ margin: "20px" }} />
               <Typography
                 variant="subtitle"
-                textAlign={"center"}
                 dangerouslySetInnerHTML={{ __html: forum?.body }}
               ></Typography>
               <Divider sx={{ margin: "20px" }} />
             </>
           )}
 
-          <ReactQuill value={text} onChange={setText} />
+          <div
+            style={{ height: "200px", overflowY: "auto", marginBottom: "20px" }}
+          >
+            <ReactQuill value={text} onChange={setText} />
+          </div>
 
-          <Box sx={{ display: "flex", justifyContent: "right" }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             <Button
               variant="contained"
               color="success"

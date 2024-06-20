@@ -598,6 +598,15 @@ function App() {
             }
           />
 
+          <Route
+            path="/forum/:id"
+            element={
+              <ProtectedRoute>
+                <EnrollmentForum />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/" element={<HomePage />} exact="true" />
           {/* <Route
             path="/"

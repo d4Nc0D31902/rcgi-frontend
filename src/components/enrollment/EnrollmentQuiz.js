@@ -318,7 +318,49 @@ const EnrollmentQuizDetails = () => {
                         </div>
 
                         {/* Forum Section for the last chapter */}
-                        {index === enrollmentModule.chapter.length - 1 && (
+                        {/* <div style={{ color: "black", textDecoration: "none" }}>
+                          <ul>
+                            {enrollmentModule.forum?.map(
+                              (forum, forumIndex) => {
+                                const isFirstChapter = index === 0;
+
+                                return (
+                                  <li key={forumIndex}>
+                                    <Typography
+                                      variant="subtitle1"
+                                      gutterBottom
+                                    >
+                                      {chapter.status === "Not Done" ? (
+                                        <span style={{ color: "gray" }}>
+                                          {forum.forumId?.title}
+                                        </span>
+                                      ) : forum.status === "Done" ? (
+                                        <span style={{ color: "green" }}>
+                                          {forum.forumId?.title}
+                                        </span>
+                                      ) : isFirstChapter ? (
+                                        <Link
+                                          to={`/forum/${forum.forumId?._id}`}
+                                          style={{
+                                            textDecoration: "none",
+                                            color: "black",
+                                          }}
+                                        >
+                                          {forum.forumId?.title}
+                                        </Link>
+                                      ) : (
+                                        <span style={{ color: "black" }}>
+                                          {forum.forumId?.title}
+                                        </span>
+                                      )}
+                                    </Typography>
+                                  </li>
+                                );
+                              }
+                            )}
+                          </ul>
+                        </div> */}
+                        {index === 0 && (
                           <div
                             style={{ color: "black", textDecoration: "none" }}
                           >
@@ -332,14 +374,22 @@ const EnrollmentQuizDetails = () => {
                                     >
                                       {chapter.status === "Not Done" ? (
                                         <span style={{ color: "gray" }}>
-                                          {forum.forumId?.title ||
-                                            "No Title Available"}
+                                          {forum.forumId?.title}
+                                        </span>
+                                      ) : forum.status === "Done" ? (
+                                        <span style={{ color: "green" }}>
+                                          {forum.forumId?.title}
                                         </span>
                                       ) : (
-                                        <span style={{ color: "green" }}>
-                                          {forum.forumId?.title ||
-                                            "No Title Available"}
-                                        </span>
+                                        <Link
+                                          to={`/forum/${forum.forumId?._id}`}
+                                          style={{
+                                            textDecoration: "none",
+                                            color: "black",
+                                          }}
+                                        >
+                                          {forum.forumId?.title}
+                                        </Link>
                                       )}
                                     </Typography>
                                   </li>

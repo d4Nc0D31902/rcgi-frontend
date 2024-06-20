@@ -104,6 +104,9 @@ const EnrollmentModuleDetails = () => {
                           ) &&
                           enrollmentModule.chapter[index - 1].quizzes.every(
                             (quiz) => quiz.status === "Done"
+                          ) &&
+                          enrollmentModule.forum.every(
+                            (forum) => forum.status === "Done"
                           )) ? (
                           chapter.status === "Done" &&
                           enrollmentModule.status !== "Done" ? (
@@ -134,6 +137,7 @@ const EnrollmentModuleDetails = () => {
                           </Typography>
                         )}
                       </AccordionSummary>
+
                       {/* Chapter Details */}
                       <AccordionDetails
                         style={{
@@ -196,7 +200,7 @@ const EnrollmentModuleDetails = () => {
                         </div>
 
                         {/* Forum Section for the last chapter */}
-                        {index === enrollmentModule.chapter.length - 1 && (
+                        {index === 0 && (
                           <div
                             style={{ color: "black", textDecoration: "none" }}
                           >

@@ -104,13 +104,16 @@ const ForumDetails = () => {
             width: "50%",
             height: "50%",
             padding: "20px",
-            textAlign: "center",
+            // textAlign: "center",
           }}
           elevation={6}
         >
           {forum && (
             <>
-              <Typography variant="h4">{forum.title}</Typography>
+              <Typography variant="h4" textAlign={"center"} gutterBottom>
+                {forum.title}
+              </Typography>
+              <Divider sx={{ marginBottom: "10px" }} />
               <Typography
                 variant="subtitle1"
                 dangerouslySetInnerHTML={{ __html: forum.body }}
