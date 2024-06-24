@@ -236,8 +236,8 @@ footer {
   width: 130px;
   height: 100px;
   background-repeat: no-repeat;
-  background-image: linear-gradient(#9B544E, #9B544E),
-    linear-gradient(#FCB44E, #FCB44E), linear-gradient(#FCB44E, #FCB44E);
+  background-image: linear-gradient(#9b544e, #9b544e),
+    linear-gradient(#fcb44e, #fcb44e), linear-gradient(#fcb44e, #fcb44e);
   background-size: 80px 70px, 30px 50px, 30px 30px;
   background-position: 0 0, 80px 20px, 100px 40px;
 }
@@ -727,3 +727,10 @@ ul.CTAs a {
 /* .MDBDataTable {
   min-width: 1000px;
 } */
+
+.lesson-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px 0;
+}

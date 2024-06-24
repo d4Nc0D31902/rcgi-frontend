@@ -72,6 +72,7 @@ const LessonDetails = () => {
             <Typography
               variant="body1"
               mt={2}
+              className="lesson-content"
               dangerouslySetInnerHTML={{ __html: lesson.content }}
             />
             {lesson.status === "Not Done" && (
