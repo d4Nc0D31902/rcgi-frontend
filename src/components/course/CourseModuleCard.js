@@ -42,7 +42,7 @@ const CourseModuleCard = ({ module }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "50px" }}>
+    <Card sx={{ maxWidth: 345 }} style={{ marginBottom: "50px" }} elevation={6}>
       {module.images && module.images.length > 0 && (
         <CardMedia
           sx={{ height: 140 }}
