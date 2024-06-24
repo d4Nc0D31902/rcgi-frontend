@@ -66,7 +66,7 @@ const CourseDetails = () => {
           )}
         </Paper>
       </Box>
-      <Box mt={5} mx={2}>
+      <Box mt={5} mx={2} sx={{ border: "2px solid black" }}>
         <Grid container spacing={3}>
           {course.modules &&
             course.modules.map((module, index) => (

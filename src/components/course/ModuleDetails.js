@@ -106,15 +106,21 @@ const ModuleDetails = () => {
       const sourceIndex = result.source.index;
       const destinationIndex = result.destination.index;
 
-      const updatedChapters = [...chapters];
+      const updatedChapters = Array.from(chapters);
       const [removed] = updatedChapters.splice(sourceIndex, 1);
       updatedChapters.splice(destinationIndex, 0, removed);
 
       setChapters(updatedChapters);
 
       const chapterOrder = updatedChapters.map((chapter) => chapter._id);
-      dispatch(reorderModule(id, { chaptersOrder: chapterOrder }));
-      dispatch(getModuleDetails(id));
+
+      dispatch(reorderModule(id, { chaptersOrder: chapterOrder }))
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error reordering items:", error);
+        });
     } catch (error) {
       console.error("Error reordering items:", error);
     }

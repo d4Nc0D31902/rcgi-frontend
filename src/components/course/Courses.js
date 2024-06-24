@@ -27,16 +27,16 @@ const Courses = () => {
       className="row"
       style={{
         justifyContent: "center",
-        alignContent: "center",
         display: "flex",
         marginTop: "120px",
+        height: "100vh",
       }}
     >
       {courses.map((course) => {
         if (course.status === "active" || isAdmin) {
           return <CourseCard key={course._id} course={course} />;
         } else {
-          return null; // Hide the Course
+          return null;
         }
       })}
     </div>
