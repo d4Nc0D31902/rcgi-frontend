@@ -45,7 +45,6 @@ const Login = () => {
       } else if (redirect === "shipping") {
         navigate(`/${redirect}`, { replace: true });
       } else {
-        // Check if user's company is Barcino
         if (user.company === "Barcino") {
           navigate("/barcino", { replace: true });
         } else if (user.company === "Meat Depot") {

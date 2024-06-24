@@ -616,6 +616,10 @@ function App() {
 
           {user && user.company && (
             <>
+              {user.company === "None" && (
+                <Route path="/" element={<HomePage />} exact="true" />
+              )}
+
               {/* Route for Barcino */}
               {user.company === "Barcino" && (
                 <Route
@@ -642,24 +646,26 @@ function App() {
 
               {/* Routes for Single Origin */}
               {user.company === "Single Origin" && (
-                <>
-                  <Route
-                    path="/single-origin"
-                    element={
-                      <ProtectedRoute>
-                        <SingleOrigin />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/bluesmith"
-                    element={
-                      <ProtectedRoute>
-                        <Bluesmith />
-                      </ProtectedRoute>
-                    }
-                  />
-                </>
+                <Route
+                  path="/single-origin"
+                  element={
+                    <ProtectedRoute>
+                      <SingleOrigin />
+                    </ProtectedRoute>
+                  }
+                />
+              )}
+
+              {/* Routes for Bluesmith*/}
+              {user.company === "Bluesmith" && (
+                <Route
+                  path="/bluesmith"
+                  element={
+                    <ProtectedRoute>
+                      <Bluesmith />
+                    </ProtectedRoute>
+                  }
+                />
               )}
             </>
           )}

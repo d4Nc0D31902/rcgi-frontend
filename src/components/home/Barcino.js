@@ -1,11 +1,14 @@
 import React from "react";
 import { easeInOut, motion } from "framer-motion";
+import MetaData from "../layout/MetaData";
 import "./Barcino/Barcino.css";
 import "./Barcino/BarcinoJS.js";
 
 const Barcino = () => {
   return (
     <div className="header">
+      <MetaData title={"Barcino"} />
+
       <div className="inner-header flex">
         <img
           src="/images/barcinologo3d.gif"
