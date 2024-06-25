@@ -163,7 +163,7 @@ const EnrollmentChapterDetails = () => {
                         ) : (
                           <Link
                             to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}`}
-                            style={{ textDecoration: "none" }}
+                            style={{  color:"black" }}
                           >
                             <Typography
                               style={{
@@ -212,7 +212,7 @@ const EnrollmentChapterDetails = () => {
                                     <Link
                                       to={`/enrollment/${enrollmentId}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
                                       style={{
-                                        textDecoration: "none",
+                                        // textDecoration: "none",
                                         color:
                                           lesson.status === "Done"
                                             ? "green"
@@ -243,7 +243,9 @@ const EnrollmentChapterDetails = () => {
                       {/* Forum Section for the last chapter */}
 
                       {index === 0 && (
-                        <div style={{ color: "black", textDecoration: "none" }}>
+                        <div style={{ color: "black", 
+                        // textDecoration: "none" 
+                        }}>
                           <ul>
                             {enrollmentModule.forum?.map(
                               (forum, forumIndex) => (
@@ -261,7 +263,7 @@ const EnrollmentChapterDetails = () => {
                                       <Link
                                         to={`/forum/${forum.forumId?._id}`}
                                         style={{
-                                          textDecoration: "none",
+                                          // textDecoration: "none",
                                           color: "black",
                                         }}
                                       >

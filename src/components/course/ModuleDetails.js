@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { easeInOut, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getModuleDetails,
@@ -230,8 +231,6 @@ const ModuleDetails = () => {
                   <div {...provided.droppableProps} ref={provided.innerRef}>
                     {module.chapters &&
                       module.chapters.map((chapter, index) => {
-                        // const isLastChapter =
-                        //   index === module.chapters.length - 1;
                         const isLastChapter = index === 0;
                         return (
                           <Draggable
@@ -259,7 +258,7 @@ const ModuleDetails = () => {
                                       to={`/admin/chapterDetails/${chapter._id}`}
                                       style={{
                                         color: "black",
-                                        textDecoration: "none",
+                                        // textDecoration: "none",
                                       }}
                                     >
                                       {chapter.title}
@@ -322,7 +321,7 @@ const ModuleDetails = () => {
                                                       to={`/admin/lessonDetails/${lesson._id}`}
                                                       style={{
                                                         color: "black",
-                                                        textDecoration: "none",
+                                                        // textDecoration: "none",
                                                       }}
                                                     >
                                                       {lesson.title}
@@ -373,7 +372,7 @@ const ModuleDetails = () => {
                                           to={`/forumDetails/${forum._id}`}
                                           style={{
                                             color: "black",
-                                            textDecoration: "none",
+                                            // textDecoration: "none",
                                           }}
                                         >
                                           {forum.title}
@@ -438,7 +437,7 @@ const ModuleDetails = () => {
                                                       to={`/admin/quizDetails/${quiz._id}`}
                                                       style={{
                                                         color: "black",
-                                                        textDecoration: "none",
+                                                        // textDecoration: "none",
                                                       }}
                                                     >
                                                       {quiz.title}

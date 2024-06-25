@@ -116,7 +116,7 @@ const EnrollmentModuleDetails = () => {
                           ) : (
                             <Link
                               to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}`}
-                              style={{ textDecoration: "none" }}
+                              style={{ color: "black" }}
                             >
                               <Typography
                                 style={{
@@ -169,7 +169,7 @@ const EnrollmentModuleDetails = () => {
                                       <Link
                                         to={`/enrollment/${id}/module/${moduleId}/chapter/${chapter._id}/lesson/${lesson._id}`}
                                         style={{
-                                          textDecoration: "none",
+                                          // textDecoration: "none",
                                           color:
                                             lesson.status === "Done"
                                               ? "green"
@@ -201,9 +201,7 @@ const EnrollmentModuleDetails = () => {
 
                         {/* Forum Section for the last chapter */}
                         {index === 0 && (
-                          <div
-                            style={{ color: "black", textDecoration: "none" }}
-                          >
+                          <div style={{ color: "black" }}>
                             <ul>
                               {enrollmentModule.forum?.map(
                                 (forum, forumIndex) => (
@@ -224,7 +222,7 @@ const EnrollmentModuleDetails = () => {
                                         <Link
                                           to={`/enrollment/${id}/module/${moduleId}/forum/${forum.forumId?._id}`}
                                           style={{
-                                            textDecoration: "none",
+                                            // textDecoration: "none",
                                             color: "black",
                                           }}
                                         >
