@@ -34,7 +34,7 @@ const Profile = () => {
             container
             justifyContent="center"
             spacing={3}
-            sx={{ marginTop: "20px" }}
+            sx={{ marginTop: "20px", height: "100vh" }}
           >
             {/* Avatar and Edit Profile Button */}
             <Grid item xs={12} md={3} align="center">

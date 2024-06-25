@@ -211,7 +211,7 @@ const AddUser = () => {
                 <MenuItem disabled value="">
                   <em>Choose a company</em>
                 </MenuItem>
-                {["Barcino", "Meat Depot", "Single Origin", "Bluesmith"].map(
+                {["Barcino", "Meat Depot", "Single Origin", "Bluesmith", "None"].map(
                   (option) => (
                     <MenuItem key={option} value={option}>
                       {option}

@@ -45,7 +45,7 @@ const UpdatePassword = () => {
   };
 
   return (
-    <Container component="main" maxWidth="lg">
+    <Container component="main" maxWidth="lg" sx={{ height: "100vh" }}>
       <MetaData title={"Change Password"} />
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={8} md={6}>

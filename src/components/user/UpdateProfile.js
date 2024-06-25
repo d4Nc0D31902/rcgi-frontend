@@ -70,7 +70,7 @@ const UpdateProfile = () => {
         className="wrapper"
         sx={{ marginTop: "120px" }}
       >
-        <Grid item xs={10} lg={5}>
+        <Grid item xs={10} lg={5} sx={{ height: "100vh" }}>
           <form
             className="shadow-lg"
             onSubmit={submitHandler}
