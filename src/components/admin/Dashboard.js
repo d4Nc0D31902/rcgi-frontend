@@ -101,7 +101,12 @@ const Dashboard = () => {
             <Sidebar />
           </Grid>
           <Grid item xs={12} md={10}>
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              sx={{ color: "black" }}
+            >
               Dashboard
             </Typography>
             {loading ? (

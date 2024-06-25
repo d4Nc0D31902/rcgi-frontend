@@ -169,7 +169,9 @@ const EnrollmentList = () => {
         </div>
         <div className="col-12 col-md-10">
           <Fragment>
-            <h1 className="my-5">All Enrollments</h1>
+            <h1 className="my-5" style={{ color: "black" }}>
+              All Enrollments
+            </h1>
             <div className="table-responsive">
               {loading ? (
                 <Loader />

@@ -99,7 +99,9 @@ const SubmitQuizList = () => {
         </div>
         <div className="col-12 col-md-10">
           <Fragment>
-            <h1 className="my-5">Quiz Scores</h1>
+            <h1 className="my-5" style={{ color: "black" }}>
+              Quiz Scores
+            </h1>
             <div className="table-responsive">
               {loading ? (
                 <Loader />

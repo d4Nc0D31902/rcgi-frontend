@@ -161,14 +161,19 @@ const UsersList = () => {
   return (
     <Fragment>
       <MetaData title={"All Users"} />
-      <div className="row" style={{ marginRight: "120px", padding: "20px" }}>
+      <div
+        className="row"
+        style={{ marginRight: "120px", border: "2px solid black" }}
+      >
         <div className="col-12 col-md-2">
           <Sidebar />
         </div>
         <div className="col-12 col-md-10">
           <Fragment>
             <div className="d-flex justify-content-between align-items-center">
-              <h1 className="my-5">All Users</h1>
+              <h1 className="my-5" style={{ color: "black" }}>
+                All Users
+              </h1>
             </div>
             <div className="table-responsive">
               {loading ? (
