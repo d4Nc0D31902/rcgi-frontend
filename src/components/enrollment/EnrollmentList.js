@@ -130,7 +130,7 @@ const ListEnrollments = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", height: "100vh" }}>
       <Fragment>
         <MetaData title={"My Enrollments"} />
         <h1 className="my-5">My Enrollments</h1>

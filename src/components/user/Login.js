@@ -63,15 +63,7 @@ const Login = () => {
       notify(error);
       dispatch(clearErrors());
     }
-  }, [
-    dispatch,
-    isAuthenticated,
-    isAdmin,
-    error,
-    navigate,
-    redirect,
-    user,
-  ]);
+  }, [dispatch, isAuthenticated, isAdmin, error, navigate, redirect, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -90,8 +82,8 @@ const Login = () => {
         <Grid
           container
           justifyContent="center"
-          alignItems="center"
-          style={{ minHeight: "70vh" }}
+          // alignItems="center"
+          style={{ minHeight: "100vh", marginTop: "120px" }}
         >
           <Grid item xs={12}>
             <Paper elevation={3} style={{ padding: "20px" }}>
@@ -191,9 +183,9 @@ const Login = () => {
                   gutterBottom
                   style={{ marginTop: "20px" }}
                 >
-                  <Link style={{ textDecoration: "none" }} to="/register">
+                  {/* <Link style={{ textDecoration: "none" }} to="/register">
                     New User?
-                  </Link>
+                  </Link> */}
                 </Typography>
               </form>
             </Paper>

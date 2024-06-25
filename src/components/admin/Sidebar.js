@@ -21,8 +21,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import QuizIcon from "@mui/icons-material/Quiz";
 import AddIcon from "@mui/icons-material/Add";
-import ForumIcon from '@mui/icons-material/Forum';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
+import ForumIcon from "@mui/icons-material/Forum";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 const Sidebar = () => {
   const [openCourses, setOpenCourses] = useState(false);
   const [openUsers, setOpenUsers] = useState(false);
@@ -69,10 +69,11 @@ const Sidebar = () => {
             src="/images/rcgi.jpg"
             alt="RCGI Logo"
             style={{
-              width: "50%",
-              marginLeft: "50px",
-              marginBottom: "20px",
-              marginTop: "20px",
+              // border: "2px solid black",
+              height: 100,
+              marginLeft: "30px",
+              marginBottom: "10px",
+              // width: 00,
             }}
           />
           <Divider sx={{ marginBottom: "20px" }} />
