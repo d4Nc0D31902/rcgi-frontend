@@ -128,7 +128,12 @@ const NewEnrollment = () => {
           <Grid item xs={12} md={10}>
             <Paper elevation={3}>
               <Container maxWidth="md" style={{ padding: "20px 0" }}>
-                <Typography variant="h4" align="center" gutterBottom>
+                <Typography
+                  variant="h4"
+                  align="center"
+                  textAlign={"center"}
+                  gutterBottom
+                >
                   New Enrollment
                 </Typography>
                 <form onSubmit={submitHandler}>

@@ -112,7 +112,12 @@ const AddUser = () => {
             }}
           >
             <form onSubmit={submitHandler} encType="multipart/form-data">
-              <Typography variant="h4" align="center" gutterBottom>
+              <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                sx={{ color: "black" }}
+              >
                 Add User
               </Typography>
 

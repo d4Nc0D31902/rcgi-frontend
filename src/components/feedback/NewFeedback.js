@@ -86,12 +86,17 @@ const NewFeedback = () => {
               [theme.breakpoints.only("sm")]: {
                 p: 3,
                 width: "100%",
-                height: "40%",
+                height: "50%",
               },
               [theme.breakpoints.only("md")]: {
                 p: 3,
                 width: "100%",
-                height: "30%",
+                height: "60%",
+              },
+              [theme.breakpoints.only("lg")]: {
+                p: 3,
+                width: "100%",
+                height: "60%",
               },
               [theme.breakpoints.only("xl")]: {
                 p: 3,
@@ -105,6 +110,7 @@ const NewFeedback = () => {
               component="h1"
               gutterBottom
               textAlign="center"
+              sx={{ color: "black" }}
             >
               Feedback
             </Typography>

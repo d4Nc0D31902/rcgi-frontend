@@ -1,7 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
+import React, { useRef } from "react";
+import { useSelector } from "react-redux";
 import {
   Dialog,
   DialogTitle,
@@ -11,21 +9,30 @@ import {
   Button,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const ModuleModal = ({ open, handleClose }) => {
   const { user } = useSelector((state) => state.auth);
+  const certificateRef = useRef(null);
 
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    const text = `Congratulations ${user.name}! Well done on completing the Module!`;
-    doc.text(text, 10, 10);
-    doc.save("module_completion_certificate.pdf");
+  const handleDownloadImage = async () => {
+    if (certificateRef.current) {
+      certificateRef.current.style.display = "block";
+
+      const canvas = await html2canvas(certificateRef.current, {
+        scale: 1, 
+        useCORS: true, 
+      });
+      certificateRef.current.style.display = "none";
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/jpeg");
+      link.download = "cert.jpg";
+      link.click();
+    }
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} style={{ borderRadius: "20px" }}>
+    <Dialog open={open} onClose={handleClose} style={{ borderRadius: "30px" }}>
       <DialogTitle>
         <Typography variant="h6" style={{ fontWeight: "bold", color: "#333" }}>
           Congratulations!
@@ -39,19 +46,44 @@ const ModuleModal = ({ open, handleClose }) => {
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
-        <Typography variant="body1">
-          I would like to congratulate you on completing the course. You can now
-          get the hard copy of acknowledgement form by showing and using this as
-          a proof that you have completed the course in HR.
-        </Typography>
+        <Typography variant="body1">CONGRATULATIONS, WELL DONE!</Typography>
+        <div
+          ref={certificateRef}
+          style={{
+            display: "none", // Initially hidden
+            position: "relative",
+            textAlign: "center",
+            marginTop: 20,
+            width: "800px", // Adjust width as needed
+            height: "auto", // Adjust height as needed
+          }}
+        >
+          <img
+            src="/images/Cert.jpg"
+            alt="Certificate"
+            style={{ width: "100%", height: "auto", borderRadius: "10px" }}
+          />
+          <Typography
+            variant="h5"
+            style={{
+              position: "absolute",
+              top: "34%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            {user.name}
+          </Typography>
+        </div>
         <Button
           variant="contained"
           color="error"
-          onClick={handleDownloadPDF}
+          onClick={handleDownloadImage}
           style={{ marginTop: 20, borderRadius: "20px" }}
-          endIcon={<PictureAsPdfIcon />}
         >
-          Download
+          Download Certificate
         </Button>
       </DialogContent>
     </Dialog>

@@ -98,6 +98,7 @@ const NewForum = () => {
               component="h1"
               gutterBottom
               textAlign="center"
+              sx={{ color: "black", textAlign: "center" }}
             >
               Create Forum Post
             </Typography>

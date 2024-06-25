@@ -84,20 +84,30 @@ const UpdateUser = () => {
   return (
     <Fragment>
       <MetaData title={`Update User`} />
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ height: "100vh" }}>
         <Grid item xs={12} md={2}>
           <Sidebar />
         </Grid>
-        <Grid item xs={12} md={10}>
-          <Grid container justifyContent="center">
+        <Grid
+          item
+          xs={12}
+          md={10}
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          <Grid container justifyContent="center" display={"flex"}>
             <Grid item xs={10} lg={5}>
               <Paper
                 elevation={3}
-                className="p-4"
-                sx={{ marginTop: "50px", marginRight: "200px", width: "100%" }}
+                // className="p-4"
+                sx={{ marginTop: "50px", width: "100%", padding: "40px" }}
               >
                 <form onSubmit={submitHandler}>
-                  <h1 className="mt-2 mb-5">Update User</h1>
+                  <h1
+                    className="mt-2 mb-5"
+                    style={{ color: "black", textAlign: "center" }}
+                  >
+                    Update User
+                  </h1>
                   <TextField
                     fullWidth
                     label="Name"

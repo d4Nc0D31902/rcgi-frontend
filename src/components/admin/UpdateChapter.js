@@ -86,7 +86,7 @@ const UpdateChapter = () => {
   return (
     <Fragment>
       <MetaData title={"Update Chapter"} />
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ height: "100vh" }}>
         <Grid item xs={12} md={2}>
           <Sidebar />
         </Grid>
@@ -96,7 +96,12 @@ const UpdateChapter = () => {
             sx={{ p: 3 }}
             style={{ marginTop: "40px", marginRight: "150px" }}
           >
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              sx={{ color: "black" }}
+            >
               Update Chapter
             </Typography>
             <form onSubmit={submitHandler} encType="multipart/form-data">

@@ -71,7 +71,7 @@ const NewCourse = () => {
   return (
     <Fragment>
       <MetaData title={"New Course"} />
-      <Grid container spacing={3} p={"20px"}>
+      <Grid container spacing={3} p={"20px"} sx={{ height: "100vh" }}>
         <Grid item xs={12} md={2}>
           <Sidebar />
         </Grid>
@@ -81,7 +81,12 @@ const NewCourse = () => {
             sx={{ p: 3 }}
             style={{ marginTop: "40px", marginRight: "150px" }}
           >
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              sx={{ color: "black", textAlign: "center" }}
+            >
               New Course
             </Typography>
             <form onSubmit={submitHandler} encType="multipart/form-data">
