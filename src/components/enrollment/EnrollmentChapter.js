@@ -242,41 +242,6 @@ const EnrollmentChapterDetails = () => {
 
                       {/* Forum Section for the last chapter */}
 
-                      {/* <div style={{ color: "black", textDecoration: "none" }}>
-                        <ul>
-                          {enrollmentModule.forum?.map((forum, forumIndex) => {
-                            return (
-                              <li key={forumIndex}>
-                                <Typography variant="subtitle1" gutterBottom>
-                                  {chapter.status === "Not Done" ? (
-                                    <span style={{ color: "gray" }}>
-                                      {forum.forumId?.title}
-                                    </span>
-                                  ) : forum.status === "Done" ? (
-                                    <span style={{ color: "green" }}>
-                                      {forum.forumId?.title}
-                                    </span>
-                                  ) : isFirstChapter ? (
-                                    <Link
-                                      to={`/forum/${forum.forumId?._id}`}
-                                      style={{
-                                        textDecoration: "none",
-                                        color: "black",
-                                      }}
-                                    >
-                                      {forum.forumId?.title}
-                                    </Link>
-                                  ) : (
-                                    <span style={{ color: "black" }}>
-                                      {forum.forumId?.title}
-                                    </span>
-                                  )}
-                                </Typography>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </div> */}
                       {index === 0 && (
                         <div style={{ color: "black", textDecoration: "none" }}>
                           <ul>
@@ -369,7 +334,13 @@ const EnrollmentChapterDetails = () => {
             >
               {chapter && (
                 <div>
-                  <Typography variant="h4" gutterBottom>
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    textAlign={"center"}
+                    fontWeight={"bold"}
+                    fontSize={"40px"}
+                  >
                     {chapter.chapterId.title}
                   </Typography>
                   <Divider style={{ margin: "20px 0" }} />

@@ -12,7 +12,7 @@ import Loader from "../layout/Loader";
 import "react-toastify/dist/ReactToastify.css";
 
 const EnrollmentForum = () => {
-  const { id } = useParams();
+  const { id, enrollmentId, moduleId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [text, setText] = useState("");
@@ -27,9 +27,11 @@ const EnrollmentForum = () => {
   const handleSend = () => {
     const replyData = {
       forumId: id,
+      enrollmentId: enrollmentId._id,
+      // moduleId: 
       reply: text,
     };
-    dispatch(createReply(replyData, forum._id));
+    dispatch(createReply(replyData, forum._id, moduleId, enrollmentId));
     setText("");
     navigate(`/forumDetails/${forum._id}`);
     toast.success("Reply sent successfully!");

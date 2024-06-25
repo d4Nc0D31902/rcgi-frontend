@@ -125,6 +125,9 @@ const EnrollmentDetails = () => {
                       variant="h5"
                       gutterBottom
                       style={{ marginTop: "5px" }}
+                      textAlign={"center"}
+                      fontWeight={"bold"}
+                      fontSize={"40px"}
                     >
                       {course[0].courseId.title}
                     </Typography>

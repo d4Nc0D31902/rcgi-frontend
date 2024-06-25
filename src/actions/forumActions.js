@@ -38,7 +38,6 @@ export const getForumDetails = (id) => async (dispatch) => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_API}/api/v1/forum/${id}`
     );
-    console.log("Received data:", data);
 
     dispatch({
       type: FORUM_DETAILS_SUCCESS,
@@ -51,10 +50,6 @@ export const getForumDetails = (id) => async (dispatch) => {
       type: FORUM_DETAILS_FAIL,
       payload: error.response.data.message,
     });
-    console.log(
-      "Dispatched FORUM_DETAILS_FAIL with message:",
-      error.response.data.message
-    );
   }
 };
 

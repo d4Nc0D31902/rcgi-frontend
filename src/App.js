@@ -599,7 +599,7 @@ function App() {
           />
 
           <Route
-            path="/forum/:id"
+            path="/enrollment/:enrollmentId/module/:moduleId/forum/:id"
             element={
               <ProtectedRoute>
                 <EnrollmentForum />

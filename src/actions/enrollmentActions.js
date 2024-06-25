@@ -540,34 +540,39 @@ export const checkProgress = (enrollmentId) => async (dispatch) => {
   }
 };
 
-export const createReply = (replyData, forumId) => async (dispatch) => {
-  try {
-    dispatch({ type: CREATE_REPLY_REQUEST });
+export const createReply =
+  (replyData, forumId, enrollmentId, moduleId) => async (dispatch) => {
+    try {
+      console.log("createReply: Dispatching CREATE_REPLY_REQUEST");
+      dispatch({ type: CREATE_REPLY_REQUEST });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
 
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_API}/api/v1/forum/${forumId}/reply`,
-      replyData,
-      config
-    );
+      console.log("createReply: Sending POST request to API");
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/enrollment/${enrollmentId}/module/${moduleId}/forum/${forumId}/reply`,
+        replyData,
+        config
+      );
 
-    dispatch({
-      type: CREATE_REPLY_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: CREATE_REPLY_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      console.log("createReply: POST request successful", data);
+      dispatch({
+        type: CREATE_REPLY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      console.error("createReply: POST request failed", error);
+      dispatch({
+        type: CREATE_REPLY_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

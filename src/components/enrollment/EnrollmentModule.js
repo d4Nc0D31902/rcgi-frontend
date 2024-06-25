@@ -222,7 +222,7 @@ const EnrollmentModuleDetails = () => {
                                         </span>
                                       ) : (
                                         <Link
-                                          to={`/forum/${forum.forumId?._id}`}
+                                          to={`/enrollment/${id}/module/${moduleId}/forum/${forum.forumId?._id}`}
                                           style={{
                                             textDecoration: "none",
                                             color: "black",
