@@ -42,7 +42,7 @@ const Barcino = () => {
             <defs>
               <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
             </defs>
-            <g class="parallax">
+            <g class="parallaxbarcino">
               <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(190, 100, 102, 0.55)"/>
               <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(177, 72, 74, 0.86)"/>
               <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(115, 28, 29, 0.78)" />
@@ -54,16 +54,18 @@ const Barcino = () => {
       </div>
       <div className="secondpbarcino">
         <div className="containerbarcino">
-          <div className="row">
+          <div className="rowbarcino">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
-              className="column"
+              className="columnbarcino"
             >
-              <div className="content">
+              <div className="contentbarcino">
                 &nbsp; &nbsp; &nbsp;
-                <h2 style={{ fontSize: "75px" }}>𝔈𝔵𝔭𝔢𝔯𝔦𝔢𝔫𝔠𝔢 𝔖𝔭𝔞𝔦𝔫 𝔈𝔳𝔢𝔯𝔶𝔡𝔞𝔶</h2>
+                <h2 style={{ fontSize: "75px", color: "white" }}>
+                  𝔈𝔵𝔭𝔢𝔯𝔦𝔢𝔫𝔠𝔢 𝔖𝔭𝔞𝔦𝔫 𝔈𝔳𝔢𝔯𝔶𝔡𝔞𝔶
+                </h2>
               </div>
             </motion.div>
             <motion.div
