@@ -27,11 +27,9 @@ const EnrollmentForum = () => {
   const handleSend = () => {
     const replyData = {
       forumId: id,
-      enrollmentId: enrollmentId._id,
-      // moduleId: 
       reply: text,
     };
-    dispatch(createReply(replyData, forum._id, moduleId, enrollmentId));
+    dispatch(createReply(replyData, forum._id, enrollmentId, moduleId));
     setText("");
     navigate(`/forumDetails/${forum._id}`);
     toast.success("Reply sent successfully!");
