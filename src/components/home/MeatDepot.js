@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import MetaData from "../layout/MetaData";
 import "./MeatDepot/MeatDepot.css";
+import { color } from "framer-motion";
 
 const MeatDepot = () => {
   const imageRefs = useRef([]);
@@ -61,7 +62,15 @@ const MeatDepot = () => {
         />
       </div>
       <div className="secondpageMD">
-        <p style={{ position: "center", padding: "100px", fontSize: "22px" }}>
+        <p
+          classname="md-p"
+          style={{
+            position: "center",
+            padding: "100px",
+            fontSize: "22px",
+            color: "white",
+          }}
+        >
           𝑾𝒆 𝒑𝒓𝒐𝒗𝒊𝒅𝒆 𝒎𝒆𝒂𝒕 𝒆𝒏𝒕𝒉𝒖𝒔𝒊𝒂𝒔𝒕𝒔 𝒘𝒊𝒕𝒉 𝒂 𝒖𝒏𝒊𝒒𝒖𝒆 𝒐𝒑𝒑𝒐𝒓𝒕𝒖𝒏𝒊𝒕𝒚 𝒕𝒐 𝒆𝒙𝒑𝒆𝒓𝒊𝒆𝒏𝒄𝒆
           𝒎𝒆𝒂𝒕 𝒂𝒏𝒅 𝒎𝒆𝒂𝒕 𝒑𝒓𝒐𝒅𝒖𝒄𝒕𝒔. 𝑶𝒖𝒓𝒔 𝒊𝒔 𝒏𝒐 𝒐𝒓𝒅𝒊𝒏𝒂𝒓𝒚 𝒔𝒕𝒆𝒂𝒌𝒉𝒐𝒖𝒔𝒆. 𝑶𝒖𝒓 𝒄𝒖𝒔𝒕𝒐𝒎𝒆𝒓𝒔
           𝒄𝒂𝒏 𝒄𝒉𝒐𝒐𝒔𝒆 𝒕𝒉𝒆 𝒄𝒖𝒕, 𝒔𝒊𝒛𝒆, 𝒔𝒂𝒖𝒄𝒆, 𝒂𝒏𝒅 𝒔𝒊𝒅𝒆𝒔 𝒐𝒇 𝒕𝒉𝒆 𝒔𝒕𝒆𝒂𝒌 𝒕𝒐 𝒕𝒉𝒆𝒊𝒓

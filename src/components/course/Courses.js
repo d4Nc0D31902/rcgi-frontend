@@ -24,7 +24,7 @@ const Courses = () => {
 
   return (
     <div
-      className="row"
+      // className="row"
       style={{
         justifyContent: "center",
         display: "flex",

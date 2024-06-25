@@ -67,7 +67,7 @@ const Barcino = () => {
             >
               <div className="content">
                 <h2></h2>
-                <p>
+                <p style={{ color: "white" }}>
                   Barcino celebrates the beauty and diversity of Spanish cuisine
                   and gives tribute to the Spanish wine culture. Immerse
                   yourself in the allure of Spain and enjoy dining the Spanish
@@ -85,8 +85,8 @@ const Barcino = () => {
                 className="content"
               >
                 <h2 style={{ fontSize: "50px" }}>𝔖𝔞𝔫𝔤𝔯𝔦𝔞</h2>
-                <h3>- The best in metro -</h3>
-                <p>
+                <h3 style={{ color: "white" }}>- The best in metro -</h3>
+                <p style={{ color: "white" }}>
                   Home of the rightfully well-loved sangria in the metro. Our
                   sangria is not for the faint of heart - the bright flavors,
                   deep colors and refreshing chill - each glass is crafted
@@ -124,8 +124,10 @@ const Barcino = () => {
             >
               <div className="content">
                 <h2 style={{ fontSize: "50px" }}>𝔴𝔦𝔫𝔢</h2>
-                <h3>- A Tribute to Wine Culture -</h3>
-                <p>
+                <h3 style={{ color: "white" }}>
+                  - A Tribute to Wine Culture -
+                </h3>
+                <p style={{ color: "white" }}>
                   Our vast collection offers one an insight to wine’s wealth of
                   scents, tastes and colors giving one’s palette the
                   extraordinary pleasure that is wine - expertly stocked from
