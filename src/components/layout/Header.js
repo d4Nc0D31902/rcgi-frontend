@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,6 +40,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 const Header = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const { notifications } = useSelector((state) => state.notifications);
   const notify = (error = "") =>
     toast.error(error, {
@@ -139,6 +140,7 @@ const Header = () => {
         toast.success("Logout successful!", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
+        navigate("/");
       })
       .catch((error) => {
         notify(error.message);
@@ -157,7 +159,7 @@ const Header = () => {
     socket.on("notification", () => {
       dispatch(getNotifications());
     });
-  }, [socket, dispatch]); 
+  }, [socket, dispatch]);
   //TRUE SOCKET
 
   return (
