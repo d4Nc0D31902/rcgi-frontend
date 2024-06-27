@@ -229,7 +229,8 @@ footer {
     transform: rotate(360deg);
   }
 } */
-.loader {
+ /* ! LOADER  */
+/* .loader {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20%;
@@ -301,7 +302,7 @@ footer {
     background-position: -30px 11px, -30px 35px, -30px 60px;
     opacity: 0;
   }
-}
+} */
 
 /* Cart */
 
@@ -734,4 +735,96 @@ ul.CTAs a {
   height: auto;
   display: block;
   margin: 10px 0;
+}
+
+:root {
+  --white: black;
+  --color-burning-orange-approx: white;
+}
+
+.loader {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.wineglass {
+  height: 36px;
+  position: relative;
+}
+
+.wineglass:after {
+  content: "";
+  position: absolute;
+  top: 47px;
+  left: 5px;
+  width: 20px;
+  height: 5px;
+  background: var(--white);
+  box-shadow: 0 0 1px var(--white);
+}
+
+.top {
+  background: var(--white);
+  width: 30px;
+  height: 36px;
+  border-radius: 0 0 36px 36px;
+  box-shadow: 0 0 1px var(--white);
+  position: relative;
+}
+
+.top:before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(
+    transparent 50%,
+    var(--color-burning-orange-approx) 50%
+  );
+}
+
+.top:after {
+  content: "";
+  position: absolute;
+  top: 35px;
+  left: 12px;
+  width: 6px;
+  height: 13px;
+  background: var(--white);
+  box-shadow: 0 0 1px var(--white);
+}
+
+.left {
+  display: inline-block;
+  margin-right: 10px;
+  animation: rotate1 2s cubic-bezier(0.39, 1.52, 0.46, 0.92) infinite;
+}
+
+.right {
+  display: inline-block;
+  animation: rotate2 2s cubic-bezier(0.39, 1.52, 0.46, 0.92) infinite;
+}
+
+@keyframes rotate1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(22deg);
+  }
+}
+
+@keyframes rotate2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-22deg);
+  }
 }

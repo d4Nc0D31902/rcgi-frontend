@@ -2,8 +2,13 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <div style={{ height: "100vh" }}>
-      <div className="loader"></div>
+    <div class="loader">
+      <div class="wineglass left">
+        <div class="top"></div>
+      </div>
+      <div class="wineglass right">
+        <div class="top"></div>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
-import { easeInOut, motion } from "framer-motion";
 
-const Hero = () => {
+const ThirdPage = () => {
   return (
     <div
       style={{
@@ -11,11 +10,11 @@ const Hero = () => {
       }}
     >
       <img
-        src="../images/RCGILOGO.gif"
+        src="../images/5.jpg"
         style={{ objectFit: "fill", height: "100%", width: "100%" }}
       />
     </div>
   );
 };
 
-export default Hero;
+export default ThirdPage;
