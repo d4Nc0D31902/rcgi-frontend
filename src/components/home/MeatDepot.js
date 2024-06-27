@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import MetaData from "../layout/MetaData";
 import "./MeatDepot.css";
-import { color } from "framer-motion";
 
 const MeatDepot = () => {
   const imageRefs = useRef([]);
@@ -22,13 +21,13 @@ const MeatDepot = () => {
         }
 
         container.appendChild(line);
-
-        const images = container.querySelectorAll(".content img");
-        images.forEach((image, index) => {
-          imageRefs.current[index] = image;
-          image.style.transform = "rotate(0deg)";
-        });
       }
+
+      const images = container.querySelectorAll(".contentmeat img");
+      images.forEach((image, index) => {
+        imageRefs.current[index] = image;
+        image.style.transform = "rotate(0deg)";
+      });
     }
   }, []);
 
@@ -37,36 +36,44 @@ const MeatDepot = () => {
       let angle = 0;
       const intervalId = setInterval(() => {
         angle += 1;
-        image.style.transform = `rotate(${angle}deg)`;
+        if (image) {
+          image.style.transform = `rotate(${angle}deg)`;
+        }
       }, 10);
-      return () => clearInterval(intervalId);
+      if (image) {
+        image.dataset.intervalId = intervalId;
+      }
     };
+
     imageRefs.current.forEach((image) => {
       rotateImage(image);
     });
+
     return () => {
       imageRefs.current.forEach((image) => {
-        clearInterval(image.dataset.intervalId);
+        if (image && image.dataset.intervalId) {
+          clearInterval(image.dataset.intervalId);
+          delete image.dataset.intervalId; // Clean up dataset property
+        }
       });
     };
-  }, [imageRefs]);
+  }, []);
 
   return (
     <div>
       <MetaData title={"Meat Depot"} />
       <div className="containertopmeatdepot">
         <img
-          classList="img-meat"
+          className="img-meat center-imagemeat"
           src="/images/meatdepotlogo.png"
           alt="Center Image"
-          className="center-imagemeat"
         />
       </div>
       <div className="secondpageMDmeat">
         <p
-          classname="md-p p-meat"
+          className="md-p p-meat"
           style={{
-            position: "center",
+            textAlign: "center",
             padding: "100px",
             fontSize: "22px",
             color: "white",
@@ -75,7 +82,7 @@ const MeatDepot = () => {
           𝑾𝒆 𝒑𝒓𝒐𝒗𝒊𝒅𝒆 𝒎𝒆𝒂𝒕 𝒆𝒏𝒕𝒉𝒖𝒔𝒊𝒂𝒔𝒕𝒔 𝒘𝒊𝒕𝒉 𝒂 𝒖𝒏𝒊𝒒𝒖𝒆 𝒐𝒑𝒑𝒐𝒓𝒕𝒖𝒏𝒊𝒕𝒚 𝒕𝒐 𝒆𝒙𝒑𝒆𝒓𝒊𝒆𝒏𝒄𝒆
           𝒎𝒆𝒂𝒕 𝒂𝒏𝒅 𝒎𝒆𝒂𝒕 𝒑𝒓𝒐𝒅𝒖𝒄𝒕𝒔. 𝑶𝒖𝒓𝒔 𝒊𝒔 𝒏𝒐 𝒐𝒓𝒅𝒊𝒏𝒂𝒓𝒚 𝒔𝒕𝒆𝒂𝒌𝒉𝒐𝒖𝒔𝒆. 𝑶𝒖𝒓 𝒄𝒖𝒔𝒕𝒐𝒎𝒆𝒓𝒔
           𝒄𝒂𝒏 𝒄𝒉𝒐𝒐𝒔𝒆 𝒕𝒉𝒆 𝒄𝒖𝒕, 𝒔𝒊𝒛𝒆, 𝒔𝒂𝒖𝒄𝒆, 𝒂𝒏𝒅 𝒔𝒊𝒅𝒆𝒔 𝒐𝒇 𝒕𝒉𝒆 𝒔𝒕𝒆𝒂𝒌 𝒕𝒐 𝒕𝒉𝒆𝒊𝒓
-          𝒍𝒊𝒌𝒊𝒏𝒈.{" "}
+          𝒍𝒊𝒌𝒊𝒏𝒈.
         </p>
         <div className="containermeatdepot">
           <div className="rowmeat">
