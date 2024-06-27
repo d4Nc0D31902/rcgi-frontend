@@ -17,15 +17,19 @@ const ModuleModal = ({ open, handleClose }) => {
 
   const handleDownloadImage = async () => {
     if (certificateRef.current) {
+      // Show certificate before capturing
       certificateRef.current.style.display = "block";
 
+      // Capture certificate with html2canvas
       const canvas = await html2canvas(certificateRef.current, {
-        scale: 1, 
-        useCORS: true, 
+        scale: 1, // Ensure original size
+        useCORS: true, // Allow cross-origin
       });
 
+      // Reset display to hide certificate after capturing
       certificateRef.current.style.display = "none";
 
+      // Create download link
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/jpeg");
       link.download = "Certicate.jpg";
@@ -61,7 +65,7 @@ const ModuleModal = ({ open, handleClose }) => {
           }}
         >
           <img
-            src="/images/Cert.jpg"
+            src="../images/Certificate.jpg"
             alt="Certificate"
             style={{ width: "100%", height: "auto", borderRadius: "10px" }}
           />

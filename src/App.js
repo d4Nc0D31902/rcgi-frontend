@@ -85,6 +85,7 @@ import MeatDepot from "./components/home/MeatDepot";
 import SingleOrigin from "./components/home/SingleOrigin";
 
 import NewUser from "./components/admin/NewUser";
+import Loader from "./components/layout/Loader";
 
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
@@ -104,6 +105,7 @@ function App() {
       <div style={mainDivStyle}>
         <Routes>
           <Route path="/courses" element={<Courses />} exact="true" />
+          {/* <Route path="/courses" element={<Loader />} exact="true" /> */}
           <Route
             path="/product/:id"
             element={<ProductDetails />}
