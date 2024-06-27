@@ -23,10 +23,12 @@ const ModuleModal = ({ open, handleClose }) => {
         scale: 1, 
         useCORS: true, 
       });
+
       certificateRef.current.style.display = "none";
+
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/jpeg");
-      link.download = "cert.jpg";
+      link.download = "Certicate.jpg";
       link.click();
     }
   };

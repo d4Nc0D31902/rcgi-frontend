@@ -163,7 +163,7 @@ const UsersList = () => {
       <MetaData title={"All Users"} />
       <div
         className="row"
-        style={{ marginRight: "120px", border: "2px solid black" }}
+        style={{ marginRight: "120px"}}
       >
         <div className="col-12 col-md-2">
           <Sidebar />
