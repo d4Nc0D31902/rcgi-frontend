@@ -105,7 +105,6 @@ function App() {
       <div style={mainDivStyle}>
         <Routes>
           <Route path="/courses" element={<Courses />} exact="true" />
-          {/* <Route path="/courses" element={<Loader />} exact="true" /> */}
           <Route
             path="/product/:id"
             element={<ProductDetails />}
