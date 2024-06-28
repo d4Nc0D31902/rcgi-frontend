@@ -163,8 +163,6 @@ const Header = () => {
   //TRUE SOCKET
 
   return (
-    // <AppBar position="static" sx={{ backgroundColor: "white" }}>
-
     <AppBar
       sx={{
         backgroundColor: "white",

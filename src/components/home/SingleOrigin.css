@@ -1,0 +1,204 @@
+.containertopSO {
+  position: relative;
+  width: 100%;
+  height: 115vh; /* Adjust height as needed */
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -100px;
+  background: rgb(236, 191, 117);
+  background: rgb(213, 163, 79);
+  background: rgb(230, 191, 126);
+  background: radial-gradient(
+    circle,
+    rgba(230, 191, 126, 1) 0%,
+    rgba(87, 56, 6, 1) 90%
+  );
+  margin-top: -100px;
+}
+
+.secondpageSO {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  background: linear-gradient(
+    0deg,
+    rgba(27, 28, 110, 1) 0%,
+    rgba(197, 127, 30, 1) 48%,
+    rgba(242, 154, 9, 1) 78%,
+    rgba(255, 246, 62, 1) 100%
+  );
+  padding-bottom: 50px;
+  background-image: url("/public/images/SO2bg.png");
+  background-size: contain;
+}
+
+.inner-header {
+  height: 70vh;
+  width: 100%;
+  margin: 0;
+  margin-top: -100px;
+  padding: 0;
+  margin-left: 27px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.content {
+  position: absolute;
+  top: 82%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 160px;
+  overflow: hidden;
+  font-family: "Lato", sans-serif;
+  font-size: 35px;
+  line-height: 40px;
+  color: #ecf0f1;
+}
+
+.content__container {
+  font-weight: 600;
+  overflow: hidden;
+  height: 55px;
+  padding: 0 25px;
+  position: relative; /* Ensure position is relative for absolute positioning inside */
+}
+
+.content__container:before {
+  margin-top: 8px;
+  content: "[";
+  left: 0;
+}
+
+.content__container:after {
+  margin-top: 8px;
+  content: "]";
+  position: absolute;
+  right: 0;
+}
+
+.content__container:before,
+.content__container:after {
+  position: absolute;
+  top: 0;
+  color: #693800;
+  font-size: 40px;
+  line-height: 40px;
+  animation-name: opacity;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.content__text {
+  display: inline;
+  float: left;
+  margin: 0;
+}
+
+.content__list {
+  margin-top: 0;
+  padding-left: 150px;
+  text-align: left;
+  list-style: none;
+  margin-bottom: 30px;
+}
+
+.content__list__item {
+  line-height: 28px;
+  margin: 0;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis for overflow */
+  animation-name: change;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  font-size: 25px;
+}
+
+@keyframes opacity {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes change {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  16.66%,
+  29.32% {
+    transform: translateY(
+      calc(-25% - 5px)
+    ); /* Adjust as necessary based on the tallest item */
+  }
+  33.32%,
+  45.98% {
+    transform: translateY(calc(-50% - 10px)); /* Adjust as necessary */
+  }
+  49.98%,
+  62.64% {
+    transform: translateY(calc(-100% - 15px)); /* Adjust as necessary */
+  }
+  66.64%,
+  79.3% {
+    transform: translateY(calc(-50% - 10px)); /* Adjust as necessary */
+  }
+  83.3%,
+  95.96% {
+    transform: translateY(calc(-25% - 5px)); /* Adjust as necessary */
+  }
+}
+
+/*images*/
+.containerSO {
+  width: 90%; /* Adjust width as a percentage of the viewport */
+  max-width: 750px; /* Set a maximum width */
+  height: auto; /* Allow height to adjust automatically */
+  margin: -60px auto; /* Center the container */
+  box-sizing: border-box;
+}
+
+.holderSO {
+  width: 30%; /* Use percentages for width */
+  max-width: 220px; /* Set a maximum width */
+  height: auto; /* Allow height to adjust automatically */
+  margin: 15px;
+  margin-top: 120px;
+  float: left;
+}
+
+.holderSO img {
+    width: 100%; /* Make image width responsive */
+    height: auto; /* Maintain aspect ratio */
+    opacity: 0.5;
+    transition: opacity 1s, transform 0.7s ease-in;
+}
+
+img.customHoverEffect {
+    opacity: 0.5;
+    transition: opacity 1s, transform 0.7s ease-in;
+  }
+  
+  img.customHoverEffect:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    box-shadow: 1px 3px 8px 4px rgb(69, 36, 2);
+  }
+
+img.no-hover {
+  opacity: 1;
+  pointer-events: none;
+}

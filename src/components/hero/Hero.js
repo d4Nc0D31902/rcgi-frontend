@@ -1,7 +1,9 @@
 import React from "react";
 import { easeInOut, motion } from "framer-motion";
-
+import { useTheme } from "@mui/material";
 const Hero = () => {
+  const theme = useTheme();
+
   return (
     <div
       style={{
