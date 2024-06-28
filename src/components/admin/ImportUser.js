@@ -10,18 +10,40 @@ import {
   Card,
   CardContent,
   CardActions,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import { CloudUpload } from "@mui/icons-material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const ImportUser = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const handleDownloadTemplate = async () => {
+    try {
+      const downloadUrl = process.env.PUBLIC_URL + "/Employee Import Template.xlsx";
+      const response = await fetch(downloadUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "Employee Import Template.xlsx");
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading template:", error);
+      setError("Error downloading template.");
+    }
+  };
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -80,16 +102,21 @@ const ImportUser = () => {
             variant="contained"
             component="span"
             startIcon={<CloudUpload />}
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, borderRadius: "50px" }}
           >
             Select File
           </Button>
+          <Tooltip title="Download Excel Template" placement="top">
+            <IconButton onClick={handleDownloadTemplate}>
+              <DownloadIcon />
+            </IconButton>
+          </Tooltip>
         </label>
+
         <Box mt={2}>
           {file && (
             <Card>
               <CardContent>
-                {/* <Typography variant="subtitle1">Selected File:</Typography> */}
                 <Typography variant="body1">{file.name}</Typography>
               </CardContent>
               <CardActions>
@@ -110,7 +137,7 @@ const ImportUser = () => {
             onClick={handleUpload}
             disabled={loading || !file}
             fullWidth
-            sx={{ borderRadius: "20px" }}
+            sx={{ borderRadius: "50px" }}
             startIcon={
               loading ? <CircularProgress size={20} /> : <CloudUpload />
             }

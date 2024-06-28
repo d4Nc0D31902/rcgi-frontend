@@ -393,7 +393,16 @@ const Header = () => {
               color="inherit"
               style={{ marginTop: "10px" }}
             >
-              <Avatar alt={user.name} src={user.avatar && user.avatar.url} />
+              <Avatar
+                alt={user.name}
+                src={
+                  user.avatar && user.avatar.url
+                    ? user.avatar.url
+                    : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        user.name
+                      )}`
+                }
+              />
             </IconButton>
             <Menu
               id="menu-appbar"

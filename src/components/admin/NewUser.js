@@ -33,12 +33,13 @@ const AddUser = () => {
     password: "",
     company: "",
     employee_id: "",
+    branch: "",
   });
-  const { name, email, password, company, employee_id } = user;
-  const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState({
-    avatar: "/images/default_avatar.jpg",
-  });
+  const { name, email, password, company, employee_id, branch } = user;
+  // const [avatar, setAvatar] = useState("");
+  // const [avatarPreview, setAvatarPreview] = useState({
+  //   avatar: "/images/default_avatar.jpg",
+  // });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
@@ -53,8 +54,9 @@ const AddUser = () => {
     formData.set("name", name);
     formData.set("email", email);
     formData.set("password", password);
-    formData.set("avatar", avatar);
+    // formData.set("avatar", avatar);
     formData.set("company", company);
+    formData.set("branch", branch);
     formData.set("employee_id", employee_id);
 
     try {
@@ -69,20 +71,7 @@ const AddUser = () => {
   };
 
   const onChange = (e) => {
-    if (e.target.name === "avatar") {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setAvatarPreview(reader.result);
-          setAvatar(reader.result);
-        }
-      };
-
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
-      setUser({ ...user, [e.target.name]: e.target.value });
-    }
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const togglePasswordVisibility = () => {
@@ -211,14 +200,37 @@ const AddUser = () => {
                 <MenuItem disabled value="">
                   <em>Choose a company</em>
                 </MenuItem>
-                {["Barcino", "Meat Depot", "Single Origin", "Bluesmith", "None"].map(
-                  (option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  )
-                )}
+                {[
+                  "Barcino",
+                  "Meat Depot",
+                  "Single Origin",
+                  "Bluesmith",
+                  "None",
+                ].map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
               </TextField>
+              <TextField
+                id="branch_field"
+                label="Branch"
+                variant="outlined"
+                name="branch"
+                value={branch}
+                onChange={onChange}
+                fullWidth
+                margin="normal"
+                placeholder="Branch"
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <DriveFileRenameOutlineIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
               <TextField
                 id="employee_id_field"
@@ -239,7 +251,7 @@ const AddUser = () => {
                 }}
               />
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="avatar_upload">Avatar</label>
                 <div className="d-flex align-items-center">
                   <div>
@@ -265,7 +277,7 @@ const AddUser = () => {
                     </label>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div
                 style={{

@@ -14,9 +14,7 @@ const UpdateProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(
-    "/images/default_avatar.jpg"
-  );
+  const [avatarPreview, setAvatarPreview] = useState("");
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -26,8 +24,15 @@ const UpdateProfile = () => {
     if (user) {
       setName(user.name);
       setEmail(user.email);
-      setAvatarPreview(user.avatar.url);
+      if (user.avatar && user.avatar.url) {
+        setAvatarPreview(user.avatar.url);
+      } else {
+        setAvatarPreview(
+          `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}`
+        );
+      }
     }
+
     if (error) {
       dispatch(clearErrors());
     }
@@ -89,6 +94,7 @@ const UpdateProfile = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               sx={{ mb: 3 }}
+              disabled
             />
 
             <TextField
@@ -100,6 +106,7 @@ const UpdateProfile = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               sx={{ mb: 3 }}
+              disabled
             />
 
             <div className="form-group">

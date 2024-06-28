@@ -129,79 +129,82 @@ const ForumDetails = () => {
             spacing={2}
           >
             {forum && forum.reply && forum.reply.length > 0 ? (
-              forum.reply.map((reply) => (
-                <Card key={reply._id} sx={{ width: "100%" }} elevation={6}>
-                  <CardHeader
-                    avatar={
-                      <Avatar
-                        aria-label="user"
-                        alt={reply.user.name}
-                        src={reply.user.avatar && reply.user.avatar.url}
-                      >
-                        {reply.user.avatar.url.charAt(0)}
-                      </Avatar>
-                    }
-                    action={
-                      (isAdmin || (user && reply.user._id === user._id)) && (
-                        <IconButton
-                          aria-label="settings"
-                          onClick={handlePopoverOpen}
+              forum.reply
+                .slice()
+                .reverse()
+                .map((reply) => (
+                  <Card key={reply._id} sx={{ width: "100%" }} elevation={6}>
+                    <CardHeader
+                      avatar={
+                        <Avatar
+                          aria-label="user"
+                          alt={reply.user.name}
+                          src={
+                            reply.user.avatar && reply.user.avatar.url
+                              ? reply.user.avatar.url
+                              : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                  reply.user.name
+                                )}`
+                          }
                         >
-                          <MoreVertIcon />
-                        </IconButton>
-                      )
-                    }
-                    title={reply.user.name}
-                    subheader={new Date(reply.createdAt).toLocaleString()}
-                  />
-                  <Popover
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handlePopoverClose}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "left",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                  >
-                    <MenuItem
-                      to={`/forum/${id}/reply/${reply._id}`}
-                      component={Link}
-                      onClick={handlePopoverClose}
-                    >
-                      <ListItemIcon>
-                        <EditIcon fontSize="small" color="primary" />
-                      </ListItemIcon>
-                      Edit
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem onClick={() => handleDelete(reply._id)}>
-                      <ListItemIcon>
-                        <DeleteIcon fontSize="small" color="error" />
-                      </ListItemIcon>
-                      Delete
-                    </MenuItem>
-                  </Popover>
-                  <CardContent>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      dangerouslySetInnerHTML={{ __html: reply.reply }}
-                    ></Typography>
-                  </CardContent>
-                  {/* <CardActions disableSpacing>
-                    <Checkbox
-                      checked={isChecked}
-                      onChange={handleCheckboxChange}
-                      icon={<FavoriteIcon />}
-                      checkedIcon={<FavoriteIcon style={{ color: "red" }} />}
+                          {reply.user.avatar && reply.user.avatar.url
+                            ? reply.user.avatar.url.charAt(0)
+                            : reply.user.name.charAt(0)}
+                        </Avatar>
+                      }
+                      action={
+                        (isAdmin || (user && reply.user._id === user._id)) && (
+                          <IconButton
+                            aria-label="settings"
+                            onClick={handlePopoverOpen}
+                          >
+                            <MoreVertIcon />
+                          </IconButton>
+                        )
+                      }
+                      title={reply.user.name}
+                      subheader={new Date(reply.createdAt).toLocaleString()}
                     />
-                  </CardActions> */}
-                </Card>
-              ))
+                    <Popover
+                      open={open}
+                      anchorEl={anchorEl}
+                      onClose={handlePopoverClose}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "left",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                    >
+                      <MenuItem
+                        to={`/forum/${id}/reply/${reply._id}`}
+                        component={Link}
+                        onClick={handlePopoverClose}
+                      >
+                        <ListItemIcon>
+                          <EditIcon fontSize="small" color="primary" />
+                        </ListItemIcon>
+                        Edit
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem onClick={() => handleDelete(reply._id)}>
+                        <ListItemIcon>
+                          <DeleteIcon fontSize="small" color="error" />
+                        </ListItemIcon>
+                        Delete
+                      </MenuItem>
+                    </Popover>
+                    <CardContent>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        dangerouslySetInnerHTML={{ __html: reply.reply }}
+                      ></Typography>
+                    </CardContent>
+                  </Card>
+                ))
             ) : (
               <Typography variant="body1">No Replies Yet</Typography>
             )}

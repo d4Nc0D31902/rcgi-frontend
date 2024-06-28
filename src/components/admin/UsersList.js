@@ -112,6 +112,12 @@ const UsersList = () => {
           width: 150,
         },
         {
+          label: "Branch",
+          field: "branch",
+          sort: "asc",
+          width: 150,
+        },
+        {
           label: "Actions",
           field: "actions",
           width: 200,
@@ -127,6 +133,7 @@ const UsersList = () => {
         role: user.role,
         company: user.company,
         employee_id: user.employee_id,
+        branch: user.branch,
         actions: (
           <Fragment>
             <Link
@@ -161,10 +168,7 @@ const UsersList = () => {
   return (
     <Fragment>
       <MetaData title={"All Users"} />
-      <div
-        className="row"
-        style={{ marginRight: "120px"}}
-      >
+      <div className="row" style={{ marginRight: "120px" }}>
         <div className="col-12 col-md-2">
           <Sidebar />
         </div>

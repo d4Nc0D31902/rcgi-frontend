@@ -41,7 +41,13 @@ const Profile = () => {
               <Paper elevation={3} sx={{ padding: 3 }}>
                 <Avatar
                   alt={user.name}
-                  src={user.avatar.url}
+                  src={
+                    user.avatar && user.avatar.url
+                      ? user.avatar.url
+                      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          user.name
+                        )}`
+                  }
                   sx={{ width: 150, height: 150, marginBottom: 2 }}
                 />
                 <Button
