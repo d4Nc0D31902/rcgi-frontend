@@ -26,24 +26,24 @@ const ImportUser = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleDownloadTemplate = async () => {
-    try {
-      const downloadUrl = process.env.PUBLIC_URL + "/Employee Import Template.xlsx";
-      const response = await fetch(downloadUrl);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "Employee Import Template.xlsx");
-      document.body.appendChild(link);
-      link.click();
+  // const handleDownloadTemplate = async () => {
+  //   try {
+  //     const downloadUrl = process.env.PUBLIC_URL + "/Employee Import Template.xlsx";
+  //     const response = await fetch(downloadUrl);
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(new Blob([blob]));
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", "Employee Import Template.xlsx");
+  //     document.body.appendChild(link);
+  //     link.click();
 
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading template:", error);
-      setError("Error downloading template.");
-    }
-  };
+  //     document.body.removeChild(link);
+  //   } catch (error) {
+  //     console.error("Error downloading template:", error);
+  //     setError("Error downloading template.");
+  //   }
+  // };
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -107,7 +107,9 @@ const ImportUser = () => {
             Select File
           </Button>
           <Tooltip title="Download Excel Template" placement="top">
-            <IconButton onClick={handleDownloadTemplate}>
+            <IconButton
+            //  onClick={handleDownloadTemplate}
+             >
               <DownloadIcon />
             </IconButton>
           </Tooltip>
