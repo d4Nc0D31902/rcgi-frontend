@@ -138,7 +138,7 @@ const Dashboard = () => {
                   <Grid item xs={12} sm={12} md={12}>
                     <Card
                       sx={{
-                        backgroundColor: "primary.main",
+                        backgroundColor: "#FCB44E",
                         color: "white",
                       }}
                     >
@@ -159,9 +159,7 @@ const Dashboard = () => {
 
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12}>
-                    <Card
-                      sx={{ backgroundColor: "success.main", color: "white" }}
-                    >
+                    <Card sx={{ backgroundColor: "#7A8D79", color: "white" }}>
                       <CardContent>
                         <Stack
                           spacing={2}
