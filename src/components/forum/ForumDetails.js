@@ -192,14 +192,14 @@ const ForumDetails = () => {
                       dangerouslySetInnerHTML={{ __html: reply.reply }}
                     ></Typography>
                   </CardContent>
-                  <CardActions disableSpacing>
+                  {/* <CardActions disableSpacing>
                     <Checkbox
                       checked={isChecked}
                       onChange={handleCheckboxChange}
                       icon={<FavoriteIcon />}
                       checkedIcon={<FavoriteIcon style={{ color: "red" }} />}
                     />
-                  </CardActions>
+                  </CardActions> */}
                 </Card>
               ))
             ) : (
